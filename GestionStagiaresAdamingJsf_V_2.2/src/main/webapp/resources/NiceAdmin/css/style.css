@@ -704,7 +704,9 @@ table tr th { color: #688a7e;}
   background-size: cover;
 }
 .bodyImg{
- background: url("#{resource['NiceAdmin/img/indeximg.jpg']}") no-repeat center center fixed; 
+ background: url("#{resource['NiceAdmin/img/bodyImgs.jpg']}"); 
+  background-repeat: repeat-y;
+  background-repeat: repeat-x;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
