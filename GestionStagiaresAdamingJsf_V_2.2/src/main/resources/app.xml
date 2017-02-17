@@ -169,11 +169,11 @@
 			  users-by-username-query="select name,password,actived from user where name=?" 
 			  authorities-by-username-query="select u.name,r.roleName from user u, role r where u.idUser = r.id_users and u.name =? "/>
 		</security:authentication-provider>
-		<security:authentication-provider>
+		<!-- <security:authentication-provider>
 		  <security:user-service>
 		     <security:user name="admin" password="admin1234" authorities="ROLE_ADMIN"/>
 		  </security:user-service>
-		</security:authentication-provider>
+		</security:authentication-provider> -->
 	</security:authentication-manager> 
 	 <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
        <constructor-arg name="strength" value="12" />

@@ -72,7 +72,7 @@ public class Test {
 		}*/
 		
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder(12);
-		System.out.println(bc.encode("admin1234"));
+		System.out.println(bc.encode("admin"));
 	}
 	
 	
