@@ -37,10 +37,10 @@ public final class SendEmailUtil {
 
 	public final static String CONFIRMATION_MESSAGE (String civilite,String nom,String prenom,String mail,String password){
 		return  " Bonjour "+civilite+" "+nom+" "+prenom
-				+ ",\n\nVotre compte a été créé avec succès."
+				+ ",\n\nVotre compte a ete cree avec succes."
 				+ "\nVoici vos identifiants de connexion : \nPseudo : "+mail
 				+ "\nMot de passe :"+password
-				+ "\nVous pouvez immédiatement accéder à l'application INTI "
+				+ "\nVous pouvez immediatement acceder à l'application INTI "
 				+ "\nA très bientôt,\n\n\nL’equipe intiformation.com";
 	}
 	

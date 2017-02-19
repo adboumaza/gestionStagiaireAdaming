@@ -136,7 +136,7 @@ public class FormateurBean implements Serializable{
 			serviceFormateur.addFormateur(formateur);
 			serviceUser.saveUser(user);
 			serviceRole.saveRole(role, user.getIdUser());
-			Utilitaire.displayMessageInfo("le Formateur "+nom+", "+prenom+" à bien été ajoutée avec succès"+" Un e-mail de confirmation a été adressé à l’adresse e-mail : "+"Pseudo : "+mail+", Password : "+passwordRandom);
+			Utilitaire.displayMessageInfo("le Formateur "+nom+", "+prenom+" à bien été ajouté avec succès"+" Un e-mail de confirmation a été adressé à l’adresse e-mail : "+"Pseudo : "+mail+", Password : "+passwordRandom);
 			SendEmailUtil.sendMail(formateur.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE(formateur.getCivilite(),formateur.getNom(),formateur.getPrenom(),formateur.getMail(), passwordRandom));
 			reset();
 		} 
