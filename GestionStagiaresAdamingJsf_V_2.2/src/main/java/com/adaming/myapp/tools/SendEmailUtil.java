@@ -37,10 +37,20 @@ public final class SendEmailUtil {
 
 	public final static String CONFIRMATION_MESSAGE (String civilite,String nom,String prenom,String mail,String password){
 		return  " Bonjour "+civilite+" "+nom+" "+prenom
-				+ ",\n\nVotre compte a ete cree avec succes."
+				+ ",\n\nVotre compte a été créé avec succès!"
 				+ "\nVoici vos identifiants de connexion : \nPseudo : "+mail
 				+ "\nMot de passe :"+password
-				+ "\nVous pouvez immediatement acceder à l'application INTI "
+				+ "\nVous pouvez immediatement accéder à l'application INTI "
+				+ "\nA très bientôt,\n\n\nL’equipe intiformation.com";
+	}
+	
+	
+	public final static String CONFIRMATION_UPDATE_MESSAGE (String civilite,String nom,String prenom,String mail,String password){
+		return  " Bonjour "+civilite+" "+nom+" "+prenom
+				+ ",\n\nVotre compte a été créé avec succès!"
+				+ "\nVoici vos identifiants de connexion : \nPseudo : "+mail
+				+ "\nMot de passe :"+password
+				+ "\nVous pouvez immediatement accéder à l'application INTI "
 				+ "\nA très bientôt,\n\n\nL’equipe intiformation.com";
 	}
 	
@@ -81,8 +91,8 @@ public final class SendEmailUtil {
 			message.setSubject(subject);
 
 			// Now set the actual message
-			message.setText(contentMail);
-            
+			//message.setText(contentMail,"charset=UTF-8");
+            message.setContent(contentMail, "text/plain; charset=UTF-8");;
 			// Send message
 			Transport transport = mailSession.getTransport();
 			transport.connect();

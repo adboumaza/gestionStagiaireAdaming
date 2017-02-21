@@ -129,7 +129,7 @@
                                       <div class="form-group ">
                                           <label for="dateDeNaissance" class="control-label col-lg-2">Date De Naissance <span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <p:calendar styleClass="calendar" id="dateDeNaissance" yearRange="c-40:c+0" 
+                                              <p:calendar styleClass="calendar" id="dateDeNaissance" yearRange="c-40:c+0" locale="fr" lang="fr"
 												value="#{etudiantBean.dateDeNaissance}" effect="fold"  navigator="true" />
                                           </div>
                                           <h:message for="dateDeNaissance" style="color:red;text-align:center;display:block"></h:message>
@@ -155,7 +155,7 @@
                                       <div class="form-group ">
                                           <label for="dateObtention" class="control-label col-lg-2">Année d'obtention du diplôme<span class="required">*</span></label>
                                           <div class="col-lg-10">
-                                              <p:calendar yearRange="c-10:c+0" styleClass="calendar" id="dateObtention" 
+                                              <p:calendar yearRange="c-10:c+0" styleClass="calendar" id="dateObtention" lang="fr" locale="fr" pattern="MM.yyyy"
 												value="#{etudiantBean.dateObtention}" effect="fold"  navigator="true" />
                                           </div>
                                           <h:message for="dateObtention" style="color:red;text-align:center;display:block"></h:message>
@@ -312,7 +312,7 @@
 														    <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
 														</h:inputText><br/>
 														<h:outputText value="Date De Naissance" /><br/>
-														<p:calendar value="#{etudiantBean.etudiant.dateDeNaissance}" yearRange="c-40:c+0" navigator="true" required="true"/><br/>
+														<p:calendar value="#{etudiantBean.etudiant.dateDeNaissance}" yearRange="c-40:c+0" navigator="true" required="true" locale="fr" lang="fr"/><br/>
 														<h:outputText value="Formation Initial" /><br/>
 														<h:inputText value="#{etudiantBean.etudiant.formationInitial}">
 														    <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
@@ -322,7 +322,7 @@
 														  <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
 														</h:inputText><br/>
 														<h:outputText value="Date d'Obtention " /><br/>
-														<p:calendar value="#{etudiantBean.etudiant.dateObtention}" required="true" yearRange="c-10:c+0" navigator="true" /><br/>
+														<p:calendar value="#{etudiantBean.etudiant.dateObtention}" required="true" yearRange="c-10:c+0" navigator="true" locale="fr" lang="fr" pattern="MM.yyyy"/><br/>
 														<h:outputText value="Adresse Postal" /><br/>
 														<h:inputText value="#{etudiantBean.etudiant.adresse.adresse}" required="true">
 														    <f:validateRegex pattern="[a-z A-ZÉéè 0-9]+$"></f:validateRegex>
@@ -356,6 +356,10 @@
                       </section>
                </div>
           </div> 
+	           <SCRIPT type="text/javascript">
+	                PrimeFaces.locales ['fr'] = { closeText: 'Fermer', prevText: 'Précédent', nextText: 'Suivant', monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ], monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ], dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'], dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'], dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'], weekHeader: 'Semaine', firstDay: 1, isRTL: false, showMonthAfterYear: false, yearSuffix:'', timeOnlyTitle: 'Choisir l\'heure', timeText: 'Heure', hourText: 'Heures', minuteText: 'Minutes', secondText: 'Secondes', currentText: 'Maintenant', ampm: false, month: 'Mois', week: 'Semaine', day: 'Jour', allDayText: 'Toute la journée' };
+	                                     
+	           </SCRIPT>
           </div>
          
          

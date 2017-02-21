@@ -1,6 +1,7 @@
 package com.adaming.myapp.entities;
 
 import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Module;
@@ -21,6 +23,7 @@ import com.adaming.myapp.entities.SessionEtudiant;
  * */
 @SuppressWarnings("serial")
 @Entity
+@Table(name="note")
 public class Note implements Serializable {
 
 	@Id

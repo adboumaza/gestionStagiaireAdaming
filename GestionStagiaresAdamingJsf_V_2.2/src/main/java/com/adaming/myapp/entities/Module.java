@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 /**
  * 
@@ -19,6 +20,7 @@ import javax.persistence.Transient;
  * @version 1.0.0
  * */
 @Entity
+@Table(name="module")
 public class Module implements Serializable {
 	/**
 	 * 

@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -17,6 +18,7 @@ import javax.persistence.OneToOne;
  * */
 @SuppressWarnings("serial")
 @Entity
+@Table(name="contrat")
 public class Contrat implements Serializable{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

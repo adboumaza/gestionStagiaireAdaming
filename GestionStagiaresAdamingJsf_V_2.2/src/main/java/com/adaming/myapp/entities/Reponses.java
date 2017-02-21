@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
  * */
 @SuppressWarnings("serial")
 @Entity
+@Table(name="reponses")
 public class Reponses implements Serializable{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

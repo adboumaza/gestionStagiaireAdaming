@@ -159,7 +159,6 @@
 	  <security:session-management session-fixation-protection="migrateSession">
        <security:concurrency-control error-if-maximum-exceeded="false" expired-url="/pages/errorpages/expired_url.xhtml" max-sessions="1"/>
       </security:session-management>
-	
 	</security:http>
       <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
             <constructor-arg name="strength" value="12" />

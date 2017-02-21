@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -17,6 +18,7 @@ import javax.persistence.OneToMany;
  * */
 @SuppressWarnings("serial")
 @Entity
+@Table(name="site")
 public class Site implements Serializable{
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

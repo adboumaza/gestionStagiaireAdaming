@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -13,6 +14,7 @@ import javax.persistence.Entity;
  * */
 @Entity
 @DiscriminatorValue("ABSENCE")
+
 public class Absence extends Evenement implements Serializable{
 
 	/**

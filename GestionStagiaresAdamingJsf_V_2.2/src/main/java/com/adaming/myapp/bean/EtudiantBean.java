@@ -30,6 +30,7 @@ import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.role.service.IRoleService;
 import com.adaming.myapp.session.service.ISessionService;
 import com.adaming.myapp.tools.LoggerConfig;
+import com.adaming.myapp.tools.SendEmailUtil;
 import com.adaming.myapp.tools.Utilitaire;
 import com.adaming.myapp.user.service.IUserService;
 /**
@@ -142,6 +143,7 @@ public class EtudiantBean implements Serializable {
 			+ nomEtudiant+ ", "+ prenomEtudiant+ " à bien été ajoutée avec succès"
             + " Voici les informations du compte etudiant : "
 			+ "Pseudo : " + mail+ ", Password : " + passwordRandom);
+			SendEmailUtil.sendMail(etudiant.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE("M/Mme",etudiant.getNomEtudiant(),etudiant.getPrenomEtudiant(),etudiant.getMail(), passwordRandom));
 			reset();
 		} catch (VerificationInDataBaseException e1) {
 			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", e1.getMessage()));

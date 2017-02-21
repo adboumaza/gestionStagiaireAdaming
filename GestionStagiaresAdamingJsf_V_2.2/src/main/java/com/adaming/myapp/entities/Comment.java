@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
 /**
@@ -19,6 +20,7 @@ import org.hibernate.validator.constraints.Length;
  * @version 1.0.0
  * */
 @Entity
+@Table(name="comment")
 public class Comment {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -14,6 +14,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 /**
  * 
@@ -24,6 +25,7 @@ import javax.persistence.Transient;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYPE_EVENEMENT", discriminatorType = DiscriminatorType.STRING)
+@Table(name="evenement")
 public class Evenement implements Serializable {
 	/**
 	 * 

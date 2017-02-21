@@ -72,7 +72,16 @@ public class Test {
 		}*/
 		
 		BCryptPasswordEncoder bc = new BCryptPasswordEncoder(12);
-		System.out.println(bc.encode("admin"));
+		System.out.println(bc.encode("admin2017"));
+		
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("B");
+		sb.append("O");
+		String sql = "select * from muClass where ";
+		sb.append(sql).append("idE").append("").append("=:").append("?");
+		
+		System.out.println(sb);
 	}
 	
 	

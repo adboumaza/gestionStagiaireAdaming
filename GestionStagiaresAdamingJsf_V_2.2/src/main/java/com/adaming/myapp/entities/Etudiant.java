@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 /**@Author Adel
  **@version 1.0.0
@@ -22,6 +23,7 @@ import javax.persistence.Transient;
  * */
 @SuppressWarnings("serial")
 @Entity
+@Table(name="etudiant")
 public class Etudiant implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

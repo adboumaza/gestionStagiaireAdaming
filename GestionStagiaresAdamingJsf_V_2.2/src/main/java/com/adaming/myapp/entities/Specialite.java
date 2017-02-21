@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -17,6 +18,7 @@ import javax.persistence.OneToOne;
  * @version 1.0.0
  * */
 @Entity
+@Table(name="Specialite")
 public class Specialite implements Serializable {
     /**
 	 * 

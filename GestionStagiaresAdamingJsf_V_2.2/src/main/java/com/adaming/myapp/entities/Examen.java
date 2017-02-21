@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 import org.joda.time.DateTime;
 /**
@@ -20,6 +21,7 @@ import org.joda.time.DateTime;
  * */
 @SuppressWarnings("serial")
 @Entity
+@Table(name="examen")
 public class Examen implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

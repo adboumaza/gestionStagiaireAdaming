@@ -91,7 +91,7 @@
                                           <label for="effect" class="control-label col-lg-2">Début<span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <p:calendar  styleClass="calendar" id="effect" navigator="true" yearRange="c-0:c+0"
-												value="#{sessionBean.dateDebute}"  effect="fold"
+												value="#{sessionBean.dateDebute}"  effect="fold" locale="fr" lang="fr"
 												 />
                                           </div>
                                       </div>
@@ -99,7 +99,7 @@
                                           <label for="effect2" class="control-label col-lg-2">Fin<span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <p:calendar styleClass="calendar" id="effect2" navigator="true" yearRange="c-0:c+0"
-												value="#{sessionBean.dateFin}"  effect="fold" 
+												value="#{sessionBean.dateFin}"  effect="fold" locale="fr" lang="fr"
 												 />
                                           </div>
                                       </div>
@@ -237,11 +237,11 @@
 												<br />
 												<h:outputText value="Date début" />
 												<br />
-												<p:calendar navigator="true" yearRange="c-0:c+0" value="#{sessionBean.sessionEtudiant.dateDebute}" />
+												<p:calendar navigator="true" yearRange="c-0:c+0" value="#{sessionBean.sessionEtudiant.dateDebute}" locale="fr" lang="fr" />
 												<br />
 												<h:outputText value="Date fin" />
 												<br />
-												<p:calendar navigator="true" yearRange="c-0:c+0" value="#{sessionBean.sessionEtudiant.dateFin}" />
+												<p:calendar navigator="true" yearRange="c-0:c+0" value="#{sessionBean.sessionEtudiant.dateFin}" locale="fr" lang="fr" />
 												<br />
 
 										   </c:if>
@@ -258,6 +258,9 @@
                   </div>
               </div>
           </section>
+           <SCRIPT type="text/javascript">
+                PrimeFaces.locales ['fr'] = { closeText: 'Fermer', prevText: 'Précédent', nextText: 'Suivant', monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ], monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ], dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'], dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'], dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'], weekHeader: 'Semaine', firstDay: 1, isRTL: false, showMonthAfterYear: false, yearSuffix:'', timeOnlyTitle: 'Choisir l\'heure', timeText: 'Heure', hourText: 'Heures', minuteText: 'Minutes', secondText: 'Secondes', currentText: 'Maintenant', ampm: false, month: 'Mois', week: 'Semaine', day: 'Jour', allDayText: 'Toute la journée' };                    
+             </SCRIPT>
 	</div>
 </ui:composition>
 </html>

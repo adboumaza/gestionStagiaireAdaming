@@ -23,6 +23,7 @@ import com.adaming.myapp.entities.User;
 import com.adaming.myapp.exception.GetUserException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.tools.LoggerConfig;
+import com.adaming.myapp.tools.SendEmailUtil;
 import com.adaming.myapp.tools.Utilitaire;
 import com.adaming.myapp.user.service.IUserService;
 /**
@@ -47,22 +48,18 @@ public class UpdatePasswordUserBean implements Serializable{
 	@Inject
 	private UserAuthentificationBean autentificationBean;
 
-	// attribut pour tester l'envoi
-	private final String username = "nymraif.stark8623@gmail.com"; // adresse de
-																	// l'administrateur
-	private final String password = "krzmngkeebnkudvh"; // password pour
-														// l'authentification
-														// gmail
-	//
+
 
 	private String newPassword;
 	private String passwordCrypted;
-
-	public void updatePassword() {
+	private final String message = "votre nouveau mot de passe";
+    private final String contentMail = "Votre mot de passe à bien été enregistrer avec succès";
+	
+    public void updatePassword() {
       
-		
+		User user= null;
         try {
-			User user = serviceUser.getUserByMail(autentificationBean.getName());
+			user = serviceUser.getUserByMail(autentificationBean.getName());
 			passwordCrypted = Utilitaire.passWordEncoderGenerator(newPassword);
 			user.setPassword(passwordCrypted);
 			serviceUser.customPassword(user);
@@ -74,46 +71,10 @@ public class UpdatePasswordUserBean implements Serializable{
 			Utilitaire.displayMessageWarning(e.getMessage());
 		}
 		
-
-		Properties properties = System.getProperties();
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.starttls.enable", "true");
-		properties.put("mail.smtp.host", "smtp.gmail.com");
-		properties.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(properties,
-				new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				});
-
-		try {
-			// Create a default MimeMessage object.
-			MimeMessage message = new MimeMessage(session);
-
-			// Set From: header field of the header.
-			message.setFrom(new InternetAddress(username));
-
-			// Set To: header field of the header.
-			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-					autentificationBean.getName()));
-
-			// Set Subject: header field
-			message.setSubject("votre nouveau mot de passe");
-
-			// Now set the actual message
-			message.setText("Votre mot de passe INTI Formation a bien été modifié : " + newPassword);
-
-			// Send message
-			Transport.send(message);
-
-			LoggerConfig.logInfo("Sent message successfully");
-            reset();
-
-		} catch (MessagingException mex) {
-			mex.printStackTrace();
-		}
+        SendEmailUtil.sendMail(user.getName(), message, contentMail.concat(" : ".concat(newPassword)));
+        LoggerConfig.logInfo("Sent message successfully");
+        reset();
+		
 	}
 	
 	public void reset(){

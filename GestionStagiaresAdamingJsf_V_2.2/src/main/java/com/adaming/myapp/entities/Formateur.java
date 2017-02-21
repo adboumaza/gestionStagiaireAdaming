@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -20,6 +21,7 @@ import javax.persistence.ManyToMany;
  * @version 1.0.0
  * */
 @Entity
+@Table(name="formateur")
 public class Formateur implements Serializable {
 	/**
 	 * 

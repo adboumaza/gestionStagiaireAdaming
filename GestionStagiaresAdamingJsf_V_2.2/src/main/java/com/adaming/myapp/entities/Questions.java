@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -24,6 +25,7 @@ import javax.persistence.OneToMany;
 
 @SuppressWarnings("serial")
 @Entity
+@Table(name="questions")
 public class Questions implements Serializable {
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

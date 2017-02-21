@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 /**
  * 
  * @author adel
@@ -16,6 +17,7 @@ import javax.persistence.ManyToOne;
  * @version 1.0.0
  * */
 @Entity
+@Table(name="role")
 public class Role implements Serializable {
     /**
 	 * 
