@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.geonames.Toponym;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -71,7 +74,7 @@ public class Test {
 			System.out.println(t.getCountryName());
 		}*/
 		
-		BCryptPasswordEncoder bc = new BCryptPasswordEncoder(12);
+	/*	BCryptPasswordEncoder bc = new BCryptPasswordEncoder(12);
 		System.out.println(bc.encode("admin2017"));
 		
 
@@ -81,7 +84,10 @@ public class Test {
 		String sql = "select * from muClass where ";
 		sb.append(sql).append("idE").append("").append("=:").append("?");
 		
-		System.out.println(sb);
+		System.out.println(sb);*/
+/*		
+		HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		System.out.println(origRequest);*/
 	}
 	
 	

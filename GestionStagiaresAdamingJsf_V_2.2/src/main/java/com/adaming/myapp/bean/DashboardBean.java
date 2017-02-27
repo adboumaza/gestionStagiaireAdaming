@@ -7,7 +7,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Scope;
@@ -76,7 +79,8 @@ public class DashboardBean implements Serializable {
 	private Date currentTime;
 
 	public void init() {
-		retardNotFoundException = new String();
+
+        retardNotFoundException = new String();
 		absenceNotFoundException = new String();
 		entretienNotFoundException = new String();
 		/** getSessionsInProgress */
