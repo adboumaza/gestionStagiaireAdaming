@@ -83,6 +83,7 @@ public class ExamenBean implements Serializable {
 	private  int examenTimeInSeconde ;
 	private  Date serverTime;
 	private Examen examen;
+	private Integer numberOfReponseSelected = 0;
 
 	
 	/**@init examen*/
@@ -156,12 +157,13 @@ public class ExamenBean implements Serializable {
 		LoggerConfig.logInfo("modulesDisplay : "+modulesNotDisplay);
 			
 	}
-	/*cette methode permet d'initialisée le tableau de 
+	/**cette methode permet d'initialisée le tableau de 
 	 * reponses en cas d'actualisation de la page*/
 	public void initResponses(){
 		reponsesSelected = new ArrayList<Reponses>();
 		reponsesSelected.clear();
 		note = 0.0;
+		numberOfReponseSelected = 0;
 	}
 	
 	public String startExamen(){
@@ -246,6 +248,7 @@ public class ExamenBean implements Serializable {
 		reponseSelectionnee = new Long(0);
 		scoreFinal = note;
 		note = 0.0;
+		numberOfReponseSelected = 0;
 		reponseSelectionnee = null;
 		questions = new HashSet<Questions>();
 	}
@@ -269,7 +272,9 @@ public class ExamenBean implements Serializable {
 
 	}
 	
-	
+	public void incrementeNumberOfReponseSelected(){
+		numberOfReponseSelected ++;
+	}
 	/* @method repondre */
 	public void register() {
         Reponses rep = null;
@@ -397,6 +402,14 @@ public class ExamenBean implements Serializable {
 
 	public void setServerTime(Date serverTime) {
 		this.serverTime = serverTime;
+	}
+
+	public Integer getNumberOfReponseSelected() {
+		return numberOfReponseSelected;
+	}
+
+	public void setNumberOfReponseSelected(Integer numberOfReponseSelected) {
+		this.numberOfReponseSelected = numberOfReponseSelected;
 	}
 
 	

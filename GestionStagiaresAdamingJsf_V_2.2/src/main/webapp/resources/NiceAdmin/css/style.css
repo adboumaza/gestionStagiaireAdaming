@@ -17,11 +17,12 @@ Website: http://geekslabs.com/
   -webkit-border-radius: 5px;
   border-radius: 5px;
 }
-ui-timer {
-    padding: 20px 132px!important;
+.ui-timer {
+    padding: 6px 50px!important;
     background: #00a0df!important;
-    color: white!important;
+    color: black!important;
 }
+
 .ui-selectoneradio label{
 	 width:660px;
 	 padding: 18px 60px;
@@ -497,7 +498,7 @@ ui-radiobutton-icon
 /*timer*/
 .timer{
 	text-align: center;
-    padding-bottom: 50px
+    padding-bottom: 10px
 }
 /*evaluations*/
 .inline li{

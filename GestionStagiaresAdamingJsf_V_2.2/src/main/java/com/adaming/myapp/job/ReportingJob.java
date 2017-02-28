@@ -29,11 +29,16 @@ public class ReportingJob  {
 	@Inject
 	private IFormateurService formateurService;
 	private List<Formateur> formateurs;
-	private final String message   = " \n Merci de procéder à la préparation et l’envoi  de vos «  weekly reports » de la semaine N° ";
-	private final String warning   = " \n\n Ce message a été generé automatiquement, veuillez ne pas y répondre.";
+	private final String message   = " \n\n Merci de procéder à la préparation et l’envoi  de vos «  weekly reports » de la semaine N° ";
+	private final String warning   = " \n\n\n\n Ce message a été generé automatiquement, veuillez ne pas y répondre.";
 	private final String signature = " \n\n L'equipe intiformation.com";
+
 	
-	@Scheduled(cron = "0 0/3 * * * ?")
+	/**
+	 * 
+	 *0 15 10 ? * THU-FRI	Fire at 10:15am every Thursday and Friday
+	 * */
+	@Scheduled(cron = "0 15 10 ? * THU-FRI")
 	public void send(){
 		final Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());
@@ -53,9 +58,5 @@ public class ReportingJob  {
 		formateurs = formateurService.getAllFormateurs();
 		return formateurs;
 	}
-
-	
-	
-	
 
 }

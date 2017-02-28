@@ -118,7 +118,7 @@ public class Bean implements Serializable {
 				reset();
 				mixChoiseOfReponses();
 			} catch (VerificationInDataBaseException e) {
-				Utilitaire.displayMessageError(e.getMessage());
+				Utilitaire.displayMessageWarning(e.getMessage());
 			}
 			
 		}

@@ -10,6 +10,29 @@
 
 
 <ui:composition>
+    	<header class="header dark-bg" style="z-index:1000!important;">
+		<div class="toggle-nav">
+			<div class="icon-reorder tooltips">
+				<i><h:outputLabel style="font-family: 'Lato', sans-serif!important;font-weight: 300;font-size: 22px!important;color: #fed189;">INTI 
+                     <span class="lite">FORMATION</span>
+		         </h:outputLabel></i>
+			</div>
+			<div class="timer">
+					<h:form>
+						<p:growl/>  
+						<pe:timer  
+						    timeout="#{examenBean.examenTimeInSeconde}"  
+						    format="HH:mm:ss"
+						    singleRun="true"  
+						    listener="#{examenBean.onTimeout}"/>   
+					</h:form>  		
+		     </div>
+		     <div>
+		        <h:outputText style="text-align:center;display: block;color: greenyellow;font-size: 18px;padding-bottom: 5px;" id="numberOfReponse" value="Réponses : #{examenBean.numberOfReponseSelected}/#{examenBean.questions.size()}"></h:outputText>
+		     </div>
+		</div>
+	</header>
+	<!--header end-->
 	<br> </br>
 	<br> </br>
 	<br> </br>
@@ -46,17 +69,6 @@
 			</div>
 		</div>
 		<br /> <br />
-		<!-- timer -->
-		<div class="timer">
-			<h:form>
-				<p:growl/>  
-				<pe:timer  
-				    timeout="#{examenBean.examenTimeInSeconde}"  
-				    format="HH:mm:ss"
-				    singleRun="true"  
-				    listener="#{examenBean.onTimeout}"/>   
-			</h:form>  		
-         </div>
          <p:growl id="growl" autoUpdate="true" showDetail="true" showSummary="true"></p:growl>
          <!-- data list question  -->
 
@@ -91,10 +103,10 @@
 		    
 		          <!-- button click -->
 					<div style="text-align:center!important;padding-bottom:10px">	
-					<p:commandButton  action="#{examenBean.register}" value="Répondre"  ajax="true">
+					<p:commandButton  action="#{examenBean.register}" value="Répondre"  ajax="true" update="numberOfReponse">
 						
 						<p:effect type="clip" event="click"  ></p:effect>
-					    
+					    <f:actionListener  binding="#{examenBean.incrementeNumberOfReponseSelected()}"></f:actionListener>
 					</p:commandButton>
 					</div>
 			      </div>
