@@ -77,7 +77,7 @@ onpageshow="if (event.persisted) noBack();" onunload="">
 				       <h:commandButton styleClass="btn btn-info"  value="Générer un pdf" id="pdf" ajax="false">
 							<f:setPropertyActionListener value="false"
 							target="#{exporterController.customExporter}" />
-							<pe:exporter type="pdf" target="studentTable"
+							<pe:exporter type="pdf" target="studentTable" encoding="CP1252"
 							fileName="Resume_Reponses_Examen_Module_N°_#{examenBean.idModule}" />
 				   		</h:commandButton>
 				</div>

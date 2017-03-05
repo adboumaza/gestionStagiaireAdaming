@@ -31,4 +31,6 @@ public interface IModuleDao extends IGenericDao<Module> {
 	 Set<Object[]> getModulesValideBySession(final Long idSession);
 	 
 	 Module verifyExistingModule(final String name);
+	 
+	// void deactivateModule(final Long idModule);//not ok
 }

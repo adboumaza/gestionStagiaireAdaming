@@ -101,4 +101,10 @@ public class ModuleServiceImpl implements IModuleService{
 		return dao.verifyExistingModule(name);
 	}
 
+	/*@Override
+	@Transactional(readOnly=false)
+	public void deactivateModule(final Long idModule) {
+		dao.deactivateModule(idModule);
+	}*/
+
 }

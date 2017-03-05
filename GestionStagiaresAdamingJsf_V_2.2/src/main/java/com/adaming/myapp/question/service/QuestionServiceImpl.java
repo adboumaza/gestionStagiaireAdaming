@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
+
 import com.adaming.myapp.entities.Questions;
 import com.adaming.myapp.entities.Reponses;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
@@ -56,4 +57,5 @@ public class QuestionServiceImpl implements IQuestionService {
 		return dao.getAllReponsesByModule(idModule);
 	}
 
+	
 }

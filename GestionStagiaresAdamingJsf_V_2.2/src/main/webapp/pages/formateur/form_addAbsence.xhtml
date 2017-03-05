@@ -270,7 +270,7 @@
 												<p:commandButton value="générer un excel" id="xls" ajax="false">
 													<f:setPropertyActionListener value="false"
 														target="#{exporterController.customExporter}" />
-													<pe:exporter type="xlsx" target="studentTable"
+													<pe:exporter type="xlsx" target="studentTable" encoding="CP1252"
 														fileName="GroupedTable" />
 									
 												</p:commandButton>
@@ -278,7 +278,7 @@
 												<p:commandButton value="générer un pdf" id="pdf" ajax="false">
 													<f:setPropertyActionListener value="false"
 														target="#{exporterController.customExporter}" />
-													<pe:exporter type="pdf" target="studentTable"
+													<pe:exporter type="pdf" target="studentTable" encoding="CP1252"
 														fileName="GroupedTable" />
 												</p:commandButton>
 									

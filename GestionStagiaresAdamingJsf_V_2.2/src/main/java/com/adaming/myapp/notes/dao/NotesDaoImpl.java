@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hamcrest.core.IsSame;
+
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Module;
 import com.adaming.myapp.entities.Note;
@@ -103,6 +105,17 @@ public class NotesDaoImpl implements INotesDao {
 		Query query = em.createQuery(SQL).setParameter("x",idSession).setParameter("y",idModule);
 		Double moyenne =(Double) query.getSingleResult();
 		return moyenne;
+	}
+
+	@Override
+	public List<Note> getAllExamesEnCoursBySessionAndModule(final Long idSession,
+			final Long idModule) {
+		//final String SQL = "Select n FROM Note n right join n.etudiant e join n.sessionEtudiant se join n.module m where se.idSession=:x and m.idModule=:y and n.idNote IS NULL";
+		
+		//final String SQL = "select n.idNote from note n right join etudiant e on n.id_etu_note = e.idEtudiant join module m on n.id_mod_Note = m.idModule join sessionEtudiant se on se.idSession = n.id_ses_note where n.idNote IS NULL and m.idModule =? and se.idSession = ?";
+		final String SQL = "SELECT * FROM etudiant e WHERE not EXISTS (SELECT * FROM note n join module m on m.idModule = n.id_mod_note join sessionEtudiant se on se.idSession = n.id_ses_note WHERE n.id_etu_note = e.idEtudiant and se.idSession  = ? and m.idModule =?)";
+		Query query = em.createNativeQuery(SQL).setParameter(1,idSession).setParameter(2,idModule);
+		return query.getResultList();
 	}
 
 }

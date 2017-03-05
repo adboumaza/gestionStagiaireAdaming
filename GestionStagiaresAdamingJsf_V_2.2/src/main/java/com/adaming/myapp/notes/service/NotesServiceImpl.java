@@ -73,4 +73,17 @@ public class NotesServiceImpl implements INotesService {
 		return dao.getMoyenne(idSession, idModule);
 	}
 
+	@Override
+	public List<Note> getAllExamesEnCoursBySessionAndModule(final Long idSession,
+			final Long idModule) throws VerificationInDataBaseException {
+		List<Note> notes = dao.getAllExamesEnCoursBySessionAndModule(idSession, idModule);
+		
+		if(notes.size() > 0)
+		{
+			throw new VerificationInDataBaseException("Veuillez patienter l'examen en cours!");
+		}
+		
+		return notes;
+	}
+
 }

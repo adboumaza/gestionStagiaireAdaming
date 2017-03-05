@@ -2,6 +2,7 @@ package com.adaming.myapp.question.dao;
 
 import java.util.List;
 import java.util.Set;
+
 import com.adaming.myapp.entities.Questions;
 import com.adaming.myapp.entities.Reponses;
 import com.adaming.myapp.exception.AddQuestionException;
@@ -38,5 +39,7 @@ public class QuestionDaoImpl extends QuestionAbstractJpa implements
 		// TODO Auto-generated method stub
 		return getAllReponsesByModuleAbstractJpa(idModule);
 	}
+
+	
 
 }

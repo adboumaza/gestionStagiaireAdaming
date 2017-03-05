@@ -114,13 +114,13 @@
 											</p:dataTable>
 											<p:commandButton value="générer un excel" id="xls" ajax="false">  
 									        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-									        <pe:exporter type="xlsx" target="studentTable" fileName="GroupedTable"/>  
+									        <pe:exporter encoding="CP1252" type="xlsx" target="studentTable" fileName="GroupedTable"/>  
 						  
 						                    </p:commandButton>  
 						                    
 						                    <p:commandButton value="générer un pdf"  id="pdf" ajax="false">  
 									        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-									        <pe:exporter type="pdf" target="studentTable" fileName="GroupedTable"/>  
+									        <pe:exporter encoding="CP1252" type="pdf" target="studentTable" fileName="GroupedTable"/>  
 						  
 						                    </p:commandButton> 
 											

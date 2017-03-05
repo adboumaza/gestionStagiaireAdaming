@@ -27,7 +27,7 @@
                           <header class="panel-heading">
                               Résultats
                           </header>
-                          
+                            <p:growl id="growl" autoUpdate="true" showDetail="true" showSummary="true"></p:growl>
                           <div class="panel-body">
                               <div class="form">
 							    <h:form>
@@ -38,8 +38,11 @@
 													<p:progressBar value="#{n.score * 5}" labelTemplate="{value}%" displayOnly="true"/>					
 													<div class="count">#{n.module.nomModule}</div>
 													<div class="title">#{n.score}</div>	
-												</div><!--/.info-box-->			
+													<br></br>
+													<h:commandButton styleClass="btn btn-danger" value="Voir le corrigé #{n.module.nomModule}" action="#{classementBean.getCorrectionByModule(n.module.idModule)}"></h:commandButton>		
+												</div><!--/.info-box-->	
 											</div><!--/.col-->
+											
 										</div><!--/.row-->										
 							       </ui:repeat>
 							    </h:form>

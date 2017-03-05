@@ -2,6 +2,7 @@ package com.adaming.myapp.question.service;
 
 import java.util.List;
 import java.util.Set;
+
 import com.adaming.myapp.entities.Questions;
 import com.adaming.myapp.entities.Reponses;
 import com.adaming.myapp.exception.AddQuestionException;
@@ -22,4 +23,6 @@ public interface IQuestionService {
 	Questions verifyExistingQuestions(final String label);
 
 	Set<Reponses> getAllReponsesByModule(final Long idModule);
+	
+	
 }

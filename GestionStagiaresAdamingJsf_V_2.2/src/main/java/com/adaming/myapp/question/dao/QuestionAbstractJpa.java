@@ -59,7 +59,7 @@ public abstract class QuestionAbstractJpa {
 		 return question;
 	}
 	
-	 @SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public Set<Reponses> getAllReponsesByModuleAbstractJpa(final Long idModule){
 		 
 		 final String SQL ="from Reponses r join fetch r.questions q join fetch q.module m where m.idModule =:x";

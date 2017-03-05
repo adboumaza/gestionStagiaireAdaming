@@ -36,6 +36,7 @@ public class ModuleServiceTestU {
 	}
 
 	@Test
+	@Ignore
 	public void testAddModule() {
 		Module m= new Module("AngularJs2");
 		try {
@@ -115,6 +116,11 @@ public class ModuleServiceTestU {
 	public void verificationModule(){
 		Module m = serviceModule.verifyExistingModule("angularJs");
 		System.out.println(m);
+	}
+	
+	@Test
+	public void deactivateModule(){
+		//serviceModule.deactivateModule(2L);
 	}
 
 }

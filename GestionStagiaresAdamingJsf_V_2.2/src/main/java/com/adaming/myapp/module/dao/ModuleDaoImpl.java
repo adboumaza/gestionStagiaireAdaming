@@ -122,4 +122,10 @@ public class ModuleDaoImpl extends AbstractJpaDao<Module> implements IModuleDao{
 		 return module;
 	}
 
+/*	@Override
+	public void deactivateModule(Long idModule) {
+		 final String SQL = "update module m set m.actif = false where idModule = ? ";     
+		 Query query =  em.createNativeQuery(SQL).setParameter(1,idModule);
+	}*/
+
 }

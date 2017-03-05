@@ -33,4 +33,6 @@ public interface IModuleService {
 	 Set<Object[]> getModulesValideBySession(final Long idSession) throws VerificationInDataBaseException;
 	 
 	 Module verifyExistingModule(final String name);
+	 
+	// void deactivateModule(Long idModule);
 }

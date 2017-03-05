@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.adaming.myapp.entities.Note;
+import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.notes.service.INotesService;
 
 public class NotesServiceTestU {
@@ -38,9 +39,22 @@ public class NotesServiceTestU {
 	}
 	
 	@Test
+	@Ignore
 	public void getMoyenne(){
 		Double d = serviceNotes.getMoyenne(1L,2L);
 		System.out.println(d);
+	}
+	@Test
+	public void getAllExamensEnCours(){
+		List<Note> notes;
+		try {
+			notes = serviceNotes.getAllExamesEnCoursBySessionAndModule(1L, 1L);
+			System.out.println(notes.size());
+		} catch (VerificationInDataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  
 	}
 
 	

@@ -5,16 +5,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.inject.Inject;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Note;
+import com.adaming.myapp.entities.Questions;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.etudiant.service.IEtudiantService;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.module.service.IModuleService;
 import com.adaming.myapp.notes.service.INotesService;
+import com.adaming.myapp.question.service.IQuestionService;
 import com.adaming.myapp.session.service.ISessionService;
 import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.Utilitaire;
@@ -54,6 +59,8 @@ public class ClassementBean implements Serializable {
 	@Inject
 	private ISessionService serviceSession;
 	@Inject
+	private IQuestionService serviceQuestions;
+	@Inject
 	private UserAuthentificationBean userAuthentification;
 	
 
@@ -63,6 +70,7 @@ public class ClassementBean implements Serializable {
 	private Etudiant etudiant;
 	private Set<Object[]> modules;
 	private List<Note> notesByStudents;
+	private Set<Questions> questions;
 	
 	
 	/*get all notes by session*/
@@ -112,7 +120,24 @@ public class ClassementBean implements Serializable {
     	notesByStudents = serviceNotes.getAllNotesByStudent(etudiant.getIdEtudiant());
     	return "resultats?faces-redirect=true";
     }
-
+    /** cette methode permet de recuperer toutes les questions avec les reponses*/
+    public String getCorrectionByModule(Long idModule){
+    	getEtudiantByName();
+    	try {
+    		 System.out.println("idModule"+idModule);
+    		 System.out.println("idSession"+sessionEtudiant.getIdSession());
+			questions = serviceQuestions.getQuestionsByModule(idModule);
+			serviceNotes.getAllExamesEnCoursBySessionAndModule(sessionEtudiant.getIdSession(), idModule);
+			return "corrige_examen?faces-redirect=true";
+    	} catch (VerificationInDataBaseException e) {
+			Utilitaire.displayMessageWarning(e.getMessage());
+			return null;
+		}
+    	
+    	
+    }
+    
+  
 
 
 	public List<Object[]> getNotes() {
@@ -162,6 +187,12 @@ public class ClassementBean implements Serializable {
 	}
 	public void setNotesByStudents(List<Note> notesByStudents) {
 		this.notesByStudents = notesByStudents;
+	}
+	public Set<Questions> getQuestions() {
+		return questions;
+	}
+	public void setQuestions(Set<Questions> questions) {
+		this.questions = questions;
 	}
 
 	

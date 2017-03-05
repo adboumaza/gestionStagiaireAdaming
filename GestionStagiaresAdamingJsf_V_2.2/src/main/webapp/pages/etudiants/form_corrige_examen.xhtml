@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:b = "http://bootsfaces.net/ui"
+	xmlns:f = "http://java.sun.com/jsf/core"
+	xmlns:h = "http://java.sun.com/jsf/html"
+	xmlns:p = "http://primefaces.org/ui"
+    xmlns:ui= "http://java.sun.com/jsf/facelets"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<title>Examen Success</title>
+	   <f:facet name="middle">
+            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
+            <h:outputScript  name="NiceAdmin/js/jquery.js" />
+            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
+            
+     </f:facet>
+     <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT>
+</h:head>
+<h:body onload="noBack();"
+onpageshow="if (event.persisted) noBack();" onunload="">
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+	<div class="well container">
+		<h1>Correction</h1>
+		<br/>
+		    <h:form>
+		    <h:panelGroup>
+				<p:dataTable id="studentTable" var="q" value="#{classementBean.questions}">
+				    <p:column headerText="N°">
+				        <h:outputText value="#{q.numeroQuestion}" />
+				    </p:column>
+				    <p:column headerText="Question">
+				        <h:outputText value="#{q.label}" />
+				    </p:column>
+				     <p:column headerText="Réponses">
+				        <p:dataList value="#{q.reponses}" var="answer">
+				            <p:column>
+				                <h:outputText style="padding-right:10px;" value="#{answer.labelReponse}" />
+				            </p:column>
+				            <p:column>
+				                <h:outputText rendered="#{answer.etat}"     value="TRUE" />
+						        <h:outputText rendered="#{not answer.etat}" value="FALSE" />
+						        <h:outputText style="padding-right:10px;"></h:outputText>
+						        <h:graphicImage rendered="#{answer.etat}"     name="NiceAdmin/img/check.png"/> 
+		                        <h:graphicImage rendered="#{not answer.etat}" name="NiceAdmin/img/cross.png"/> 
+				            </p:column>
+				        </p:dataList>
+				        
+				     </p:column>
+				</p:dataTable>
+				<br></br>
+				<br></br>
+				<!-- add boutton accueil -->
+				<div style="text-align:center;">
+					   <h:commandButton style="margin-right: 20px;" styleClass="btn btn-danger" ajax="false" action="resultats?faces-redirect=true" value="Retour Résultats"/>
+				</div>
+				
+   		 </h:panelGroup>
+   		 </h:form>
+	</div>		  
+</h:body>
+</html>
