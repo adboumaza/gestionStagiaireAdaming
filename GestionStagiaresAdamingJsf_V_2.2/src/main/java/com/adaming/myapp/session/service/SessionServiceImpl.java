@@ -10,6 +10,7 @@ import org.jboss.logging.Logger;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.dto.SessionDto;
+import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
@@ -135,6 +136,24 @@ public class SessionServiceImpl implements ISessionService{
 			   throw new VerificationInDataBaseException("Votre session a été terminée");
 		}
 		return session;
+	}
+
+	@Override
+	public List<Evenement> getMoreInformationBySession(final Long idSession,final String choix) throws VerificationInDataBaseException {
+		List<Evenement> evenements = dao.getMoreInformationBySession(idSession,choix);
+		if(choix.equals("TOP") && evenements.isEmpty()){
+			throw new VerificationInDataBaseException("le team leader n'a pas encore été signalé..!");
+		}
+		if(choix.equals("WARNING") && evenements.isEmpty()){
+			throw new VerificationInDataBaseException("la black list n'a pas encore été signalée..!");
+		}
+		if(choix.equals("ABSENCE") && evenements.isEmpty()){
+			throw new VerificationInDataBaseException("aucune absence signalée..!");
+		}
+		if(choix.equals("RETARD") && evenements.isEmpty()){
+			throw new VerificationInDataBaseException("aucun retard signalée..!");
+		}
+		return evenements;
 	}
 
 

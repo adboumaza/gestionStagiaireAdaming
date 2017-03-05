@@ -5,7 +5,8 @@
 	xmlns:f = "http://java.sun.com/jsf/core"
 	xmlns:h = "http://java.sun.com/jsf/html"
 	xmlns:p = "http://primefaces.org/ui"
-    xmlns:ui= "http://java.sun.com/jsf/facelets">
+    xmlns:ui= "http://java.sun.com/jsf/facelets"
+    xmlns:pe="http://primefaces.org/ui/extensions">
 <h:head>
 	<title>Examen Success</title>
 	   <f:facet name="middle">
@@ -43,8 +44,9 @@ onpageshow="if (event.persisted) noBack();" onunload="">
 	<div class="well container">
 		<h1>Resumé de vos réponses</h1>
 		<br/>
+		    <h:form>
 		    <h:panelGroup>
-				<p:dataTable var="r" value="#{examenBean.reponsesSelected}">
+				<p:dataTable id="studentTable" var="r" value="#{examenBean.reponsesSelected}">
 				    <p:column headerText="N°">
 				        <h:outputText value="#{r.questions.numeroQuestion}" />
 				    </p:column>
@@ -54,28 +56,34 @@ onpageshow="if (event.persisted) noBack();" onunload="">
 				    </p:column>
 				 
 				    <p:column headerText="Réponse">
-				        <h:outputText value=" - #{r.labelReponse}" styleClass="goodAnswer#{r.etat}"/><br/>
+				        <h:outputText value=" - #{r.labelReponse}" style="font-weight:bold" styleClass="goodAnswer#{r.etat}"/>
 				    </p:column>
 				    <p:column headerText="Point">
 				        <h:outputText rendered="#{r.etat}"     value="1" />
 				        <h:outputText rendered="#{not r.etat}" value="0" />
-				        <p:spacer width="10"></p:spacer>
+				        <h:outputText style="padding-right:10px;"></h:outputText>
 				        <h:graphicImage rendered="#{r.etat}"     name="NiceAdmin/img/check.png"/> 
                         <h:graphicImage rendered="#{not r.etat}" name="NiceAdmin/img/cross.png"/> 
 				    </p:column>
 			        <f:facet name="footer">
-			          Note Final :  #{examenBean.scoreFinal}
+			          <h:outputText value="Note Final :  #{examenBean.scoreFinal}"></h:outputText>
 			        </f:facet>
 				</p:dataTable>
 				<br></br>
 				<br></br>
 				<!-- add boutton accueil -->
 				<div style="text-align:center;">
-					<h:form>
-					   <h:commandButton styleClass="btn btn-danger" ajax="false" action="index?faces-redirect=true" value="Retour Accueil"/>
-					</h:form>
+					   <h:commandButton style="margin-right: 20px;" styleClass="btn btn-danger" ajax="false" action="index?faces-redirect=true" value="Retour Accueil"/>
+				       <h:commandButton styleClass="btn btn-info"  value="Générer un pdf" id="pdf" ajax="false">
+							<f:setPropertyActionListener value="false"
+							target="#{exporterController.customExporter}" />
+							<pe:exporter type="pdf" target="studentTable"
+							fileName="Resume_Reponses_Examen_Module_N°_#{examenBean.idModule}" />
+				   		</h:commandButton>
 				</div>
+				
    		 </h:panelGroup>
+   		 </h:form>
 	</div>		  
 	</div>
 </h:body>

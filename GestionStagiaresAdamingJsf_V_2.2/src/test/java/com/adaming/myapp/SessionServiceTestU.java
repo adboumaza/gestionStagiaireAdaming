@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.adaming.myapp.dto.SessionDto;
+import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
@@ -38,14 +39,13 @@ public class SessionServiceTestU {
 		context.close();
 	}
 
-	
 	@Test
 	@Ignore
 	public void testAddSessionStudent() throws AddSessionException {
-		SessionEtudiant s = new SessionEtudiant(new Date(), new Date(),1L);
-		serviceSession.addSessionStudent(s, 1L,1L,1L);
-		SessionEtudiant s2 = new SessionEtudiant(new Date(), new Date(),1L);
-		serviceSession.addSessionStudent(s2, 2L,2L,1L);
+		SessionEtudiant s = new SessionEtudiant(new Date(), new Date(), 1L);
+		serviceSession.addSessionStudent(s, 1L, 1L, 1L);
+		SessionEtudiant s2 = new SessionEtudiant(new Date(), new Date(), 1L);
+		serviceSession.addSessionStudent(s2, 2L, 2L, 1L);
 		assertNotNull(s.getIdSession());
 		assertNotNull(s2.getIdSession());
 	}
@@ -54,10 +54,10 @@ public class SessionServiceTestU {
 	@Ignore
 	public void testUpdateSessionEtudian() throws AddSessionException {
 		SessionEtudiant se = serviceSession.getSessionEtudiantById(1L);
-		//se.setLieu("Nantes");
-		serviceSession.updateSessionEtudiant(se, 1L,1L,1L);
+		// se.setLieu("Nantes");
+		serviceSession.updateSessionEtudiant(se, 1L, 1L, 1L);
 		SessionEtudiant se2 = serviceSession.getSessionEtudiantById(1L);
-		//assertThat("Nantes", IsEqual.equalTo(se2.getLieu()));
+		// assertThat("Nantes", IsEqual.equalTo(se2.getLieu()));
 	}
 
 	@Test
@@ -70,9 +70,10 @@ public class SessionServiceTestU {
 			e.printStackTrace();
 		}
 	}
+
 	@Test
 	@Ignore
-	public void testGetSessionByFormateur(){
+	public void testGetSessionByFormateur() {
 		SessionEtudiant s;
 		try {
 			s = serviceSession.getSessionByFormateur(1L);
@@ -81,21 +82,34 @@ public class SessionServiceTestU {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+	}
+
+	@Test
+	@Ignore
+	public void getSessionByEtudiant() {
+		try {
+			SessionEtudiant se = serviceSession.getSessionByEtudiant(1L);
+			System.out.println(se);
+		} catch (VerificationInDataBaseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@Test
-	public void getSessionByEtudiant(){
-	  try {
-		SessionEtudiant se = 	serviceSession.getSessionByEtudiant(1L);
-	    System.out.println(se);
-	  } catch (VerificationInDataBaseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+	public void getTeamLeaderBySession(){
+		List<Evenement> e;
+		try {
+			e = serviceSession.getMoreInformationBySession(1L,"ABSENCE");
+			System.out.println(e.size());
+			for(Evenement ee:e){
+				System.out.println(ee.getEtudiant().getNomEtudiant());
+			}
+		} catch (VerificationInDataBaseException e1) {
+			System.out.println(e1);
+		}
+		
 	}
-	}
-	
-	
-	
 
 }

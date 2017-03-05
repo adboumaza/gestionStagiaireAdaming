@@ -37,7 +37,7 @@
                       </header>
                      <div class="panel-body text-center">
                                  <c:if test="#{fn:length(dashboardBean.sessionsInProgress) > 0}">
-							     <form>
+							     <h:form>
 									<table class="table bootstrap-datatable countries">
 										<thead>
 											<tr>
@@ -50,28 +50,28 @@
 											</tr>
 										</thead>  
 										 <ui:repeat value="#{dashboardBean.sessionsInProgress}" var="x"> 
-										<tbody>
-											<tr>
-											    <td>#{x[0]}</td>
-											    <td>#{x[1]}</td>
-												<td>#{x[2]}</td>
-												<td>#{x[3]}</td>
-												<td>#{x[4]}</td>
-												<td style="width:300px">
-							                    <b:progressBar  look="danger" animated="true"
-													value="#{x[6]}" min="0" max="#{x[5]}"
-													tooltip="il reste #{x[5] - x[6]} Jours" large-screen="two-thirds" />
-											    </td>
-										    </tr>
-										</tbody>
+											<tbody>
+												<tr>
+												    <td style="vertical-align: inherit"><h:commandButton action="#{sessionBean.getCureentSessionAndRedirect(x[0])}" style="vertical-align: inherit!important" styleClass="css_btn_class" value="Voir en détail session : #{x[0]}"></h:commandButton></td>
+												    <td style="vertical-align: inherit!important">#{x[1]}</td>
+													<td style="vertical-align: inherit!important">#{x[2]}</td>
+													<td style="vertical-align: inherit!important">#{x[3]}</td>
+													<td style="vertical-align: inherit!important">#{x[4]}</td>
+													<td style="width:300px;vertical-align: inherit!important;margin-bottom:0!important">
+								                    <b:progressBar style="margin-bottom:0!important"  look="danger" animated="true"
+														value="#{x[6]}" min="0" max="#{x[5]}"
+														tooltip="il reste #{x[5] - x[6]} Jours" large-screen="two-thirds" />
+												    </td>
+											    </tr>
+											</tbody>
 										  </ui:repeat>
 							        </table>
-							</form>
+							</h:form>
 							</c:if>
 							 <c:if test="#{fn:length(dashboardBean.sessionsInProgress) eq 0}">
 						     	 <h:graphicImage width="270px" height="270px" name="NiceAdmin/img/picto_not_found.png"></h:graphicImage>
 							     <p style="color:red">
-								  <h:outputText value="Aucune Session En Cours...! "></h:outputText>
+								 <h:outputText value="Aucune Session En Cours...! "></h:outputText>
 								 </p>
 							 </c:if>
 							</div>
@@ -113,7 +113,7 @@
 															<f:facet name="header">
 																<h:outputText value="Etudiant" />
 															</f:facet>
-															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}"/>
+															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}" styleClass="css_btn_class"/>
 														</p:column>
 														<p:column style="width:80px;">
 															<f:facet name="header">
@@ -170,7 +170,7 @@
 															<f:facet name="header">
 																<h:outputText value="Etudiant" />
 															</f:facet>
-															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}"/>
+															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}" styleClass="css_btn_class"/>
 														</p:column>
 														<p:column style="width:100px;">
 															<f:facet name="header">
@@ -205,7 +205,7 @@
                                       <div class="col-lg-6">
                                           <section class="panel">
                                               <header class="panel-heading">
-                                                   <h2 style="display:block;text-align:center;padding-top: 10px;padding-bottom: 10px;margin: 0px">ENTRETIRN</h2>
+                                                   <h2 style="display:block;text-align:center;padding-top: 10px;padding-bottom: 10px;margin: 0px">ENTRETIEN</h2>
                                               </header>
                                               <div class="panel-body text-center">
                                               <c:if test="#{fn:length(dashboardBean.entretiens) >0 }">
@@ -224,7 +224,7 @@
 															<f:facet name="header">
 																<h:outputText value="Etudiant" />
 															</f:facet>
-															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}"/>
+															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}" styleClass="css_btn_class"/>
 														</p:column>
 														<p:column style="width:100px;">
 															<f:facet name="header">

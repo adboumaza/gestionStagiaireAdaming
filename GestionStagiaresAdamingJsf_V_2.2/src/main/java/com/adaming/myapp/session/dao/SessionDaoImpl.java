@@ -2,6 +2,7 @@ package com.adaming.myapp.session.dao;
 import java.util.List;
 
 import com.adaming.myapp.dto.SessionDto;
+import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
 /**
@@ -68,6 +69,12 @@ public class SessionDaoImpl extends SessionAbstractJpa implements ISessionDao{
 	public SessionEtudiant getSessionByEtudiant(final Long idEtudiant) {
 		// TODO Auto-generated method stub
 		return getSessionByEtudiantAbstractJpa(idEtudiant);
+	}
+
+	@Override
+	public List<Evenement> getMoreInformationBySession(final Long idSession,final String choix){
+		// TODO Auto-generated method stub
+		return getMoreInformationBySessionAbstractJpa(idSession,choix);
 	}
 
 	

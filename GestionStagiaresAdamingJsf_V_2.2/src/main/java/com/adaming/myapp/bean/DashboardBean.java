@@ -109,6 +109,8 @@ public class DashboardBean implements Serializable {
 		}
 
 	}
+	
+	
 
 	/** @methode remplire la session en cours */
 	public void sessionEnCours() {
@@ -124,32 +126,35 @@ public class DashboardBean implements Serializable {
 
 	/** @ method pour avoir les jours d'une sessions (progress bar in css) */
 	public void getSessionEnCours() {
+		
 		sessionEnCours();
-		final Date CURRENT_DATE = new Date();
 		/* parcourir chaque session en cours */
-		for (Object[] s : sessionsInProgress) {
-			Date dateDebutSession = (Date) s[2];
-			Date dateFinSession = (Date) s[3];
-			// Long nommbreDeJours = (Long)s[6];
-			final long DATE_START_EN_DAY = dateDebutSession.getTime()
-					/ (24 * 60 * 60 * 1000);
-			final long DATE_END_EN_DAY = dateFinSession.getTime()
-					/ (24 * 60 * 60 * 1000);
 
-			// la date du jour
-			final long currentDate = CURRENT_DATE.getTime()
-					/ (24 * 60 * 60 * 1000);
+			final Date CURRENT_DATE = new Date();
+			for (Object[] s : sessionsInProgress) {
+				Date dateDebutSession = (Date) s[2];
+				Date dateFinSession = (Date) s[3];
+				// Long nommbreDeJours = (Long)s[6];
+				final long DATE_START_EN_DAY = dateDebutSession.getTime()
+						/ (24 * 60 * 60 * 1000);
+				final long DATE_END_EN_DAY = dateFinSession.getTime()
+						/ (24 * 60 * 60 * 1000);
 
-			// nombre de jours de la formation
-			final long DIFFERENCE_DATE = DATE_END_EN_DAY - DATE_START_EN_DAY;
-			String dayFin = Long.toString(DIFFERENCE_DATE);
-			s[5] = dayFin;
+				// la date du jour
+				final long currentDate = CURRENT_DATE.getTime()
+						/ (24 * 60 * 60 * 1000);
 
-			// nombre de jours entre le début et le jour courant
-			final long differenceTwo = currentDate - DATE_START_EN_DAY;
-			String differenceTwoStr = Long.toString(differenceTwo);
-			s[6] = differenceTwoStr;
+				// nombre de jours de la formation
+				final long DIFFERENCE_DATE = DATE_END_EN_DAY - DATE_START_EN_DAY;
+				String dayFin = Long.toString(DIFFERENCE_DATE);
+				s[5] = dayFin;
+
+				// nombre de jours entre le début et le jour courant
+				final long differenceTwo = currentDate - DATE_START_EN_DAY;
+				String differenceTwoStr = Long.toString(differenceTwo);
+				s[6] = differenceTwoStr;
 		}
+		
 	}
 	
 	public void initHeader(){

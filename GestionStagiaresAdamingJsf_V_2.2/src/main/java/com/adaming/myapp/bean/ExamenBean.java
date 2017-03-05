@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -84,6 +85,7 @@ public class ExamenBean implements Serializable {
 	private  Date serverTime;
 	private Examen examen;
 	private Integer numberOfReponseSelected = 0;
+	private Boolean reponseSelected = false;
 
 	
 	/**@init examen*/
@@ -164,6 +166,7 @@ public class ExamenBean implements Serializable {
 		reponsesSelected.clear();
 		note = 0.0;
 		numberOfReponseSelected = 0;
+		reponseSelected = false;
 	}
 	
 	public String startExamen(){
@@ -171,6 +174,7 @@ public class ExamenBean implements Serializable {
 		reponseSelectionnee = null;
 		initResponses();
 		questions = serviceQuestion.getQuestionsByModule(idModule);
+		
 		if(questions.isEmpty()){
 			Utilitaire.displayMessageWarning("il existe aucune question dans la base de donnée");
 			return null;
@@ -250,6 +254,7 @@ public class ExamenBean implements Serializable {
 		note = 0.0;
 		numberOfReponseSelected = 0;
 		reponseSelectionnee = null;
+		reponseSelected = false;
 		questions = new HashSet<Questions>();
 	}
 	
@@ -299,7 +304,9 @@ public class ExamenBean implements Serializable {
        
 	}
 	
-	
+	public void verificationClickReponse(){
+		reponseSelected = true;
+	}
 
 	
 	public List<Note> getNotes() {
@@ -410,6 +417,14 @@ public class ExamenBean implements Serializable {
 
 	public void setNumberOfReponseSelected(Integer numberOfReponseSelected) {
 		this.numberOfReponseSelected = numberOfReponseSelected;
+	}
+
+	public Boolean getReponseSelected() {
+		return reponseSelected;
+	}
+
+	public void setReponseSelected(Boolean reponseSelected) {
+		this.reponseSelected = reponseSelected;
 	}
 
 	

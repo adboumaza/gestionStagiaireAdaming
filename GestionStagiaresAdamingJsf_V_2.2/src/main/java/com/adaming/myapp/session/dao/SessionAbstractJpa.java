@@ -5,6 +5,7 @@ import java.util.List;
 
 
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -18,9 +19,11 @@ import javax.persistence.Query;
 
 
 
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.dto.SessionDto;
+import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Salle;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.entities.Site;
@@ -147,5 +150,59 @@ public abstract class SessionAbstractJpa {
 		 return session;
 	}
 	
-
+	public List<Evenement> getMoreInformationBySessionAbstractJpa(final Long idSession,final String choix){
+		/*final String SQL = "select distinct e from Evenement e join fetch"
+        + " e.etudiant et join fetch e.sessionEtudiant se"
+        + " where TYPE_EVENEMENT =:x and se.idSession =:y";
+			if(query.getResultList() != null && !query.getResultList().isEmpty()){
+			evenement = (Evenement) query.getResultList().get(0);
+			}
+			return evenement;*/
+		
+		
+		StringBuilder req = new StringBuilder();
+		final String SQL = "select distinct e from Evenement e join fetch "
+	    	                       + "e.etudiant et join fetch e.sessionEtudiant se "
+	    	                       + "where se.idSession =:id and ";
+		req.append(SQL);
+		if(choix.equals("TOP")){
+			final String reqTeamLeader = "TYPE_EVENEMENT =:t ";
+			req.append(reqTeamLeader);
+			System.out.println(req.toString());
+		}
+		if(choix.equals("WARNING")){
+			final String reqWarning = "TYPE_EVENEMENT =:w ";
+			req.append(reqWarning);
+			System.out.println(req.toString());
+		}
+		if(choix.equals("RETARD")){
+			final String reqRetard = "TYPE_EVENEMENT =:r ";
+			req.append(reqRetard);
+			System.out.println(req.toString());
+		}
+		if(choix.equals("ABSENCE")){
+			final String reqAbesence = "TYPE_EVENEMENT =:a ";
+			req.append(reqAbesence);
+			System.out.println(req.toString());
+		}
+		
+		
+	    Query query = em.createQuery(req.toString())
+	    		.setParameter("id", idSession);
+	    if(choix.equals("TOP")){
+	    	query.setParameter("t", "TOP");
+	    }
+	    if(choix.equals("WARNING")){
+	    	query.setParameter("w", "WARNING");
+	    }
+	    if(choix.equals("RETARD")){
+	    	query.setParameter("r", "RETARD");
+	    }
+	    if(choix.equals("ABSENCE")){
+	    	query.setParameter("a", "ABSENCE");
+	    }
+	  
+	    return query.getResultList();
+	}
+	
 }

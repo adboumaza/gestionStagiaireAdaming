@@ -22,6 +22,13 @@ import com.adaming.myapp.tools.Utilitaire;
 
 
 public class Test {
+	
+	
+	
+	public static void main(String[] args) {
+		String x = generateSessionKey(1);
+		System.out.println(x);
+	}
     
 	public static String generateSessionKey(int length){
 		String alphabet = 
@@ -36,7 +43,10 @@ public class Test {
 
 		return result;
 	}
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+	
+	
+	
+	//public static void main(String[] args) throws InstantiationException, IllegalAccessException {
 		//System.out.println(generateSessionKey(8));
 		
 		//String y = Utilitaire.passWordEncoderGenerator("admin");
@@ -88,7 +98,12 @@ public class Test {
 /*		
 		HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		System.out.println(origRequest);*/
-	}
+		
+		/*BCryptPasswordEncoder bc = new BCryptPasswordEncoder(11);
+		System.out.println(bc.encode("admin2017"));*/
+		//$2a$12$XTHhjSbnjJTn93M/t2btSO8opTYTPF.V/JsHr.86//PA1V7vrSkem
+		//$2a$12$93C/Kx1SAls.ZJMlskyJrOBkitcvxjvY/CahhgGVkqC55IifRs4ku
+	//}
 	
 	
 }

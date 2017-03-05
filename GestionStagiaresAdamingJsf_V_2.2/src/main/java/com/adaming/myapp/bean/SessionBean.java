@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -16,6 +17,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Salle;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.entities.Site;
@@ -25,6 +27,7 @@ import com.adaming.myapp.salle.service.ISalleService;
 import com.adaming.myapp.session.service.ISessionService;
 import com.adaming.myapp.site.service.ISiteService;
 import com.adaming.myapp.tools.DataUtil;
+import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.Utilitaire;
 import com.adaming.myapp.user.service.IUserService;
 /**
@@ -79,6 +82,8 @@ public class SessionBean implements Serializable{
 	private Date currentTime;
 	private List<Site> sites;
 	private List<Object[]> salles;
+	private String choix;
+	private List<Evenement> evenements;
 
     /**@method add session*/
 	public void addSession() throws ParseException {
@@ -164,9 +169,26 @@ public class SessionBean implements Serializable{
 	
 	
 	/*@method get CurrentSession*/
-	public void getCurrentSession(Long idSession){
+	public SessionEtudiant getCurrentSession(Long idSession){
 		System.out.println("idSession"+idSession);
-		sessionEtudiant = serviceSession.getSessionEtudiantById(idSession);
+		return sessionEtudiant = serviceSession.getSessionEtudiantById(idSession);
+	}
+	/**@method cette methode permet de recupérer les informations liées à une session et faire une redirection*/
+	public String getCureentSessionAndRedirect(Long idSession){
+		getCurrentSession(idSession);
+		evenements = null;
+		choix      = null;
+		return "informationSession?faces-redirect=true";
+	}
+	
+	public void getMoreInformation(Long idSession,String choix){
+		try {
+			evenements = serviceSession.getMoreInformationBySession(idSession,choix);
+			LoggerConfig.logInfo("teamLeader"+choix);
+		} catch (VerificationInDataBaseException e) {
+			Utilitaire.displayMessageWarning(e.getMessage());
+			evenements = null;
+		}
 	}
 	
 	/**@method update SessionEtudiant*/
@@ -344,6 +366,23 @@ public class SessionBean implements Serializable{
 
 	public void setNombreJours(Long nombreJours) {
 		this.nombreJours = nombreJours;
+	}
+
+
+	public List<Evenement> getEvenements() {
+		return evenements;
+	}
+
+	public void setEvenements(List<Evenement> evenements) {
+		this.evenements = evenements;
+	}
+
+	public String getChoix() {
+		return choix;
+	}
+
+	public void setChoix(String choix) {
+		this.choix = choix;
 	}
 
 	

@@ -21,6 +21,7 @@ Website: http://geekslabs.com/
     padding: 6px 50px!important;
     background: #00a0df!important;
     color: black!important;
+    
 }
 
 .ui-selectoneradio label{
@@ -493,12 +494,15 @@ ui-radiobutton-icon
 }
 .progress{
 	width:300px;
+	margin-bottom:0!important;
 }
 
 /*timer*/
 .timer{
 	text-align: center;
-    padding-bottom: 10px
+     position: relative!important;
+     top: 18px;
+     left: -82px;
 }
 /*evaluations*/
 .inline li{
