@@ -23,11 +23,21 @@
 						    timeout="#{examenBean.examenTimeInSeconde}"  
 						    format="HH:mm:ss"
 						    singleRun="true"  
-						    listener="#{examenBean.onTimeout}"/>   
+						    listener="#{examenBean.onTimeout}"/> 
+						     <p:commandButton style="padding-top: 2px;padding-bottom: 2px;margin-left:25px;" value="Initialisation" oncomplete="location.reload()">
+						        <p:confirm header="Confirmation" message="Êtes-vous sûr de vouloir réinitialiser vos réponses?" icon="ui-icon-alert" />
+						     </p:commandButton>  
+						    
+							     <p:confirmDialog style="text-align: center!important"  global="true" showEffect="fade" hideEffect="fade" width="400px" height="25px">
+							        <p:commandButton style="padding-left:57px!important;padding-right:57px!important" value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							        <p:commandButton style="padding-left:57px!important;padding-right:57px!important" value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+							    </p:confirmDialog>
+						    
 					</h:form>		
 		     </div>
-		      <div>
-		         <h:outputText style="text-align:center;display: block;color: greenyellow;font-size: 18px;float: right;position: relative;top: -4px" id="numberOfReponse" value="Réponses : #{examenBean.numberOfReponseSelected}/#{examenBean.questions.size()}"></h:outputText>
+		      <div style="text-align:center;display: block;color: greenyellow;font-size: 18px;float: right;position: relative;top: -4px">
+		         <h:outputText  id="numberOfReponse" value="Réponses : #{examenBean.numberOfReponseSelected}/#{examenBean.questions.size()}"></h:outputText>
+		         <p:rating id="numberOfReponse2" readonly="true" onRate="value" value="#{examenBean.numberOfReponseSelected}" stars="#{examenBean.questions.size()}"/>
 		      </div>  
 	</header>
 	<!--header end-->
@@ -69,7 +79,7 @@
 		<br /> <br />
          <p:growl id="growl" autoUpdate="true" showDetail="true" showSummary="true"></p:growl>
          <!-- data list question  -->
-
+           
 			<p:dataList value="#{examenBean.questions}" var="q"
 					varStatus="iteration">
 		<h:form id="formSelect">
@@ -92,30 +102,36 @@
 									columns="1" required="true" id="myRadio">
 					             <div class="quiz" id="quiz">
 					                <f:selectItems  value="#{q.reponses}" var="c" itemLabel="#{c.labelReponse}" itemValue="#{c.idReponse}" ></f:selectItems>
-					                <f:ajax listener="#{examenBean.verificationClickReponse()}" render="@form"></f:ajax>
+					                <f:ajax listener="#{examenBean.verificationClickReponse()}" render="selected" ></f:ajax>
 					            </div>
 					    </p:selectOneRadio>
+					    
 
 		          </div>
 		          
 		   
 		    
 		          <!-- button click -->
-		            <c:if  test="#{examenBean.reponseSelected}">
-						<div style="text-align:center!important;padding-bottom:10px">	
-							<p:commandButton  action="#{examenBean.register}" value="Répondre"  ajax="true" update="numberOfReponse">
-								
-								<p:effect type="clip" event="click"  ></p:effect>
-							    <f:actionListener  binding="#{examenBean.incrementeNumberOfReponseSelected()}"></f:actionListener>
-							</p:commandButton>
-						</div>
-					</c:if>
+		           <p:panel id="selected">
+			            <c:if  test="#{examenBean.reponseSelected}">
+							<div style="text-align:center!important;padding-bottom:10px">	
+								<p:commandButton  action="#{examenBean.register}" value="Confirmer Votre Réponse"  ajax="true" update="numberOfReponse,numberOfReponse2">
+									
+									<p:effect type="clip" event="click" for="formSelect"></p:effect>
+								    <f:actionListener  binding="#{examenBean.incrementeNumberOfReponseSelected()}"></f:actionListener>
+								</p:commandButton>
+							</div>
+						</c:if>
+					</p:panel>
+				   
 			      </div>
 		        </div>
 		
 		</h:form>
 		
+		
 		</p:dataList>
+
 
         <!-- modal confirmation -->
 		<h:form>
