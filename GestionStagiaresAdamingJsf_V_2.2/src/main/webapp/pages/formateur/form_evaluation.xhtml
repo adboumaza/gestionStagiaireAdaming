@@ -48,7 +48,7 @@
 	                                          <div class="col-lg-10">
 	                                              <h:selectOneMenu id="module" style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker"
 													value="#{scheduleView.idModule}">
-													<f:selectItem itemLabel="Sélectionnez Un Module"
+													<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Un Module"
 													itemValue="#{null}" />
 												    <f:selectItems value="#{scheduleView.modules}" var="m"
 													itemLabel="#{m[1]}" itemValue="#{m[0]}" />

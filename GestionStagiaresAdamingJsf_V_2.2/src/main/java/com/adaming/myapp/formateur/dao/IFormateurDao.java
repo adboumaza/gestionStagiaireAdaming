@@ -23,6 +23,8 @@ public interface IFormateurDao extends IGenericDao<Formateur> {
 	 Formateur getFormateur(final String mail);
 	 
 	 List<Object[]> getFormateuByName(final String nom,final Date dateDeNaissance,final String mail);
+	 
+	 List<Formateur> getFormateursInSessionEncours();
 	
 
 }

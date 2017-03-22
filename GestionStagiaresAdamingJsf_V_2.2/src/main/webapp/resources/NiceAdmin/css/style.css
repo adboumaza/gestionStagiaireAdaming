@@ -53,7 +53,11 @@ Website: http://geekslabs.com/
     -o-transition-duration: .8s;
 }
 
+/*agenda*/
 
+.fc th, .fc td {
+	border: 1px solid gray!important;
+}
 
 .modal-header {
     background-color: transparent;

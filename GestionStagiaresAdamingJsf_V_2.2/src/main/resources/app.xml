@@ -19,6 +19,13 @@
    <!--  <bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
        <property name="baseAddress" value="http://localhost:8093/etudiant"></property>
     </bean> -->
+    
+     <!-- injection de dépendances Agenda-->
+    <bean id="AgendaDao" class="com.adaming.myapp.agenda.dao.AgendaDaoImpl"></bean>
+    <bean id="AgendaService" class="com.adaming.myapp.agenda.service.AgendaServiceImpl">
+      <property name="dao" ref="AgendaDao"></property>
+    </bean>
+    
     <!-- injection de dépendances Examen-->
     <bean id="ExamenDao" class="com.adaming.myapp.examen.dao.ExamenDaoImpl"></bean>
     <bean id="ExamenService" class="com.adaming.myapp.examen.service.ExamenServiceImpl">

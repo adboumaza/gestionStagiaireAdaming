@@ -38,7 +38,7 @@
                                           <label for="session" class="control-label col-lg-2">Session (En Cours) <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <h:selectOneMenu required="true" requiredMessage="la session est Obligatoire" id="session" style="cursor:pointer;height:35px;width:75%;color:#797979;font-size:16px;" styleClass="selectpicker" value="#{etudiantBean.idSession}">
-												<f:selectItem  itemLabel="-------------------------------------------Sélectionnez une session-------------------------------------------"
+												<f:selectItem itemDisabled="true" itemLabel="-------------------------------------------Sélectionnez une session-------------------------------------------"
 													itemValue="#{null}" noSelectionOption="true" />
 											     <f:selectItems value="#{etudiantBean.sessionsEncours}" var="s"
 													itemLabel="Session N°:#{s[0]}, #{s[1]}, Début:#{s[2]},Site : #{s[4]}"
@@ -195,7 +195,7 @@
 												<p:ajax event="valueChange"
 												listener="#{etudiantBean.getAllStudentsBySession}"
 												update="@form" />
-												<f:selectItem  itemLabel="-------------------------------------------Sélectionnez une session-------------------------------------------"
+												<f:selectItem itemDisabled="true" itemLabel="-------------------------------------------Sélectionnez une session-------------------------------------------"
 													itemValue="#{null}" noSelectionOption="true" />
 												<f:selectItems  value="#{etudiantBean.allSessions}" var="s"
 													itemLabel="Session N°:#{s[0]}, #{s[1]}, Début:#{s[2]},Site : #{s[4]}"

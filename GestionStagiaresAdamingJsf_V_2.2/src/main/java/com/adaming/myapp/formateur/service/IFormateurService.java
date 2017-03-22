@@ -23,4 +23,6 @@ public interface IFormateurService {
 	 Formateur getFormateurById(final Long idFormateur) throws VerificationInDataBaseException;
 	 
 	 List<Object[]> getFormateuByName(final String nom,final Date dateDeNaissance,final String mail);
+	 
+	 List<Formateur> getFormateursInSessionEncours();
 }

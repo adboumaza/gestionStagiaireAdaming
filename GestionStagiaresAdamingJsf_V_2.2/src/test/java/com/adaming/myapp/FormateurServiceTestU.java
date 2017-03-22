@@ -1,5 +1,7 @@
 package com.adaming.myapp;
 
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -41,6 +43,7 @@ public class FormateurServiceTestU {
 		}
 	}
 	@Test
+	@Ignore
 	public void addFormateurToSession(){
 		
 		try {
@@ -69,5 +72,12 @@ public class FormateurServiceTestU {
 		} catch (VerificationInDataBaseException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	@Test
+	public void getFormateursInSessionEnCours()
+	{
+		List<Formateur> formateurs = serviceFormateur.getFormateursInSessionEncours();
+		System.out.println(formateurs);
 	}
 }

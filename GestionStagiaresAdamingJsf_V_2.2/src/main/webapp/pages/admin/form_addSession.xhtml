@@ -38,7 +38,7 @@
                                           <div class="col-lg-10">
                                               <h:selectOneMenu style="height:35px;width:30%;color:#797979;font-size:16px;" styleClass="selectpicker"
 												value="#{sessionBean.idSpecialite}">
-												<f:selectItem itemLabel="Sélectionnez Une Formation" itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Une Formation" itemValue="#{null}" noSelectionOption="true" />
 												<f:selectItems value="#{specialiteBean.specialites}" var="spec"
 												itemLabel="#{spec.designation}" itemValue="#{spec.idSpecialite}" />
 											</h:selectOneMenu>
@@ -58,7 +58,7 @@
                                           <div class="col-lg-10">
                                               <h:selectOneMenu style="height:35px;width:30%;color:#797979;font-size:16px;" styleClass="selectpicker"
 												value="#{sessionBean.idSite}">
-												<f:selectItem itemLabel="Sélectionnez Un Site" itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Un Site" itemValue="#{null}" noSelectionOption="true" />
 												<f:selectItems value="#{sessionBean.sites}" var="site"
 												itemLabel="#{site.nomSite}" itemValue="#{site.idSite}" />
 												<f:ajax listener="#{sessionBean.getAllSallesBySite}" render="salle"></f:ajax>
@@ -78,7 +78,7 @@
                                           <div class="col-lg-10">
                                               <h:selectOneMenu id="salle" style="height:35px;width:30%;color:#797979;font-size:16px;" styleClass="selectpicker"
 												value="#{sessionBean.idSalle}">
-												<f:selectItem itemLabel="Sélectionnez Une Salle" itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Une Salle" itemValue="#{null}" noSelectionOption="true" />
 												<f:selectItems value="#{sessionBean.salles}" var="salle"
 												itemLabel="#{salle[1]}" itemValue="#{salle[0]}" />
 												<f:ajax listener="#{sessionBean.getAllSallesDisponible}"></f:ajax>

@@ -95,4 +95,10 @@ public class FormateurServiceImpl implements IFormateurService {
 		return sessionEtudiant;
 	}
 
+	@Override
+	public List<Formateur> getFormateursInSessionEncours() {
+		// TODO Auto-generated method stub
+		return dao.getFormateursInSessionEncours();
+	}
+
 }

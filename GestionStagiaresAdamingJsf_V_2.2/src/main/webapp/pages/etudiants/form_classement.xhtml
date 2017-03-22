@@ -41,7 +41,7 @@
 	                                        <h:selectOneMenu style="height:35px;width:100%;color:#797979;font-size:16px;" styleClass="selectpicker"
 												
 											    value="#{classementBean.idModule}">
-											    <f:selectItem itemLabel="Sélectionnez un Module"
+											    <f:selectItem itemDisabled="true" itemLabel="Sélectionnez un Module"
 														itemValue="#{null}" />
 												<f:selectItems value="#{classementBean.modules}" var="m"
 														itemLabel="#{m[1]}"

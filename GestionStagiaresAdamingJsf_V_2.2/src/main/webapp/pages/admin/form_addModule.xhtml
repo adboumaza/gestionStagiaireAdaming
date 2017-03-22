@@ -86,7 +86,7 @@
                                           <div class="col-lg-10">
                                               <h:selectOneMenu id="session" style="cursor:pointer; height:35px;width:75%;color:#797979;font-size:16px;" styleClass="selectpicker" 
 												value="#{moduleBean.idSpecialite}" >
-												<f:selectItem itemLabel="Sélectionnez Une Specialitée"
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Une Specialitée"
 													itemValue="#{null}" noSelectionOption="true" />
 												<f:selectItems value="#{specialiteBean.specialites}" var="s"
 													itemLabel="#{s.designation}" itemValue="#{s.idSpecialite}" />

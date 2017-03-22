@@ -26,6 +26,17 @@
                          <li><h:link outcome="custom_password">Changer Le M-D-Passe</h:link></li>                            
                       </ul>
                   </li> 
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage name="NiceAdmin/img/calendar.png"/></i>
+                          <span>Calendrier-Collab</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{agendaBean.init}" value="Programme semaine"/> </h:form></li> 
+                           <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivie-Collaboratif"/> </h:form></li> 
+                      </ul>
+                     
+                   </li> 
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/reporting.png"/></i>

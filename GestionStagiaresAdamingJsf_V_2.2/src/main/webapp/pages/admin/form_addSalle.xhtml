@@ -52,7 +52,7 @@
                                           <div class="col-lg-5">
                                               <h:selectOneMenu required="true" requiredMessage="le site est obligatoire" style="height:35px;width:100%;color:#797979;font-size:16px;" styleClass="selectpicker"
 												value="#{salleBean.idSite}" id="site">
-												<f:selectItem itemLabel="Sélectionnez Un Site" itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Un Site" itemValue="#{null}" noSelectionOption="true" />
 												<f:selectItems value="#{salleBean.sites}" var="site"
 												itemLabel="#{site.nomSite}" itemValue="#{site.idSite}" />
 											</h:selectOneMenu>

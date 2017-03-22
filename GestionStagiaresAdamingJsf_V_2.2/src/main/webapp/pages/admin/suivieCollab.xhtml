@@ -5,12 +5,10 @@
 	xmlns:h = "http://java.sun.com/jsf/html"
 	xmlns:p = "http://primefaces.org/ui"
     xmlns:ui= "http://java.sun.com/jsf/facelets">
-     
-       <f:metadata>
-		<f:viewAction action="#{dashboardBean.init}" />
-	   </f:metadata>
+
+
 <h:head>
-	<title>Dashboard</title>
+	<title>Programme - Calendrier</title>
 	   <f:facet name="middle">
             <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
             <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
@@ -20,11 +18,12 @@
             <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
             <h:outputScript  name="NiceAdmin/js/jquery.js" />
             <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
+
      </f:facet>
 </h:head>
 <h:body>
 <ui:include src="header.xhtml"></ui:include>
-<ui:include src="form_dashboard.xhtml" ></ui:include>
+<ui:include src="form_suivieCollab.xhtml" ></ui:include>
 
 </h:body>
 </html>

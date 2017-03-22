@@ -58,7 +58,7 @@
 	                                          <div class="col-lg-10">
 	                                              <h:selectOneMenu id="session" style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker"
 													value="#{scheduleView.idEtudiant}">
-													<f:selectItem itemLabel="Sélectionnez un etudiant"
+													<f:selectItem itemDisabled="true" itemLabel="Sélectionnez un etudiant"
 														itemValue="#{null}" />
 													<f:selectItems value="#{scheduleView.etudiants}" var="e"
 														itemLabel="#{e[1]},#{e[2]}"

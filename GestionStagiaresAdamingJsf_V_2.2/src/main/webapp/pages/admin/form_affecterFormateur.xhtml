@@ -56,7 +56,7 @@
 												requiredMessage="1 - Formateur *"
 												value="#{affectationFormateurBean.idFormateur}">
 												<f:selectItem itemLabel="Sélectionnez Un Formateur"
-													itemValue="#{null}" />
+													itemValue="#{null}" itemDisabled="true" />
 											     <f:selectItems value="#{affectationFormateurBean.formateurs}" var="f" itemLabel="#{f.nom},#{f.prenom}" itemValue="#{f.idFormateur}"/>
 											</h:selectOneMenu>
                                           </div>
@@ -67,7 +67,7 @@
                                               <h:selectOneMenu style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker" required="true"
 												requiredMessage="2 - Session En Cours *"
 												value="#{affectationFormateurBean.idSession}">
-												<f:selectItem itemLabel="Sélectionnez Une Session En Cours"
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Une Session En Cours"
 													itemValue="#{null}" />
 											    <f:selectItems value="#{affectationFormateurBean.sessionsInProgress}" var="s" 
 											    itemLabel="Session N°:#{s[0]}, #{s[1]}, Début:#{s[2]},Site : #{s[4]}" itemValue="#{s[0]}" />

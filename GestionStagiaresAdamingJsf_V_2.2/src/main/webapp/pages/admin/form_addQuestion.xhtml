@@ -44,7 +44,7 @@
 								 style="width:250px">
 										
 								<f:selectItem itemLabel="Sélectionnez Une Specialitée"
-									itemValue="#{null}" noSelectionOption="true" />
+									itemDisabled="true" itemValue="#{null}" noSelectionOption="true" />
 								<f:selectItems value="#{specialiteBean.specialites}" var="s"
 									itemLabel="#{s.designation}" itemValue="#{s.idSpecialite}" />
 								<p:ajax event="valueChange"
@@ -78,7 +78,7 @@
 								requiredMessage="Veuillez Selectionnez un Module SVP!!">
 		
 								<f:selectItem itemLabel="Choisir Un Module" itemValue="#{null}"
-									noSelectionOption="true" />
+									noSelectionOption="true" itemDisabled="true" />
 								<f:selectItems value="#{moduleBean.modulesBySpecialites}"
 									var="module" itemLabel="#{module.nomModule}"
 									itemValue="#{module.idModule}" />
@@ -102,7 +102,7 @@
 						</p:column>
 						<p:column headerText="Réponse 1 *">
 							<p:selectOneMenu value="#{bean.etatOne}" id="bRep1">
-								<f:selectItem itemLabel="Choisir Un Choix" itemValue="#{null}"
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItem itemLabel="#{bean.etatOne}" itemValue="#{bean.etatOne}"/>	
 							</p:selectOneMenu>
@@ -117,7 +117,7 @@
 						</p:column>
 						<p:column headerText="Réponse 2 *">
 						    <p:selectOneMenu value="#{bean.etatTwo}" id="bRep2">
-								<f:selectItem itemLabel="Choisir Un Choix" itemValue="#{null}"
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItem itemLabel="#{bean.etatTwo}" itemValue="#{bean.etatTwo}"/>	
 							</p:selectOneMenu>
@@ -132,7 +132,7 @@
 						</p:column>
 						<p:column headerText="Réponse 3 *">
 						    <p:selectOneMenu value="#{bean.etatThree}" id="bRep3">
-								<f:selectItem itemLabel="Choisir Un Choix" itemValue="#{null}"
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItem itemLabel="#{bean.etatThree}" itemValue="#{bean.etatThree}"/>
 							</p:selectOneMenu>
@@ -147,7 +147,7 @@
 						</p:column>
 						<p:column headerText="Réponse 4 *">
 						    <p:selectOneMenu value="#{bean.etatFour}" id="bRep4">
-								<f:selectItem itemLabel="Choisir Un Choix" itemValue="#{null}"
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
 									noSelectionOption="true" />
 								<f:selectItem  itemLabel="#{bean.etatFour}" itemValue="#{bean.etatFour}"/>
 							</p:selectOneMenu>
