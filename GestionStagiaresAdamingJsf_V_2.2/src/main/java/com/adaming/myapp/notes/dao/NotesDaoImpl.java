@@ -101,8 +101,9 @@ public class NotesDaoImpl implements INotesDao {
 
 	@Override
 	public Double getMoyenne(final Long idSession, final Long idModule) {
-		final String SQL = "Select AVG(n.score) FROM Note n join n.sessionEtudiant se join n.module m where se.idSession=:x and m.idModule=:y";
-		Query query = em.createQuery(SQL).setParameter("x",idSession).setParameter("y",idModule);
+		//final String SQL = "Select AVG(n.score) FROM Note n join n.sessionEtudiant se join n.module m where se.idSession=:x and m.idModule=:y";
+		final String SQL = "Select AVG(n.score) FROM Note n join sessionEtudiant se on se.idSession = n.id_ses_note  join module m on m.idModule = n.id_mod_note where se.idSession=:x and m.idModule=:y";
+		Query query = em.createNativeQuery(SQL).setParameter("x",idSession).setParameter("y",idModule);
 		Double moyenne =(Double) query.getSingleResult();
 		return moyenne;
 	}
@@ -113,8 +114,10 @@ public class NotesDaoImpl implements INotesDao {
 		//final String SQL = "Select n FROM Note n right join n.etudiant e join n.sessionEtudiant se join n.module m where se.idSession=:x and m.idModule=:y and n.idNote IS NULL";
 		
 		//final String SQL = "select n.idNote from note n right join etudiant e on n.id_etu_note = e.idEtudiant join module m on n.id_mod_Note = m.idModule join sessionEtudiant se on se.idSession = n.id_ses_note where n.idNote IS NULL and m.idModule =? and se.idSession = ?";
-		final String SQL = "SELECT * FROM etudiant e WHERE not EXISTS (SELECT * FROM note n join module m on m.idModule = n.id_mod_note join sessionEtudiant se on se.idSession = n.id_ses_note WHERE n.id_etu_note = e.idEtudiant and se.idSession  = ? and m.idModule =?)";
-		Query query = em.createNativeQuery(SQL).setParameter(1,idSession).setParameter(2,idModule);
+		//final String SQL = "SELECT * FROM etudiant e WHERE not EXISTS (SELECT * FROM note n join module m on m.idModule = n.id_mod_note join sessionEtudiant se on se.idSession = n.id_ses_note WHERE n.id_etu_note = e.idEtudiant and se.idSession  =:x and m.idModule =:y)";
+		final String SQL = "select * from etudiant e join sessionEtudiant se on e.id_sess_etudiant = se.idSession where se.idSession =:x and  not exists (select * from note n join module m on m.idModule = n.id_mod_note where n.id_etu_note = e.idEtudiant and m.idModule =:y)";
+		Query query = em.createNativeQuery(SQL).setParameter("x",idSession).setParameter("y",idModule);
+		LoggerConfig.logInfo("query "+query.getResultList().size());
 		return query.getResultList();
 	}
 

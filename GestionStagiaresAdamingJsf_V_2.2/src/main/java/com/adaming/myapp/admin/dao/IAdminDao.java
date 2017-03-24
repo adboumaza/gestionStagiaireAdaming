@@ -1,6 +1,7 @@
 package com.adaming.myapp.admin.dao;
 
 import com.adaming.myapp.entities.Admin;
+import com.adaming.myapp.exception.VerificationInDataBaseException;
 
 public interface IAdminDao {
 

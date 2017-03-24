@@ -1,6 +1,7 @@
 package com.adaming.myapp.bean;
 
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -120,7 +121,8 @@ public class EtudiantBean implements Serializable {
 	private List<Toponym> villes;
 
 	/**
-	 ** @create New Etudiant
+	 ** @throws URISyntaxException 
+	 * @create New Etudiant
 	 ** @throws VerificationInDataBaseException
 	 *             , if the object exist @return exception Object already exist
 	 ** @see EtudiantBean.generateRandomPassword()
@@ -129,7 +131,7 @@ public class EtudiantBean implements Serializable {
 	 ** @see EtudiantBean.createEtudiant()
 	 ** @see createRole()
 	 */
-	public void addEtudiant(){
+	public void addEtudiant() throws URISyntaxException{
 		passwordRandom = generateRandomPassword();
 		passwordCrypted = Utilitaire.passWordEncoderGenerator(passwordRandom);
 		etudiant = createEtudiant();
@@ -143,7 +145,7 @@ public class EtudiantBean implements Serializable {
 			+ nomEtudiant+ ", "+ prenomEtudiant+ " à bien été ajoutée avec succès"
             + " Voici les informations du compte etudiant : "
 			+ "Pseudo : " + mail+ ", Password : " + passwordRandom);
-			SendEmailUtil.sendMail(etudiant.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE("M/Mme",etudiant.getNomEtudiant(),etudiant.getPrenomEtudiant(),etudiant.getMail(), passwordRandom));
+			SendEmailUtil.sendMail(etudiant.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE("M/Mme",etudiant.getNomEtudiant(),etudiant.getPrenomEtudiant(),etudiant.getMail(), passwordRandom,SendEmailUtil.getAbsoluteApplicationUrl()));
 			reset();
 		} catch (VerificationInDataBaseException e1) {
 			FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!", e1.getMessage()));

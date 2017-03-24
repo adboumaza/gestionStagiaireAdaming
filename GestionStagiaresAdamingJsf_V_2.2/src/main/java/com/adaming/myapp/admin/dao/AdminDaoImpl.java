@@ -1,11 +1,12 @@
 package com.adaming.myapp.admin.dao;
 
 import com.adaming.myapp.entities.Admin;
+import com.adaming.myapp.exception.VerificationInDataBaseException;
 
 public class AdminDaoImpl extends AdminAbstractJpa implements IAdminDao{
 
 	@Override
-	public Admin createAdmin(Admin admin) {
+	public Admin createAdmin(Admin admin){
 		
 		return createAdminAbstractJpa(admin);
 	}

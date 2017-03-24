@@ -101,6 +101,7 @@
 										     
 											<h:commandButton  id="fade" onclick="PF('dlg2').show();" rendered="#{m[2]}" action="#{suivieExamenBean.getNotesByModulesAndSession(m[3],m[0])}" value="#{m[1]}"  style="border-radius: 2px!important" styleClass="btn btn-primary btn-lg btn-block">
 											  <p:tooltip style="color:red;padding:10px!important;background:white!important;border-radius:2px!important;" id="toolTipFade" for="fade" value="Voir la liste des notes" position="bottom"/>
+											 
 											</h:commandButton>
 											<h:outputText rendered="#{not m[2]}" value="#{m[1]}"></h:outputText>
 										   

@@ -1,7 +1,11 @@
 package com.adaming.myapp.tools;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -10,6 +14,7 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 /**
  * 
  * @author adel
@@ -35,12 +40,12 @@ public final class SendEmailUtil {
 																		// l'administrateur
 	private final static String PASSWORD = "krzmngkeebnkudvh"; // password pour
 
-	public final static String CONFIRMATION_MESSAGE (String civilite,String nom,String prenom,String mail,String password){
+	public final static String CONFIRMATION_MESSAGE (String civilite,String nom,String prenom,String mail,String password,String url){
 		return  " Bonjour "+civilite+" "+nom+" "+prenom
 				+ ",\n\nVotre compte a été créé avec succès!"
 				+ "\nVoici vos identifiants de connexion : \nPseudo : "+mail
 				+ "\nMot de passe :"+password
-				+ "\nVous pouvez immediatement accéder à l'application INTI "
+				+ "\nVous pouvez immediatement accéder à l'application INTI : "+url
 				+ "\nA très bientôt,\n\n\nL’equipe intiformation.com";
 	}
 	
@@ -53,6 +58,18 @@ public final class SendEmailUtil {
 				+ "\nVous pouvez immediatement accéder à l'application INTI "
 				+ "\nA très bientôt,\n\n\nL’equipe intiformation.com";
 	}
+	
+	
+	public static String getAbsoluteApplicationUrl() throws URISyntaxException {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
+        URI uri = new URI(request.getRequestURL().toString());
+        URI newUri = new URI(uri.getScheme(), null,
+                uri.getHost(),
+                uri.getPort(),
+                request.getContextPath().toString(),null, null);
+        return newUri.toString();
+  }
 	
 	
 	

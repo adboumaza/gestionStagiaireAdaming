@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+	xmlns:b = "http://bootsfaces.net/ui"
+	xmlns:f = "http://java.sun.com/jsf/core"
+	xmlns:h = "http://java.sun.com/jsf/html"
+	xmlns:p = "http://primefaces.org/ui"
+    xmlns:ui= "http://java.sun.com/jsf/facelets">
+
+
+<h:head>
+	<title>Ajouter un Administrateur</title>
+	   <f:facet name="middle">
+            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
+            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
+            <h:outputScript  name="NiceAdmin/js/jquery.js" />
+            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
+
+     </f:facet>
+</h:head>
+<h:body>
+<ui:include src="header.xhtml"></ui:include>
+<ui:include src="form_addAdmin.xhtml" ></ui:include>
+
+</h:body>
+</html>

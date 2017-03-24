@@ -1,10 +1,12 @@
 package com.adaming.myapp.bean;
 
 import java.io.Serializable;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+
 
 
 
@@ -111,6 +113,7 @@ public class FormateurBean implements Serializable{
 	 * génerer un password random,crypter le password,
 	 * créer un nouveau Formateur,créer un nouveau User,
 	 * créer un nouveau Role et associer le role et le user au formateur créeé
+	 * @throws URISyntaxException 
 	 *
 	 * @see com.adaming.myapp.bean.generateRandomPassword
 	 * @see com.adaming.myapp.bean.createFormateur
@@ -120,7 +123,7 @@ public class FormateurBean implements Serializable{
 	 * @see com.adaming.myapp.tools.Utilitaire.displayMessageWarning
 	 * @throws @see com.adaming.myapp.exception.VerificationInDataBaseException
 	 */
-	public void addFormateur(){
+	public void addFormateur() throws URISyntaxException{
 		
 		passwordRandom  = generateRandomPassword();
 		/***/
@@ -137,7 +140,7 @@ public class FormateurBean implements Serializable{
 			serviceUser.saveUser(user);
 			serviceRole.saveRole(role, user.getIdUser());
 			Utilitaire.displayMessageInfo("le Formateur "+nom+", "+prenom+" à bien été ajouté avec succès"+" Un e-mail de confirmation a été adressé à l’adresse e-mail : "+"Pseudo : "+mail+", Password : "+passwordRandom);
-			SendEmailUtil.sendMail(formateur.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE(formateur.getCivilite(),formateur.getNom(),formateur.getPrenom(),formateur.getMail(), passwordRandom));
+			SendEmailUtil.sendMail(formateur.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE(formateur.getCivilite(),formateur.getNom(),formateur.getPrenom(),formateur.getMail(), passwordRandom,SendEmailUtil.getAbsoluteApplicationUrl()));
 			reset();
 		} 
 		catch (VerificationInDataBaseException e1) 

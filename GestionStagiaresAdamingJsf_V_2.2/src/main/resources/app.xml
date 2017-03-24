@@ -20,6 +20,14 @@
        <property name="baseAddress" value="http://localhost:8093/etudiant"></property>
     </bean> -->
     
+    
+    <!-- injection de dépendances Admin-->
+    <bean id="AdminDao" class="com.adaming.myapp.admin.dao.AdminDaoImpl"></bean>
+    <bean id="AdminService" class="com.adaming.myapp.admin.service.AdminServiceImpl">
+      <property name="dao" ref="AdminDao"></property>
+    </bean>
+    
+    
      <!-- injection de dépendances Agenda-->
     <bean id="AgendaDao" class="com.adaming.myapp.agenda.dao.AgendaDaoImpl"></bean>
     <bean id="AgendaService" class="com.adaming.myapp.agenda.service.AgendaServiceImpl">

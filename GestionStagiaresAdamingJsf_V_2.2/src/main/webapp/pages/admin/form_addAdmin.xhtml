@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+<ui:composition>
+	<br> </br>
+	<br> </br>
+	<br> </br>
+
+	<div class="well container">
+		  <p:growl id="growler" showDetail="true" life="5000"  severity="info,warn" /> 
+		 <!-- Form validations -->  
+		 <section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+						<h3 class="page-header"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Add Administrateur</h3>
+					</ol>
+				</div>
+			</div>
+			<p:messages id="messages" showDetail="true"  severity="info" closable="true" />                         
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Ajouter Un Administrateur
+                          </header>
+                          <div class="panel-body">
+                              <div class="form">
+                                  <h:form class="form-validate form-horizontal">
+                                      
+                                      <div class="form-group ">
+                                          <label for="cname" class="control-label col-lg-2">Nom <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText maxlength="30" value="#{adminBean.nom}" class="form-control" id="cname"  type="text">
+                                                  <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
+                                              </h:inputText>
+                                          </div>
+                                          <h:message for="cname" style="color:red;text-align:center;display:block"></h:message>
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="prenom" maxlength="30" class="control-label col-lg-2">Prénom <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText  value="#{adminBean.prenom}" class="form-control" id="prenom"  type="text">
+                                                 <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
+                                              </h:inputText>
+                                          </div>
+                                          <h:message for="prenom" style="color:red;text-align:center;display:block"></h:message>
+                                      </div>
+                                     
+                                      <div class="form-group ">
+                                          <label for="mail" class="control-label col-lg-2">Mail <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText value="#{adminBean.mail}"  class="form-control" id="mail"  type="text">
+                                                 <f:validator binding="#{emailValidator}" />
+                                              </h:inputText>
+                                               <h:message for="mail" style="color:red;text-align:center;display:block"></h:message>
+                                          </div>
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="fonction" maxlength="30" class="control-label col-lg-2">Fonction <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText  value="#{adminBean.fonction}" class="form-control" id="fonction"  type="text">
+                                                 <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
+                                              </h:inputText>
+                                          </div>
+                                          <h:message for="fonction" style="color:red;text-align:center;display:block"></h:message>
+                                      </div>
+                                     
+                                                  
+                                      <div class="form-group">
+                                          <div class="col-lg-offset-2 col-lg-10">
+                                              <h:commandButton action="#{adminBean.addAdmin}" value="Save" class="btn btn-primary"/>
+                                          </div>
+                                      </div>
+                                  </h:form>
+                              </div>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+          </section>
+          
+	</div>
+</ui:composition>
+</html>

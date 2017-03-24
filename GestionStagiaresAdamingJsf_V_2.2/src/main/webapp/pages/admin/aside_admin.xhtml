@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
@@ -24,6 +25,7 @@
                       <ul class="sub">
                           <li><h:form><h:commandLink action="#{agendaBean.init}" value="Programme semaine"/> </h:form></li> 
                           <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivie-Collaboratif"/> </h:form></li> 
+                          <li><h:link outcome="admin">Ajouter Un Admin</h:link></li>   
                       </ul>
                      
                    </li> 
