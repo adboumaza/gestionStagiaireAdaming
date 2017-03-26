@@ -32,5 +32,7 @@ public interface IModuleDao extends IGenericDao<Module> {
 	 
 	 Module verifyExistingModule(final String name);
 	 
+	 Module desactivateModule(final Module module);
+	 
 	// void deactivateModule(final Long idModule);//not ok
 }

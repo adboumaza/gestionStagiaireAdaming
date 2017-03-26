@@ -38,7 +38,7 @@
 
 								<h:panelGrid columnClasses="value">
 									<h3 style="margin-top: 0">Programme de la semaine</h3>
-									<p:schedule style="cursor:pointer!important" draggable="false"  id="schedule" value="#{agendaBean.eventModel}"
+									<p:schedule showWeekends="false" style="cursor:pointer!important" draggable="false"  id="schedule" value="#{agendaBean.eventModel}"
 										widgetVar="myschedule" timeZone="GMT+2" locale="fr" lang="fr">
 
 										<p:ajax event="dateSelect"
@@ -61,23 +61,23 @@
 											required="true" />
 
 										<p:outputLabel for="from" value="De:" />
-										<p:calendar minHour="8" maxHour="18" locale="fr" lang="fr" id="from" value="#{agendaBean.event.startDate}"
+										<p:calendar disabledWeekends="true" minHour="8" maxHour="18" locale="fr" lang="fr" id="from" value="#{agendaBean.event.startDate}"
 											timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
 
 										<p:outputLabel for="to" value="A:" />
-										<p:calendar minHour="8" maxHour="18" locale="fr" lang="fr" id="to" value="#{agendaBean.event.endDate}"
+										<p:calendar disabledWeekends="true" minHour="8" maxHour="18" locale="fr" lang="fr" id="to" value="#{agendaBean.event.endDate}"
 											timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm" />
 
 										<c:if test="#{empty agendaBean.event.id}">
-											<p:commandButton id="addButton" value="Save"
+											<p:commandButton id="addButton" value="Enregistrer"
 												actionListener="#{agendaBean.addEvent}"
 												oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
 										</c:if>
 										<c:if test="#{not empty agendaBean.event.id}">
-											<p:commandButton id="deleteButton" value="Delete" 
+											<p:commandButton id="deleteButton" value="Supprimer" 
 												actionListener="#{agendaBean.deleteEvent}"
 												oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
-											<p:commandButton id="updateButton" value="update" 
+											<p:commandButton id="updateButton" value="Modifier" 
 												actionListener="#{agendaBean.updEvent}"
 												oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
 									    </c:if>

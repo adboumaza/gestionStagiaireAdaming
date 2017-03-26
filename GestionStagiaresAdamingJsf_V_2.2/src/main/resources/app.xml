@@ -68,7 +68,11 @@
 	<bean id="FormateurService" class="com.adaming.myapp.formateur.service.FormateurServiceImpl">
 		<property name="dao" ref="FormateurDao"></property>
 	</bean>
-	
+		<!-- injection de dépendances Module -->
+	<bean id="ModuleDao" class="com.adaming.myapp.module.dao.ModuleDaoImpl"></bean>
+	<bean id="ModuleService" class="com.adaming.myapp.module.service.ModuleServiceImpl">
+		<property name="dao" ref="ModuleDao"></property>
+	</bean>
     <!-- injection de dépendances Evenement-->
 	<bean id="EvenementDao" class="com.adaming.myapp.evenement.dao.EvenementDaoImpl"></bean>
 	<bean id="EvenementService" class="com.adaming.myapp.evenement.service.EvenementServiceImpl">
@@ -105,11 +109,7 @@
 		<property name="dao" ref="SessionEtDao"></property>
 	</bean>
 	
-	<!-- injection de dépendances Module -->
-	<bean id="ModuleDao" class="com.adaming.myapp.module.dao.ModuleDaoImpl"></bean>
-	<bean id="ModuleService" class="com.adaming.myapp.module.service.ModuleServiceImpl">
-		<property name="dao" ref="ModuleDao"></property>
-	</bean>
+
 	
 	
 	<!-- injection de dépendances Question -->

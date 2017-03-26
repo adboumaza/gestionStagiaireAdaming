@@ -34,5 +34,5 @@ public interface IModuleService {
 	 
 	 Module verifyExistingModule(final String name);
 	 
-	// void deactivateModule(Long idModule);
+	 Module desactivateModule(final Module module);
 }

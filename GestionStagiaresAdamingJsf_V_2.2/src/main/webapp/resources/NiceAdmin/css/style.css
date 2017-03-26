@@ -58,6 +58,10 @@ Website: http://geekslabs.com/
 .fc th, .fc td {
 	border: 1px solid gray!important;
 }
+.fc-ltr .fc-basic-view .fc-day-number {
+    background: #fed189!important;
+    color: black;
+}
 
 .modal-header {
     background-color: transparent;
@@ -631,9 +635,7 @@ border-radius:4px!important;
 	
     background-position: center; 
 }
-td{
-	padding-left: 5px!important;
-}
+
 .ui-chkbox .ui-chkbox-box {
     width: 20px!important;
     height: 20px!important;

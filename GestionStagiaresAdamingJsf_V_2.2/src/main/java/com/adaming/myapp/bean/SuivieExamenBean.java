@@ -41,8 +41,8 @@ public class SuivieExamenBean implements Serializable{
 	private List<Object[]> notes;
 	private List<Object[]> results;
 	private Double moyenne;
-	private Double moyenneModule;
-	private PieChartModel pieModel1;
+	/*private Double moyenneModule;
+	private PieChartModel pieModel1;*/
 	
 	public String init(){
 		idSession = null;
@@ -50,10 +50,10 @@ public class SuivieExamenBean implements Serializable{
 		sessionEnCours = serviceSession.getAllSessionsInProgressV2();
 		return "suivie_examen?faces-redirect=true";
 	}
-	@PostConstruct
+	/*@PostConstruct
 	public void initChart(){
 		pieModel1 = new PieChartModel();
-	}
+	}*/
 	
 	/** cette method permet de vérifier est ce que le module à été passée ou non **/
 	public void getModulesBySession(){
@@ -81,11 +81,11 @@ public class SuivieExamenBean implements Serializable{
 	/** get all notes by session end modules**/
 	public String getNotesByModulesAndSession(Long idSession,Long idModule){
 		results = serviceNote.getNotesBySessionAndModule(idSession, idModule);
-		moyenneModule = serviceNote.getMoyenne(idSession, idModule);
+		/*moyenneModule = serviceNote.getMoyenne(idSession, idModule);
 		pieModel1.set("Moyenne", moyenneModule);
 		pieModel1.set("Total", 20 - moyenneModule);
 		pieModel1.setTitle("la moyenne du module numéro"+idModule);
-	    pieModel1.setLegendPosition("w");
+	    pieModel1.setLegendPosition("w");*/
 		return "notes?faces-redirect=true";
 	}
 	
@@ -129,16 +129,16 @@ public class SuivieExamenBean implements Serializable{
 	/**
 	 * @return the moyenneModule
 	 */
-	public Double getMoyenneModule() {
+	/*public Double getMoyenneModule() {
 		return moyenneModule;
-	}
+	}*/
 
 	/**
 	 * @param moyenneModule the moyenneModule to set
 	 */
-	public void setMoyenneModule(Double moyenneModule) {
+	/*public void setMoyenneModule(Double moyenneModule) {
 		this.moyenneModule = moyenneModule;
-	}
+	}*/
 	/**
 	 * @return the notes
 	 */
@@ -154,15 +154,15 @@ public class SuivieExamenBean implements Serializable{
 	/**
 	 * @return the pieModel1
 	 */
-	public PieChartModel getPieModel1() {
+	/*public PieChartModel getPieModel1() {
 		return pieModel1;
-	}
+	}*/
 	/**
 	 * @param pieModel1 the pieModel1 to set
 	 */
-	public void setPieModel1(PieChartModel pieModel1) {
+	/*public void setPieModel1(PieChartModel pieModel1) {
 		this.pieModel1 = pieModel1;
-	}
+	}*/
 	
 	
 

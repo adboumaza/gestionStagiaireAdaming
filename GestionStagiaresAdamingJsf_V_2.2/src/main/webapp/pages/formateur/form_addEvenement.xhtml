@@ -90,7 +90,7 @@
 	                                      <div class="form-group ">
 	                                          <label for="De" class="control-label col-lg-2">De <span class="required">*</span></label>
 	                                          <div class="col-lg-10">
-	                                               <p:calendar placeholder="ex : 12/01/2017 09h:00" lang="fr" locale="fr" id="De" minHour="8" maxHour="18" value="#{scheduleView.dateStart}" pattern="MM/dd/yyyy HH:mm" />
+	                                               <p:calendar disabledWeekends="true"  placeholder="ex : 12/01/2017 09h:00" lang="fr" locale="fr" id="De" minHour="8" maxHour="18" value="#{scheduleView.dateStart}" pattern="MM/dd/yyyy HH:mm" />
 	                                          </div>
 	                                          <br></br>
 	                                           <h:message for="De" style="text-align:center;color:red;display:block"></h:message>
@@ -98,7 +98,7 @@
 	                                      <div class="form-group ">
 	                                          <label for="A" class="control-label col-lg-2">À <span class="required">*</span></label>
 	                                          <div class="col-lg-10">
-	                                              <p:calendar placeholder="ex : 12/01/2017 11h:00" lang="fr" locale="fr" id="A" minHour="8" maxHour="18" value="#{scheduleView.dateEnd}" pattern="MM/dd/yyyy HH:mm" />
+	                                              <p:calendar disabledWeekends="true"  placeholder="ex : 12/01/2017 11h:00" lang="fr" locale="fr" id="A" minHour="8" maxHour="18" value="#{scheduleView.dateEnd}" pattern="MM/dd/yyyy HH:mm" />
 	                                          </div>
 	                                          <br></br>
 	                                           <h:message  for="A" style="text-align:center;color:red;display:block"></h:message>

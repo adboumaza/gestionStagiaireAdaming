@@ -122,6 +122,12 @@ public class ModuleDaoImpl extends AbstractJpaDao<Module> implements IModuleDao{
 		 return module;
 	}
 
+	@Override
+	public Module desactivateModule(Module module) {
+		// TODO Auto-generated method stub
+		return em.merge(module);
+	}
+
 /*	@Override
 	public void deactivateModule(Long idModule) {
 		 final String SQL = "update module m set m.actif = false where idModule = ? ";     

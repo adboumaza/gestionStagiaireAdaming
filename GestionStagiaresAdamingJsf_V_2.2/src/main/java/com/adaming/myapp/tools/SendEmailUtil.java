@@ -36,9 +36,9 @@ public final class SendEmailUtil {
 	private static final String MAIL_DEBUG_FALSE = "false";
 	
 	// attribut pour tester l'envoi
-	private final static String USERNAME = "nymraif.stark8623@gmail.com"; // adresse de
+	private final static String USERNAME = "intiformations@gmail.com"; // adresse de
 																		// l'administrateur
-	private final static String PASSWORD = "krzmngkeebnkudvh"; // password pour
+	private final static String PASSWORD = "intiformations2017"; // password pour
 
 	public final static String CONFIRMATION_MESSAGE (String civilite,String nom,String prenom,String mail,String password,String url){
 		return  " Bonjour "+civilite+" "+nom+" "+prenom

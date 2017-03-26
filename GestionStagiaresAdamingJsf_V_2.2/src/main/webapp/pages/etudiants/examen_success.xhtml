@@ -74,7 +74,7 @@ onpageshow="if (event.persisted) noBack();" onunload="">
 				<!-- add boutton accueil -->
 				<div style="text-align:center;">
 					   <h:commandButton style="margin-right: 20px;" styleClass="btn btn-danger" ajax="false" action="index?faces-redirect=true" value="Retour Accueil"/>
-				       <h:commandButton styleClass="btn btn-info"  value="Générer un pdf" id="pdf" ajax="false">
+				       <h:commandButton styleClass="btn btn-danger"  value="Générer un pdf" id="pdf" ajax="false">
 							<f:setPropertyActionListener value="false"
 							target="#{exporterController.customExporter}" />
 							<pe:exporter type="pdf" target="studentTable" encoding="CP1252"

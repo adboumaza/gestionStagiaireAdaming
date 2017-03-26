@@ -93,6 +93,13 @@
 																listener="#{scheduleView.getCurrentModule(m[0])}" />
 												           </p:commandLink>
 													    </p:column>
+													    
+													    <p:column  headerText="Télécharger" style="text-align:center;">
+													            <h:commandButton styleClass="btn btn-danger" value="Télécharger QCM">
+													               <p:ajax  event="click"
+																listener="#{scheduleView.getCurrentModule(m[0])}" />
+													            </h:commandButton>
+													    </p:column>
 		                                             </p:dataTable> 
 		                                             
 		                                             <p:dialog header="Module Info" widgetVar="actionDialog" modal="true"

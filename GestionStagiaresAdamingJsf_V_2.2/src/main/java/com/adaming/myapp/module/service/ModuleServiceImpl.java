@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.atmosphere.config.service.Ready;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.entities.Module;
@@ -99,6 +100,13 @@ public class ModuleServiceImpl implements IModuleService{
 	public Module verifyExistingModule(final String name) {
 		// TODO Auto-generated method stub
 		return dao.verifyExistingModule(name);
+	}
+
+	@Override
+	@Transactional(readOnly = false)
+	public Module desactivateModule(Module module) {
+		// TODO Auto-generated method stub
+		return dao.desactivateModule(module);
 	}
 
 	/*@Override
