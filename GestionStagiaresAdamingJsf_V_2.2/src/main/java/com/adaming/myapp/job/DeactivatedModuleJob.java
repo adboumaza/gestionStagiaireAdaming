@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,7 @@ import com.adaming.myapp.tools.LoggerConfig;
 @Component("deactivatedModuleJob")
 public class DeactivatedModuleJob {
     
-	@Inject
+	@Autowired
 	private IModuleService serviceModule;
 	
 	private List<Module> modules;

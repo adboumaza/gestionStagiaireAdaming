@@ -102,7 +102,7 @@ public class NotesDaoImpl implements INotesDao {
 	@Override
 	public Double getMoyenne(final Long idSession, final Long idModule) {
 		//final String SQL = "Select AVG(n.score) FROM Note n join n.sessionEtudiant se join n.module m where se.idSession=:x and m.idModule=:y";
-		final String SQL = "Select AVG(n.score) FROM Note n join sessionEtudiant se on se.idSession = n.id_ses_note  join module m on m.idModule = n.id_mod_note where se.idSession=:x and m.idModule=:y";
+		final String SQL = "Select AVG(n.score) FROM note n join sessionEtudiant se on se.idSession = n.id_ses_note  join module m on m.idModule = n.id_mod_note where se.idSession=:x and m.idModule=:y";
 		Query query = em.createNativeQuery(SQL).setParameter("x",idSession).setParameter("y",idModule);
 		Double moyenne =(Double) query.getSingleResult();
 		return moyenne;
