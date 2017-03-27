@@ -33,6 +33,7 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -138,7 +139,16 @@ public class Utilitaire {
 		return filtred;
 	}
 	
+	/**
+     * @methode convert Set to list
+     * 
+     * */
 	
+	public static List<?> convertSetToList(Set<?> mySet){
+		List<?> myList = new ArrayList<>(mySet);
+		return myList;
+		
+	}
 	
 	
 	/**

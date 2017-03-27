@@ -2,7 +2,9 @@ package com.adaming.myapp.bean;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -19,6 +21,7 @@ import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Formateur;
 import com.adaming.myapp.entities.Module;
+import com.adaming.myapp.entities.Questions;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.etudiant.service.IEtudiantService;
 import com.adaming.myapp.evenement.service.IEvenementService;
@@ -26,7 +29,9 @@ import com.adaming.myapp.exception.EvenementNotFoundException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.formateur.service.IFormateurService;
 import com.adaming.myapp.module.service.IModuleService;
+import com.adaming.myapp.question.service.IQuestionService;
 import com.adaming.myapp.session.service.ISessionService;
+import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.Utilitaire;
 /**
  * 
@@ -57,6 +62,9 @@ public class ScheduleView  implements Serializable {
 	
 	@Inject
 	private ISessionService serviceSession;
+    
+	@Inject
+	private IQuestionService serviceQuestion;
 
 	@Inject
 	private IEvenementService serviceEvenement;
@@ -71,6 +79,7 @@ public class ScheduleView  implements Serializable {
 	private List<Etudiant> students;
 	private List<Object[]> modules;
 	private Module module;
+	private Set<Questions> questions;
 
 	private Date dateIn;
 	private String[] dateString;
@@ -178,7 +187,7 @@ public class ScheduleView  implements Serializable {
 		}
 		active = false;
 		setIdModule(null);
-		return "evaluation?redirect=true";
+		return "evaluation?faces-redirect=true";
 	}
 
 	public String initActivationModule() throws VerificationInDataBaseException {
@@ -229,9 +238,18 @@ public class ScheduleView  implements Serializable {
 	}
 
 	/* @method get module by id for activation Formateur */
-	public void getCurrentModule(Long idModule) {
+	public Module getCurrentModule(Long idModule) {
 		module = FactoryBean.getModuleFactory().create("Module");
 		module = serviceModule.getModuleById(idModule);
+	   return module;
+	}
+	
+	/* @method get all Questions and responses by Module  */
+	public void getQuestionsAndResponse(Long idModule) {
+		LoggerConfig.logDebug("idM"+idModule);
+		questions = new HashSet<Questions>();
+		module = getCurrentModule(idModule);
+		questions = serviceQuestion.getQuestionsByModule(idModule);
 	}
 
 	/* @method update */
@@ -636,6 +654,20 @@ public class ScheduleView  implements Serializable {
 
 	public void setStudents(List<Etudiant> students) {
 		this.students = students;
+	}
+
+	/**
+	 * @return the questions
+	 */
+	public Set<Questions> getQuestions() {
+		return questions;
+	}
+
+	/**
+	 * @param questions the questions to set
+	 */
+	public void setQuestions(Set<Questions> questions) {
+		this.questions = questions;
 	}
 	
 	

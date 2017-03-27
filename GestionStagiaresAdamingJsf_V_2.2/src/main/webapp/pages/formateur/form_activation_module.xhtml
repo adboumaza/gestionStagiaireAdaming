@@ -94,14 +94,53 @@
 												           </p:commandLink>
 													    </p:column>
 													    
-													    <p:column  headerText="Télécharger" style="text-align:center;">
-													            <h:commandButton styleClass="btn btn-danger" value="Télécharger QCM">
-													               <p:ajax  event="click"
-																listener="#{scheduleView.getCurrentModule(m[0])}" />
-													            </h:commandButton>
+													    <p:column  headerText="Visualisation" style="text-align:center;">
+													           
+														     <p:commandButton oncomplete="PF('actionDialog2').show()" 
+															update=":form10:questionsDetail" styleClass="btn btn-danger" value="Voir le QCM">
+														        <f:param value="#{m[0]}" name="idModule" />
+														        <p:ajax  event="click"
+																listener="#{scheduleView.getQuestionsAndResponse(m[0])}" />
+																	
+														     </p:commandButton>
+													            
 													    </p:column>
 		                                             </p:dataTable> 
-		                                             
+		                                             <p:dialog width="75%" height="50%"  draggable="false" header="QCM Info"  widgetVar="actionDialog2" modal="true"
+														showEffect="blind" hideEffect="explode" resizable="false">
+														<p:outputPanel style="overflow:scroll;text-align:center;height:500px;" id="questionsDetail">
+															
+														    <h:panelGroup>
+																<p:dataTable scrollable="true"  id="responseTable" var="q" value="#{scheduleView.questions}">
+																    <p:column headerText="N°">
+																        <h:outputText value="#{q.numeroQuestion}" />
+																    </p:column>
+																    <p:column headerText="Question">
+																        <h:outputText value="#{q.label}" />
+																    </p:column>
+																     <p:column headerText="Réponses">
+																        <p:dataList value="#{q.reponses}" var="answer">
+																            <p:column>
+																                <h:outputText style="padding-right:10px;" value="#{answer.labelReponse}" />
+																            </p:column>
+																            <p:column>
+																                <h:outputText rendered="#{answer.etat}"     value="TRUE" />
+																		        <h:outputText rendered="#{not answer.etat}" value="FALSE" />
+																		        <h:outputText style="padding-right:10px;"></h:outputText>
+																		        <h:graphicImage rendered="#{answer.etat}"     name="NiceAdmin/img/check.png"/> 
+														                        <h:graphicImage rendered="#{not answer.etat}" name="NiceAdmin/img/cross.png"/> 
+																            </p:column>
+																        </p:dataList>
+																     </p:column>
+																</p:dataTable>
+																<br></br>
+																<br></br>
+																
+												   		 </h:panelGroup>
+												   		 
+														</p:outputPanel>
+														
+													</p:dialog> 
 		                                             <p:dialog header="Module Info" widgetVar="actionDialog" modal="true"
 														showEffect="blind" hideEffect="explode" resizable="false">
 														<p:outputPanel id="moduleDetail" style="text-align:center;">
