@@ -119,9 +119,11 @@ public class ModuleServiceTestU {
 	}
 	
 	@Test
+	@Ignore
 	public void deactivateModule(){
 		//serviceModule.deactivateModule(2L);
 	}
+	
 
 }
 

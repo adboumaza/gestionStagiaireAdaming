@@ -12,7 +12,7 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.adaming.myapp">
-		<level value="info" />
+		<level value="info"  />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->

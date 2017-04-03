@@ -121,4 +121,31 @@ public class NotesDaoImpl implements INotesDao {
 		return query.getResultList();
 	}
 
+	
+
+	@Override
+	public Double getMoyenneGeneralBySession(final Long idSession) {
+		final String SQL = "SELECT avg(n.score) FROM note n join sessionEtudiant se on n.ID_SES_NOTE = se.idSession join module m on n.ID_MOD_NOTE = m.idModule  where se.idSession =:x and m.nomModule != 'TEST'";
+		Query query = em.createNativeQuery(SQL).setParameter("x",idSession);
+		Double moyenneGeneral =(Double) query.getSingleResult();
+		return moyenneGeneral;
+	}
+
+	@Override
+	public List<Object[]> getClassementGeneralBySession(final Long idSession) {
+/*		final String SQL = "SELECT distinct et.idEtudiant,et.prenomEtudiant FROM note n "
+				+ "join sessionEtudiant se on se.idSession = n.ID_SES_NOTE join etudiant et "
+				+ "on et.idEtudiant = n.ID_ETU_NOTE where se.idSession =:x";*/
+		
+		
+		Query query = em.createNativeQuery("SELECT distinct et.idEtudiant,et.prenomEtudiant,avg(n.score) as moyenne"
+				+ " FROM note n join sessionEtudiant se on se.idSession = n.ID_SES_NOTE join module m"
+				+ " on m.idModule = n.ID_MOD_NOTE join etudiant et on et.idEtudiant = n.ID_ETU_NOTE"
+				+ " where se.idSession =:x and m.nomModule != 'TEST' group by et.idEtudiant "
+				+ " order by moyenne desc").setParameter("x",idSession);
+		LoggerConfig.logInfo("query "+query.getResultList().size());
+		return query.getResultList();
+	}
+	
+
 }

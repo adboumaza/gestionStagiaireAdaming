@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+<ui:composition>
+	<br> </br>
+	<br> </br>
+	<br> </br>
+	
+	<div class="well container">
+	    <section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+						<h3 class="page-header"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Classement Général</h3>
+					</ol>
+				</div>
+			</div>
+			 <c:if test="#{not empty classementBean.customException}">
+			    <div align="center" style="color:black;font-weight:bold" class="alert alert-warning">
+			       #{classementBean.customException}
+			    </div>
+			 </c:if>
+			 <c:if test="#{classementBean.moyenneGeneral gt 0}">        
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Le Classement Général 
+                          </header>
+                            
+                          <div class="panel-body">
+                              <div class="form">
+							    <h:form>
+							       <p:chart type="bar" model="#{classementBean.barModel}" style="height:300px"/>
+								</h:form>
+							   </div>
+							</div>
+						</section>
+					</div>
+				</div>	
+				
+				<div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              La Moyenne Générale 
+                          </header>
+                           
+                          <div class="panel-body">
+                              <div class="form">
+							    <h:form>
+							       <p:chart type="pie" model="#{classementBean.pieModel3}" style="width:400px;height:300px;display:block;margin:auto" />
+							       
+							       <div style="color:red;text-align:center;display:block" class="container alert alert-success">
+									  <strong>La Moyenne Générale</strong> 
+									  <span>#{classementBean.moyenneGeneral}</span>
+									</div>
+							    </h:form>
+							   </div>
+							</div>
+						</section>
+					</div>
+				</div>
+				</c:if>  	
+			</section>
+	</div>
+</ui:composition>
+</html>

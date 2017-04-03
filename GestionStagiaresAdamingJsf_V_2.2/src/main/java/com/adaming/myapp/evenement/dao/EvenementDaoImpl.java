@@ -15,8 +15,8 @@ public class EvenementDaoImpl extends EvenementAbstractJpa implements
 	}
 
 	@Override
-	public Evenement AddWarningAndTop(Evenement e, Long idSession,
-			Long idEtudiant) {
+	public Evenement AddWarningAndTop(final Evenement e, final Long idSession,
+			final Long idEtudiant) {
 
 		return addWarningAndTopAbstractJpa(e, idSession, idEtudiant);
 	}
@@ -64,13 +64,13 @@ public class EvenementDaoImpl extends EvenementAbstractJpa implements
 	}
 
 	@Override
-	public List<Evenement> getAllEvenementsBySession(Long idSession) {
+	public List<Evenement> getAllEvenementsBySession(final Long idSession) {
 
 		return getAllEvenementsBySessionAbstractJpa(idSession);
 	}
 
 	@Override
-	public List<Object[]> getEventsExiste(Long idEtudiant) {
+	public List<Object[]> getEventsExiste(final Long idEtudiant) {
 
 		return getEventsExisteAbstractJpa(idEtudiant);
 	}
@@ -100,9 +100,22 @@ public class EvenementDaoImpl extends EvenementAbstractJpa implements
 	}
 
 	@Override
-	public Evenement verifyExistingEvent(Long idEtudiant) {
+	public Evenement verifyExistingEvent(final Long idEtudiant) {
 		// TODO Auto-generated method stub
 		return verifyExistingEventAbstractJpa(idEtudiant);
+	}
+
+	@Override
+	public void deleteEvenement(final Long idEvenement) {
+		
+		deleteEvenementAbstractJpa(idEvenement);
+	}
+
+	@Override
+	public Evenement updateEvenement(Evenement evenement, Long idEtudiant,
+			Long idSession) {
+		// TODO Auto-generated method stub
+		return updateEvenementAbstractJpa(evenement, idEtudiant, idSession);
 	}
 
 

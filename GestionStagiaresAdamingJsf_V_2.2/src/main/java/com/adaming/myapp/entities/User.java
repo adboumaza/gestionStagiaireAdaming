@@ -16,20 +16,18 @@ import javax.persistence.Table;
  * @version 1.0.0
  * */
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name="user")
 public class User implements Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long idUser;
 	private String name;
 	private String password;
 	private boolean actived;
-	/*assocition*/
+	/*asso*/
 	@OneToMany(mappedBy="user")
 	private Collection<Role> roles;
 	

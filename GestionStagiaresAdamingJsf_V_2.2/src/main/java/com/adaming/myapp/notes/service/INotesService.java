@@ -29,4 +29,8 @@ public interface INotesService {
 	 Double getMoyenne(final Long idSession,final Long idModule);
 	 
 	 List<Note> getAllExamesEnCoursBySessionAndModule(final Long idSession,final Long idModule) throws VerificationInDataBaseException;
+
+	 Double getMoyenneGeneralBySession(final Long idSession);
+     
+	 List<Object[]> getClassementGeneralBySession(final Long idSession) throws VerificationInDataBaseException;
 }

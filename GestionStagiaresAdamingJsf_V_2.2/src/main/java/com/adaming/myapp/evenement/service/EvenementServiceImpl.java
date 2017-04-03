@@ -21,6 +21,7 @@ import com.adaming.myapp.evenement.dao.IEvenementDao;
 import com.adaming.myapp.exception.EvenementNotFoundException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.tools.LoggerConfig;
+import com.adaming.myapp.tools.Utilitaire;
 
 @Transactional(readOnly=true)
 public class EvenementServiceImpl implements IEvenementService {
@@ -66,14 +67,6 @@ public class EvenementServiceImpl implements IEvenementService {
 		return entretien;
 	}
 
-	
-
-	
-
-	
-	
-
-	
 
 	@Override
 	public List<Evenement> getAllEvenements() {
@@ -205,6 +198,27 @@ public class EvenementServiceImpl implements IEvenementService {
 	public Evenement verifyExistingEvent(final Long idEtudiant) {
 		// TODO Auto-generated method stub
 		return dao.verifyExistingEvent(idEtudiant);
+	}
+
+	@Override
+	@Transactional(readOnly=false)
+	public void deleteEvenement(final Long idEvenement) {
+		dao.deleteEvenement(idEvenement);
+		
+	}
+
+	@Override
+	@Transactional(readOnly=false,rollbackFor = Exception.class)
+	public Evenement updateEvenement(Evenement evenement, Long idEtudiant,
+			Long idSession) throws Exception {
+		if(evenement.getStartDate().after(evenement.getEndDate())){
+			throw new Exception("la date de départ ne peut être antérieur ");
+		}
+		else if(evenement.getStartDate().equals(evenement.getEndDate()))
+		{
+			throw new Exception("la durré ne peut être 0 min");	
+		}
+		return dao.updateEvenement(evenement, idEtudiant, idSession);
 	}
 
 }

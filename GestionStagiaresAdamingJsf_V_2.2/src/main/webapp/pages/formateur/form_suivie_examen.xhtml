@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+<ui:composition>
+	<br> </br>
+	<br> </br>
+	<br> </br>
+      <p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
+              <div class="sk-circle">
+			  <div class="sk-circle1 sk-child"></div>
+			  <div class="sk-circle2 sk-child"></div>
+			  <div class="sk-circle3 sk-child"></div>
+			  <div class="sk-circle4 sk-child"></div>
+			  <div class="sk-circle5 sk-child"></div>
+			  <div class="sk-circle6 sk-child"></div>
+			  <div class="sk-circle7 sk-child"></div>
+			  <div class="sk-circle8 sk-child"></div>
+			  <div class="sk-circle9 sk-child"></div>
+			  <div class="sk-circle10 sk-child"></div>
+			  <div class="sk-circle11 sk-child"></div>
+			  <div class="sk-circle12 sk-child"></div>
+			</div>
+        </p:dialog>
+	<div class="well container">
+		<section class="wrapper">
+			<!-- exception add new Etudiant + message success+ error validation-->
+			<p:messages id="messages" showDetail="true" autoUpdate="true"
+				closable="true" />
+			<p:growl id="growl" showDetail="true" showSummary="true" autoUpdate="true" severity="warn,info"></p:growl>
+			<div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+						<h3 class="page-header">
+							<i><h:graphicImage name="NiceAdmin/img/form.png" /> </i> Form
+							Suivie Examens
+						</h3>
+					</ol>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-lg-12">
+					<section class="panel">
+						<div class="panel-body">
+							<header class="panel-heading">
+								<h4>Suivie Examens</h4>
+							</header>
+							<div class="panel-body text-center">
+							  
+								<h:form id="form20">
+									<p:dataTable id="tabModule" value="#{suivieExamenBean.modules}"
+										var="m" >
+										
+										<p:column headerText="Module">
+										     
+											<h:commandButton  id="fade" onclick="PF('dlg2').show();" rendered="#{m[2]}" action="#{suivieExamenBean.getNotesByModulesAndSession(m[3],m[0])}" value="#{m[1]}"  style="border-radius: 2px!important" styleClass="btn btn-primary btn-lg btn-block">
+											  <p:tooltip style="color:red;padding:10px!important;background:white!important;border-radius:2px!important;" id="toolTipFade" for="fade" value="Voir la liste des notes" position="bottom"/>
+											 
+											</h:commandButton>
+											<h:outputText rendered="#{not m[2]}" value="#{m[1]}"></h:outputText>
+										   
+										</p:column>
+										
+										
+										<p:column headerText="Statut">
+											
+											<p:spacer width="10"></p:spacer>
+											<h:graphicImage rendered="#{m[2]}"
+												name="NiceAdmin/img/check.png">
+												
+											   <h:outputText value="Validée" style="padding-right : 10px"></h:outputText>
+											</h:graphicImage>
+											<h:graphicImage rendered="#{not m[2]}">
+												<div id="fountainG" style="display: inline-block !important">
+													<h:outputText value="En Cours" style="margin-left : 20px"></h:outputText>
+													<div id="fountainG_1" class="fountainG"></div>
+													<div id="fountainG_2" class="fountainG"></div>
+													<div id="fountainG_3" class="fountainG"></div>
+												</div>
+											</h:graphicImage>
+										</p:column>
+										
+									</p:dataTable>
+								</h:form>
+								
+							</div>
+							
+						</div>
+					</section>
+				</div>
+			</div>
+		</section>
+	</div>
+	<br />
+</ui:composition>
+</html>

@@ -29,5 +29,7 @@ public interface INotesDao {
 	 
 	 List<Note> getAllExamesEnCoursBySessionAndModule(final Long idSession,final Long idModule);
 	
-	
+	 Double getMoyenneGeneralBySession(final Long idSession);
+     
+	 List<Object[]> getClassementGeneralBySession(final Long idSession);
 }

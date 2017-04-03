@@ -20,7 +20,6 @@
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/account-passkey.png"/></i>
                           <span>Mon Compte</span>
-                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                       <ul class="sub">
                          <li><h:link outcome="custom_password">Changer Le M-D-Passe</h:link></li>                            
@@ -41,21 +40,20 @@
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/reporting.png"/></i>
                           <span>Reporting</span>
-                          <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                       <ul class="sub">                                    
                            <li><h:form><h:commandLink action="#{scheduleView.initEvenement}" value="Signaler un Évènement"/></h:form></li>
-                           <li><h:form><h:commandLink action="#{scheduleView.initWarning}" value="Blacklist"/></h:form></li>   
+                           <li><h:form><h:commandLink action="#{scheduleView.initWarning}" value="Blacklist et TeamLeader"/></h:form></li>   
                            <li><h:form><h:commandLink action="#{scheduleView.initAbsences}" value="Gérer les Absences"/></h:form></li>   
                            <li><h:form><h:commandLink action="#{scheduleView.initProspection}" value="Suivi Prospection"/></h:form></li>   
-                           <li><h:form><h:commandLink action="#{scheduleView.initEvaluation}" value="Évaluation"/></h:form></li>                                                                                               
+                           <li><h:form><h:commandLink action="#{scheduleView.initEvaluation}" value="Évaluation"/></h:form></li>
+                           <li><h:form><h:commandLink action="#{scheduleView.getAllEvenementsBySession}" value="Voir les Évènements"/></h:form></li>                                                                                               
                       </ul>
                   </li> 
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/exam.png" style="wdth:24px;height:24px;"/></i>
                           <span>Examen</span>
-                          <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                       <ul class="sub">
                         <li><h:form><h:commandLink action="#{scheduleView.initActivationModule}" value="Activation Module"/></h:form></li>
@@ -65,48 +63,27 @@
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/mail.png" style="wdth:24px;height:24px;"/></i>
                           <span>Contact</span>
-                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                       <ul class="sub">
                          <li><h:link outcome="send_mail">Contacter le R-P</h:link></li>                            
                       </ul>
                   </li> 
-                  <li class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i><h:graphicImage name="NiceAdmin/img/student.png"/></i>
-                          <span>Etudiant</span>
-                          <i><h:graphicImage name="NiceAdmin/img/lock-button.png" style="float: right;padding-right: 6px"/></i>
-                      </a>
-                  </li>       
+                      
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/notes.png"/></i>
                           <span>Notes</span>
-                        <i><h:graphicImage name="NiceAdmin/img/lock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
+                       <ul class="sub">
+                         <li><h:form><h:commandLink action="#{suivieExamenBean.getSessionByFormateur}" value="Suivie Examens"/> </h:form>  </li>
+                      </ul>
                   </li>       
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/rank.png"/></i>
                           <span>Classement</span>
-                         <i><h:graphicImage name="NiceAdmin/img/lock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                   </li>       
-                  <li class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i><h:graphicImage name="NiceAdmin/img/book.png"/></i>
-                          <span>Modules</span>
-                          <i><h:graphicImage name="NiceAdmin/img/lock-button.png" style="float: right;padding-right: 6px"/></i>
-                      </a>
-                  </li> 
-                  <li class="sub-menu">
-                      <a href="javascript:;" class="">
-                          <i><h:graphicImage name="NiceAdmin/img/session.png"/></i>
-                          <span>Session</span>
-                        <i><h:graphicImage name="NiceAdmin/img/lock-button.png" style="float: right;padding-right: 6px"/></i>
-                      </a>
-                  </li>      
-                  
                    <h:graphicImage name="NiceAdmin/img/logoiniti.png" style=" width: 100px; margin: auto;display: block;padding-top: 20px;"/>                 
               </ul>
               <!-- sidebar menu end-->

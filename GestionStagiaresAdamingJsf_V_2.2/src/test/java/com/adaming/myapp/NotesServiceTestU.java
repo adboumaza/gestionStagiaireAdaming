@@ -45,6 +45,7 @@ public class NotesServiceTestU {
 		System.out.println(d);
 	}
 	@Test
+	@Ignore
 	public void getAllExamensEnCours(){
 		List<Note> notes;
 		try {
@@ -57,6 +58,12 @@ public class NotesServiceTestU {
 	  
 	}
 
+	
+	@Test
+	public void getClassementGenral(){
+		Double moyenneGeneral = serviceNotes.getClassementGeneralBySession(1L, 11L);
+	    System.out.println("Moyenne : "+moyenneGeneral);
+	}
 	
 
 }

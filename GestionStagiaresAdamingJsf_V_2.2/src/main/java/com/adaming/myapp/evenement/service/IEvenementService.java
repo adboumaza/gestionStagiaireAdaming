@@ -59,4 +59,8 @@ public interface IEvenementService {
 	
 	/**@verification evenement */
 	 Evenement verifyExistingEvent(final Long idEtudiant);
+
+	 void deleteEvenement(final Long idEvenement);
+	 
+	 Evenement updateEvenement(final Evenement evenement,final Long idEtudiant,final Long idSession) throws Exception;
 }

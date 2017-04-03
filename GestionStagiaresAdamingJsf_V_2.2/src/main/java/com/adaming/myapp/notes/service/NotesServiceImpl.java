@@ -86,4 +86,20 @@ public class NotesServiceImpl implements INotesService {
 		return notes;
 	}
 
+	
+	@Override
+	public Double getMoyenneGeneralBySession(final Long idSession) {
+		// TODO Auto-generated method stub
+		return dao.getMoyenneGeneralBySession(idSession);
+	}
+
+	@Override
+	public List<Object[]> getClassementGeneralBySession(final Long idSession) throws VerificationInDataBaseException {
+		List<Object[]> classement = dao.getClassementGeneralBySession(idSession);
+		if(classement.isEmpty()){
+			throw new VerificationInDataBaseException("Le classement n'est pas disponible,Veuillez passer les examens..! ");
+		}
+		return classement;
+	}
+
 }

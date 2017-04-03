@@ -55,11 +55,13 @@ public interface IEvenementDao {
 
 	 List<Evenement> getAllEvenements();
 
-	 List<Evenement> getAllEvenementsBySession(Long idSession);
+	 List<Evenement> getAllEvenementsBySession(final Long idSession);
 	 
 	 /**@verification*/
-	 Evenement verifyExistingEvent(Long idEtudiant);
+	 Evenement verifyExistingEvent(final Long idEtudiant);
 	 
-	
+	 void deleteEvenement(final Long idEvenement);
+	 
+	 Evenement updateEvenement(final Evenement evenement,final Long idEtudiant,final Long idSession);
 
 }

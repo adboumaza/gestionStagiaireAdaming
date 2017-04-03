@@ -289,6 +289,19 @@ public abstract class EvenementAbstractJpa {
 		return event;
 	}
 	
+	public void deleteEvenementAbstractJpa(final Long idEvenement){
+		Evenement evnement = em.find(Evenement.class, idEvenement);
+		em.remove(evnement);
+	}
+	
+	public Evenement updateEvenementAbstractJpa(final Evenement evenement,final Long idEtudiant,final Long idSession){
+		Etudiant etudiant = em.find(Etudiant.class, idEtudiant);
+		SessionEtudiant sessionEtudiant = em.find(SessionEtudiant.class, idSession);
+		evenement.setSessionEtudiant(sessionEtudiant);
+		evenement.setEtudiant(etudiant);
+		em.merge(evenement);
+		return evenement;
+	}
 	
 
 	

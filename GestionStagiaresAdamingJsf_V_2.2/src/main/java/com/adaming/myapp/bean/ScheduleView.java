@@ -49,8 +49,8 @@ public class ScheduleView  implements Serializable {
 	 * @see org.apache.log4j.Logger
 	 */
     
-    
-     
+    @Inject
+    private SessionBean sessionBean; 
     
 	@Inject
 	private IEtudiantService serviceEtudiant;
@@ -102,6 +102,7 @@ public class ScheduleView  implements Serializable {
 	private List<SessionEtudiant> sessionsFormateur;
 	private SessionEtudiant sessionFormateur;
 	private List<Evenement> events;
+	private Evenement evenement;
 	
 
 	public SessionEtudiant initReporting(){
@@ -219,8 +220,31 @@ public class ScheduleView  implements Serializable {
 			}
 		}
 	}
-
-	/** @method generate Absences **/
+	
+	/** get All Evenement par session for reporting*/
+	public String getAllEvenementsBySession(){
+		initReporting();
+		if(sessionFormateur != null){
+			return "data_evenements?faces-redirect=true";
+		}else{
+			return null;
+		}
+		
+	}
+	
+	
+	
+	/** delete evenement */
+	public void deleteEvenement(){
+		LoggerConfig.logDebug("delete Evenement : "+evenement);
+		serviceEvenement.deleteEvenement(evenement.getIdEvenement());
+		LoggerConfig.logInfo("before Evenements : "+sessionBean.getEvenements());
+		sessionBean.getEvenements().remove(evenement);
+	    LoggerConfig.logInfo("after Evenement : "+sessionBean.getEvenements());
+	    Utilitaire.displayMessageInfo("L'évènement a bien été supprimé");
+	}
+	
+	/**  generate Absences **/
 	public void genererSchedule(){
 		getStudentsBySession();
 	}
@@ -668,6 +692,34 @@ public class ScheduleView  implements Serializable {
 	 */
 	public void setQuestions(Set<Questions> questions) {
 		this.questions = questions;
+	}
+
+	/**
+	 * @return the evenement
+	 */
+	public Evenement getEvenement() {
+		return evenement;
+	}
+
+	/**
+	 * @param evenement the evenement to set
+	 */
+	public void setEvenement(Evenement evenement) {
+		this.evenement = evenement;
+	}
+
+	/**
+	 * @return the sessionBean
+	 */
+	public SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	/**
+	 * @param sessionBean the sessionBean to set
+	 */
+	public void setSessionBean(SessionBean sessionBean) {
+		this.sessionBean = sessionBean;
 	}
 	
 	
