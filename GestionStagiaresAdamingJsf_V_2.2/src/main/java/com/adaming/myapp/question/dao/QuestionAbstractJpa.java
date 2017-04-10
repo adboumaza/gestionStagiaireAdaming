@@ -27,15 +27,15 @@ public abstract class QuestionAbstractJpa {
 	@PersistenceContext
 	private EntityManager em;
 	
-	public Questions addQuestionsAbstractJpa(final Questions q,final Long idModule,final List<Reponses> reponses){
+	public Questions addQuestionsAbstractJpa(final Questions question,final Long idModule,final List<Reponses> reponses){
 		Module module = em.find(Module.class, idModule);
 		for(Reponses r:reponses){
-			r.setQuestions(q);
+			r.setQuestions(question);
 		}
-		q.setModule(module);
-		q.setReponses(reponses);
-		em.persist(q);
-		return q;
+		question.setModule(module);
+		question.setReponses(reponses);
+		em.persist(question);
+		return question;
 	}
 	
 	@SuppressWarnings("unchecked")

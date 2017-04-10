@@ -125,14 +125,23 @@ public abstract class SessionAbstractJpa {
 	public SessionEtudiant getSessionByFormateurAbstractJpa(final Long idFormateur){
 		 final String SQL = "select distinct s from SessionEtudiant s " +
                  "left join fetch s.site left join fetch s.salle left join fetch s.specialite " +
-                 "left join fetch s.formateurs f left join s.etudiants e where f.idFormateur = :id ORDER BY s.dateFin desc";
+                 "left join fetch s.formateurs f left join s.etudiants e where f.idFormateur = :id";
 		 SessionEtudiant session = null;
          Query query =  em.createQuery(SQL)
 				       .setParameter("id", idFormateur);
-		 if(query.getResultList() != null && !query.getResultList().isEmpty()){
+		 if(query.getResultList() != null && !query.getResultList().isEmpty() && query.getResultList().size() == 1){
 			 session = (SessionEtudiant) query.getResultList().get(0);
+			 LoggerConfig.logInfo("size == 1"+query.getResultList()+""+ (query.getResultList().get(0)));
+			 LoggerConfig.logInfo("mysession"+session);
 		 }
-
+		 
+		 if(query.getResultList() != null && !query.getResultList().isEmpty() && query.getResultList().size() > 1){
+			 session = (SessionEtudiant) query.getResultList().get(query.getResultList().size() - 1);
+			 LoggerConfig.logInfo("size > 1"+query.getResultList()+"size -1,"+ (query.getResultList().size() -1)+"get 0, "+(query.getResultList().get(0)));
+			 LoggerConfig.logInfo("mysession"+session);
+		 }
+		 
+		 
 		 return session;
 	}
 	

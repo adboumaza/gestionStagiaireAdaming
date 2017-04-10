@@ -59,6 +59,8 @@ public class Etudiant implements Serializable {
 	private List<Note> notes;
 	@OneToMany(mappedBy="etudiant",fetch=FetchType.LAZY)
 	private List<Evenement> evenements;
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "etudiant")
+	private List<Prospection> prospections;
 
 	/**construct*/
 	public Etudiant() {
@@ -266,6 +268,36 @@ public class Etudiant implements Serializable {
 	}
 
 
+	/**
+	 * @return the prospections
+	 */
+	public List<Prospection> getProspections() {
+		return prospections;
+	}
+
+
+	/**
+	 * @param prospections the prospections to set
+	 */
+	public void setProspections(List<Prospection> prospections) {
+		this.prospections = prospections;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Etudiant [idEtudiant=" + idEtudiant + ", nomEtudiant="
+				+ nomEtudiant + ", prenomEtudiant=" + prenomEtudiant
+				+ ", dateDeNaissance=" + dateDeNaissance
+				+ ", formationInitial=" + formationInitial + ", ecole=" + ecole
+				+ ", dateObtention=" + dateObtention + ", numTel=" + numTel
+				+ ", mail=" + mail + ", adresse=" + adresse + "]";
+	}
+
+    
 	
 	
 }

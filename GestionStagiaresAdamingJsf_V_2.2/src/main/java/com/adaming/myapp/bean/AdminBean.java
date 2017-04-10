@@ -82,11 +82,7 @@ public class AdminBean extends SavedRequestAwareAuthenticationSuccessHandler imp
 		role = createRole();
 		
 			try {
-				
-				
-				serviceAdmin.createAdmin(admin);
-				serviceUser.saveUser(user);
-				serviceRole.saveRole(role, user.getIdUser());
+				serviceAdmin.createAdmin(admin, user, role);
 				Utilitaire.displayMessageInfo("l'admin "+nom+", "+prenom+" à bien été ajouté avec succès"+" Un e-mail de confirmation a été adressé à l’adresse e-mail : "+"Pseudo : "+mail+", Password : "+passwordRandom);
 				SendEmailUtil.sendMail(admin.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE("M/Mme",admin.getNom(),admin.getPrenom(),admin.getMail(), passwordRandom,SendEmailUtil.getAbsoluteApplicationUrl()));
 				reset();
@@ -96,16 +92,7 @@ public class AdminBean extends SavedRequestAwareAuthenticationSuccessHandler imp
 			
 	}
 	
-	public String getAbsoluteApplicationUrl() throws URISyntaxException {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        URI uri = new URI(request.getRequestURL().toString());
-        URI newUri = new URI(uri.getScheme(), null,
-                uri.getHost(),
-                uri.getPort(),
-                request.getContextPath().toString(),null, null);
-        return newUri.toString();
-  }
+	
 	
 	
     

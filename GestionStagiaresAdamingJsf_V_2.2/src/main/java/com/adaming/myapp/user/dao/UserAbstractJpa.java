@@ -24,7 +24,7 @@ public abstract class UserAbstractJpa {
 	public User saveUserAbstractJpa(final User u) {
 		em.persist(u);
 		LoggerConfig.logInfo("l'identifiant et le mot de passe ont bien Générées"+"USER N° : "+"psseudo Name : "+u.getName()+" Password: "+u.getPassword());
-		return u;
+		return null;
 	}
 	@SuppressWarnings("unchecked")
 	public List<User> getUsersByMailAbstractJpa(final String mail){

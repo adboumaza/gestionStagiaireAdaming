@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 
 import com.adaming.myapp.entities.Etudiant;
+import com.adaming.myapp.entities.Role;
+import com.adaming.myapp.entities.User;
 import com.adaming.myapp.exception.AddEtudiantException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 
@@ -30,7 +32,7 @@ public interface IEtudiantService {
 	 * @throws VerificationInDataBaseException
 	 * @see com.adaming.myapp.etudiant.dao.IEtudiantDao.addStudent
 	 **/
-	Etudiant addStudent(final Etudiant e, final Long idSession) throws VerificationInDataBaseException;
+	Etudiant addStudent(final Etudiant e, final Long idSession,final User user,final Role role) throws VerificationInDataBaseException;
 
 	/**
 	 * {@inheritDoc}

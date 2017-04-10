@@ -21,6 +21,12 @@
     </bean> -->
     
     
+    <!-- injection de dépendances Prospection-->
+    <bean id="ProspectionDao" class="com.adaming.myapp.prospection.dao.ProspectionDaoImpl"></bean>
+    <bean id="ProspectionService" class="com.adaming.myapp.prospection.service.ProspectionServiceImpl">
+      <property name="dao" ref="ProspectionDao"></property>
+    </bean>
+    
     <!-- injection de dépendances Admin-->
     <bean id="AdminDao" class="com.adaming.myapp.admin.dao.AdminDaoImpl"></bean>
     <bean id="AdminService" class="com.adaming.myapp.admin.service.AdminServiceImpl">

@@ -123,7 +123,7 @@ public abstract class EtudiantAbstractJpa {
 	@SuppressWarnings("unchecked")
 	public List<Etudiant> getStudentsBySessionAbstractJpa(Long idSession){
 		
-		final String SQL = "From Etudiant e join fetch e.sessionEtudiant se where se.idSession =:x";
+		final String SQL = "From Etudiant e join fetch e.sessionEtudiant se left join fetch e.prospections pr where se.idSession =:x";
 		Query query = entityManager.createQuery(SQL).setParameter("x",idSession);
 		return query.getResultList();
 	}

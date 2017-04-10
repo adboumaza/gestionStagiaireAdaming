@@ -4,13 +4,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.entities.Etudiant;
+import com.adaming.myapp.entities.Role;
+import com.adaming.myapp.entities.User;
 import com.adaming.myapp.etudiant.dao.IEtudiantDao;
 import com.adaming.myapp.exception.AddEtudiantException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
+import com.adaming.myapp.role.dao.IRoleDao;
 import com.adaming.myapp.tools.LoggerConfig;
+import com.adaming.myapp.user.dao.IUserDao;
 /**
  *  @author Adel 
  *  @version 1.0.0
@@ -36,6 +42,12 @@ public class EtudiantServiceImpl implements IEtudiantService {
     * @Interface IEtudiantDao @see com.adaming.myapp.etudiant.dao.IEtudiantDao
     **/
 	private IEtudiantDao dao;
+	
+	@Inject
+	private IUserDao daoUser;
+	
+	@Inject 
+	private IRoleDao daoRole;
 
 	public void setDao(IEtudiantDao dao) {
 		this.dao = dao;
@@ -49,8 +61,8 @@ public class EtudiantServiceImpl implements IEtudiantService {
 	* @see com.adaming.myapp.etudiant.service.IEtudiantService.addStudent
 	**/
 	@Override
-	@Transactional(readOnly=false)
-	public Etudiant addStudent(final Etudiant e, final Long idSession)
+	@Transactional(readOnly=false,rollbackFor = VerificationInDataBaseException.class)
+	public Etudiant addStudent(final Etudiant e, final Long idSession,final User user,final Role role)
 			throws VerificationInDataBaseException {
 	            Etudiant etudiant = verifyExistingEtudiant(e.getNomEtudiant(),e.getDateDeNaissance());
 	            if (etudiant != null)
@@ -60,12 +72,17 @@ public class EtudiantServiceImpl implements IEtudiantService {
 							+ " Existe déja dans la Session N°" + idSession);
 				}
 				else 
-					if(getEtudiant(e.getMail()) != null)
+					if(!daoUser.getUsersByMail(e.getMail()).isEmpty())
 				{
 					throw new VerificationInDataBaseException("l'adresse mail "+e.getMail()+" existe déjà dans la session N° "+idSession+" Veuillez renseigner une autre adresse mail");
 				}
+				else{
+					dao.addStudent(e, idSession);
+					daoUser.saveUser(user);
+					daoRole.saveRole(role, user.getIdUser());
+				}
 
-		        return dao.addStudent(e, idSession);
+		        return null;
 	}
    
 	

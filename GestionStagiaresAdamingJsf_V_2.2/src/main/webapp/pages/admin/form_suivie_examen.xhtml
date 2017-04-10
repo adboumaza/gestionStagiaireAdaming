@@ -96,7 +96,9 @@
 								<h:form id="form20">
 									<p:dataTable id="tabModule" value="#{suivieExamenBean.modules}"
 										var="m" >
-										
+										<f:facet name="header">
+										        #{sessionBean.choix}
+										</f:facet>
 										<p:column headerText="Module">
 										     
 											<h:commandButton  id="fade" onclick="PF('dlg2').show();" rendered="#{m[2]}" action="#{suivieExamenBean.getNotesByModulesAndSession(m[3],m[0])}" value="#{m[1]}"  style="border-radius: 2px!important" styleClass="btn btn-primary btn-lg btn-block">
@@ -125,6 +127,9 @@
 												</div>
 											</h:graphicImage>
 										</p:column>
+										<p:column headerText="Classement" rendered="#{m[2]}">
+								            <p:commandButton action="#{suivieExamenBean.getClassementGeneral(m[3],m[0])}" process="tabModule"  icon="ui-icon-search" value="Voir le classement des étudiants" onclick="PF('dlg2').show();"/>
+								        </p:column>
 										
 									</p:dataTable>
 								</h:form>

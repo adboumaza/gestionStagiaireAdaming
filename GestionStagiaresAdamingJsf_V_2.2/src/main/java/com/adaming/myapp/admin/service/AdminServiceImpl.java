@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.admin.dao.IAdminDao;
 import com.adaming.myapp.entities.Admin;
+import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.User;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
+import com.adaming.myapp.role.dao.IRoleDao;
 import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.user.dao.IUserDao;
 import com.adaming.myapp.user.service.IUserService;
@@ -21,6 +23,9 @@ public class AdminServiceImpl implements IAdminService{
 	@Inject
 	private IUserDao daoUser;
 	
+	@Inject
+	private IRoleDao daoRole;
+	
 	/**
 	 * @param dao the dao to set
 	 */
@@ -30,15 +35,17 @@ public class AdminServiceImpl implements IAdminService{
 	}
 
 	@Override
-	@Transactional(readOnly = false)
-	public Admin createAdmin(Admin admin) throws VerificationInDataBaseException {
+	@Transactional(readOnly = false,rollbackFor = VerificationInDataBaseException.class)
+	public Admin createAdmin(Admin admin,User user,Role role) throws VerificationInDataBaseException {
 		List<User> u = daoUser.getUsersByMail(admin.getMail());
 		if(u.size() == 0){
-			return dao.createAdmin(admin);
+			 dao.createAdmin(admin);
+			 daoUser.saveUser(user);
+			 daoRole.saveRole(role, user.getIdUser());
 		}else{
 			 throw new VerificationInDataBaseException("cette adresse mail existe déja dans notre base de donnée");
 		}
-		
+		return null;
 	}
 
 	@Override

@@ -2,20 +2,28 @@ package com.adaming.myapp.formateur.service;
 
 import java.util.Date;
 import java.util.List;
-
-import org.apache.log4j.Logger;
+import javax.inject.Inject;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.adaming.myapp.entities.Formateur;
+import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.SessionEtudiant;
+import com.adaming.myapp.entities.User;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.formateur.dao.IFormateurDao;
+import com.adaming.myapp.role.dao.IRoleDao;
 import com.adaming.myapp.tools.LoggerConfig;
+import com.adaming.myapp.user.dao.IUserDao;
 
 @Transactional(readOnly=true)
 public class FormateurServiceImpl implements IFormateurService {
-
+    
 	private IFormateurDao dao;
+	
+	@Inject
+	private IUserDao daoUser;
+	@Inject
+	private IRoleDao daoRole;
 
 
 	public void setDao(IFormateurDao dao) {
@@ -24,31 +32,21 @@ public class FormateurServiceImpl implements IFormateurService {
 	}
 
 	@Override
-	@Transactional(readOnly=false)
-	public Formateur addFormateur(final Formateur f)
+	@Transactional(readOnly=false,rollbackFor = VerificationInDataBaseException.class)
+	public Formateur addFormateur(final Formateur f,final User user,final Role role)
 			throws VerificationInDataBaseException {
-		List<Object[]> formateurs = getFormateuByName(f.getNom(), f.getDateDeNaissance(),f.getMail());
 		
-		/*verification*/
-		if(!formateurs.isEmpty()){
-			for(Object[] formateur:formateurs){
-				String nom = (String) formateur[0];
-				Date date = (Date) formateur[1];
-				String mail = (String) formateur[2];
-				if(date.compareTo(f.getDateDeNaissance()) == 0
-						&& nom.equals(f.getNom()))
-				{
-					throw new VerificationInDataBaseException("Le Formateur "
-							+ f.getNom()
-							+ " Existe déja dans la base de données");
-				}
-				else if(mail.equals(f.getMail()))
-				{
-					throw new VerificationInDataBaseException("l'adresse mail "+mail+" existe déjà dans la base de donnée, Veuillez renseigner une autre adresse mail");
-				}
-			}
+		if(!daoUser.getUsersByMail(f.getMail()).isEmpty())
+		{
+			throw new VerificationInDataBaseException("l'adresse mail "+f.getMail()+" existe déjà dans notre base de donnée Veuillez renseigner une autre adresse mail");
 		}
-		return dao.addFormateur(f);
+		else
+		{
+			dao.addFormateur(f);
+			daoUser.saveUser(user);
+			daoRole.saveRole(role,user.getIdUser());
+		}
+		return null;
 	}
 
 	@Override

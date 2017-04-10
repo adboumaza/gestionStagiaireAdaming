@@ -54,7 +54,7 @@
                                           <label for="cname" class="control-label col-lg-2">Nom <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <h:inputText maxlength="30" value="#{formateurBean.nom}" class="form-control" id="cname"  type="text">
-                                                  <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
+                                                  <f:validateRegex pattern="[a-z A-Zéèàâãäæçêë]+$"></f:validateRegex>
                                               </h:inputText>
                                           </div>
                                           <h:message for="cname" style="color:red;text-align:center;display:block"></h:message>
@@ -63,7 +63,7 @@
                                           <label for="prenom" maxlength="30" class="control-label col-lg-2">Prénom <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <h:inputText  value="#{formateurBean.prenom}" class="form-control" id="prenom"  type="text">
-                                                 <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
+                                                 <f:validateRegex pattern="[a-z A-Zéèàâãäæçêë]+$"></f:validateRegex>
                                               </h:inputText>
                                           </div>
                                           <h:message for="prenom" style="color:red;text-align:center;display:block"></h:message>
@@ -72,7 +72,7 @@
                                           <label for="adresse" class="control-label col-lg-2">Adresse <span class="required">*</span></label>
                                           <div class="col-lg-10">
                                               <h:inputText maxlength="100" value="#{formateurBean.adresse}" class="form-control" id="adresse"  type="text">
-                                                   <f:validateRegex pattern="[a-z A-ZÉéè 0-9]+$"></f:validateRegex>
+                                                   <f:validateRegex pattern="[a-z A-ZÉéèàâãäæçêë 0-9]+$"></f:validateRegex>
                                               </h:inputText>
                                           </div>
                                           <h:message for="adresse" style="color:red;text-align:center;display:block"></h:message>

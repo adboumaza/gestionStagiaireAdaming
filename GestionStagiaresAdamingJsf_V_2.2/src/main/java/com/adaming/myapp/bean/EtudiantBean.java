@@ -62,8 +62,6 @@ public class EtudiantBean implements Serializable {
 	private IUserService serviceUser;
 
 	@Inject
-	private IRoleService serviceRole;
-	@Inject
 	private FormateurBean formateurBean;
 	
 	private Adresse adresseObject;
@@ -138,9 +136,7 @@ public class EtudiantBean implements Serializable {
 		user = createUser(passwordCrypted);
 		role = createRole();
 		try {
-			serviceEtudiant.addStudent(etudiant, idSession);
-			serviceUser.saveUser(user);
-			serviceRole.saveRole(role, user.getIdUser());
+			serviceEtudiant.addStudent(etudiant, idSession,user,role);
 			Utilitaire.displayMessageInfo("l'Etudiant "
 			+ nomEtudiant+ ", "+ prenomEtudiant+ " à bien été ajoutée avec succès"
             + " Voici les informations du compte etudiant : "

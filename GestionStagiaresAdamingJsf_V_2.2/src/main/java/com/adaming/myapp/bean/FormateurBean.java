@@ -5,10 +5,13 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 
 
+
+import java.util.Set;
 
 import javax.faces.bean.ViewScoped;
 import javax.inject.Inject;
@@ -136,9 +139,7 @@ public class FormateurBean implements Serializable{
 		role = createRole();
 		try 
 		{
-			serviceFormateur.addFormateur(formateur);
-			serviceUser.saveUser(user);
-			serviceRole.saveRole(role, user.getIdUser());
+			serviceFormateur.addFormateur(formateur,user,role);
 			Utilitaire.displayMessageInfo("le Formateur "+nom+", "+prenom+" à bien été ajouté avec succès"+" Un e-mail de confirmation a été adressé à l’adresse e-mail : "+"Pseudo : "+mail+", Password : "+passwordRandom);
 			SendEmailUtil.sendMail(formateur.getMail(), "Confirmation de votre inscription",SendEmailUtil.CONFIRMATION_MESSAGE(formateur.getCivilite(),formateur.getNom(),formateur.getPrenom(),formateur.getMail(), passwordRandom,SendEmailUtil.getAbsoluteApplicationUrl()));
 			reset();
@@ -245,8 +246,8 @@ public class FormateurBean implements Serializable{
 	 * @see com.adaming.myapp.tools.DataUtil.fillingSpecialites
 	 **/
 	public List<String> specialitesInfo(String query){
-		List<String> specilites = DataUtil.fillingSpecialites(query);
-		List<String> filtred = Utilitaire.filterObject(query, specilites);
+		List<String> specialites = DataUtil.fillingSpecialites(query);
+		List<String> filtred = Utilitaire.filterObject(query, specialites);
 		return filtred;
 	}
 	
@@ -283,6 +284,7 @@ public class FormateurBean implements Serializable{
 				System.out.println(toponym.getName());
 				villes.add(toponym);
 			}
+			
 		}
 		else
 		{

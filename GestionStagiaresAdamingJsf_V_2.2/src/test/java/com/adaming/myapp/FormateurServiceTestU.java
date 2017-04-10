@@ -10,7 +10,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.adaming.myapp.entities.Adresse;
 import com.adaming.myapp.entities.Formateur;
+import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.SessionEtudiant;
+import com.adaming.myapp.entities.User;
 import com.adaming.myapp.evenement.service.IEvenementService;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.formateur.service.IFormateurService;
@@ -37,7 +39,7 @@ public class FormateurServiceTestU {
 		Adresse adresse = new Adresse("adresse", "ville", "codePostal", "pays");
 		Formateur f = new Formateur("civilite", "nom", "prenom", "telMobile", "mail", "nationalite",null, "specialite",adresse);
 		try {
-			serviceFormateur.addFormateur(f);
+			serviceFormateur.addFormateur(f,new User(),new Role());
 		} catch (VerificationInDataBaseException e) {
 			System.out.println(e.getMessage());
 		}

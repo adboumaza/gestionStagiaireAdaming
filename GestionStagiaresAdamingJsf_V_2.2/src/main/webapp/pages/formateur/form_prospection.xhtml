@@ -18,7 +18,7 @@
 	<div class="well container">
        <br/>
 	     <!-- messages errors + exception -->
-		   <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />   
+		   <p:growl id="messages" showDetail="true" autoUpdate="true" closable="true" severity="info,warning" />   
 		 <!-- Form validations -->  
 		 <section class="wrapper">
 		  <div class="row">
@@ -47,15 +47,73 @@
                                         <br/><br/>
                                        <!-- Affichage Evenement/Etudiant --> 
 									  <c:if test="#{fn:length(scheduleView.students) >0 }">
+									  <div class="form-group ">
+	                                          <label for="etudiant" class="control-label col-lg-2">Etudiant <span class="required">*</span></label>
+	                                          <div class="col-lg-10">
+	                                              <h:selectOneMenu id="etudiant" style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker"
+													value="#{scheduleView.idEtudiant}">
+													<f:selectItem itemDisabled="true" itemLabel="Sélectionnez un etudiant"
+														itemValue="#{null}" />
+													<f:selectItems value="#{scheduleView.students}" var="e"
+														itemLabel="#{e.nomEtudiant},#{e.prenomEtudiant}"
+														itemValue="#{e.idEtudiant}" />
+												</h:selectOneMenu>
+	                                          </div>
+	                                          <br></br>
+	                                          <h:message for="etudiant" style="text-align:center;color:red;display:block"></h:message>
+	                                    </div>
+	                                    <div class="form-group ">
+	                                          <label for="comment" class="control-label col-lg-2">Commentaire <span class="required">*</span></label>
+	                                          <div class="col-lg-10">
+	                                              <h:selectOneMenu id="comment" style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker"
+														value="#{scheduleView.commentaire}">
+														<f:selectItem itemLabel="Choisir un commentaire"
+															itemValue="#{null}" itemDisabled="true" />
+														<f:selectItems value="#{scheduleView.comportement}" var="c" itemLabel="#{c}" itemValue="#{c}"></f:selectItems>	
+														
+												</h:selectOneMenu>
+	                                          </div>
+	                                          <br></br>
+	                                          <h:message for="comment" style="text-align:center;color:red;display:block"></h:message>
+	                                       </div>
+										
+										<div class="form-group ">
+	                                          <label for="risque" class="control-label col-lg-2">Risque <span class="required">*</span></label>
+	                                          <div class="col-lg-10">
+	                                              <h:selectOneMenu id="risque" style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker"
+														value="#{scheduleView.risque}">
+														<f:selectItem itemLabel="Quel est le risque"
+															itemValue="#{null}" itemDisabled="true" />
+														<f:selectItem itemLabel="Faible"
+															itemValue="Faible" />
+														<f:selectItem itemLabel="Moyen"
+															itemValue="Moyen" />
+														<f:selectItem itemLabel="Élevé"
+															itemValue="Élevé" />
+												</h:selectOneMenu>
+	                                          </div>
+	                                          <br></br>
+	                                          <h:message for="risque" style="text-align:center;color:red;display:block"></h:message>
+	                                       </div>
+	                                       
+	                                        <div class="form-group">
+	                                          <div class="col-lg-offset-2 col-lg-10">
+	                                              <h:commandButton  action="#{scheduleView.addProspection(scheduleView.idEtudiant,scheduleView.risque,scheduleView.commentaire)}" value="Signaler Un Evenement" styleClass="btn btn-primary"/>
+	                                          </div>
+	                                      </div>
+	                                      </c:if>
+	                                      </h:form>
+	                                      
+										<h:form id="form20">
 										<div align="center">
 										      <!-- more Informations width tag absence-->
 										      <div class="champsObligatoire">
 										      <h:outputText style="color:black" value="Merci de remplir tous les champs du tableau ci-dessous afin que nous puissions rediriger toutes les informations  vers Nos clients.  " />
 						                      </div>
 										    <br/> <br/>
-										    <p:dataTable reflow="true" var="e" value="#{scheduleView.students}"
-												id="studentTable" editable="true" editMode="cell" widgetVar="cellSchedule"
-												style="width:96%;margin-bottom:20px;">
+										    
+										    <p:dataTable  var="e" value="#{scheduleView.students}" reflow="true"
+												id="studentTable"  style="width:96%;margin-bottom:20px;">
 						
 												<f:facet name="header">
 													<h:outputText value="Suivi collaborateurs - Session n°: " />
@@ -64,68 +122,90 @@
 													<h:outputText style="color:red;font-weight:bold" value="  Début:#{scheduleView.sessionFormateur.dateDebute} ; "/>
 													<h:outputText style="color:red;font-weight:bold" value="  Fin:#{scheduleView.sessionFormateur.dateFin}"/>
 												</f:facet>
-												
-												<p:column style="width:100px;">
-														<f:facet name="header">
-														<h:outputText value="Nom" />
-														</f:facet>
-													    <h:outputText value="#{e.nomEtudiant}" />
-												</p:column>
-												<p:column style="width:100px;">
-														<f:facet name="header">
-														     <h:outputText value="Prenom" />
-														</f:facet>
-													    <h:outputText value="#{e.prenomEtudiant}" />
-												</p:column>
-												
-												<p:column style="width:190px;">
-												    <f:facet name="header">
-														<h:outputText value="Risque" />
+												<p:column width="15%">
+													<f:facet name="header">
+															<h:outputText value="Nom" />
 													</f:facet>
-										           <p:cellEditor>
-										               <f:facet name="output"><h:outputText value="#{e.risque[0]}" style="cursor:pointer"/></f:facet>
-										               <f:facet name="input">
-										                <p:selectOneMenu value="#{e.risque[0]}" style="width:200px">
-						                                  <f:selectItems value="#{e.risque}" var="r" itemLabel="#{r}" itemValue="#{r}"  />
-						                                </p:selectOneMenu>
-										               </f:facet>
-										            </p:cellEditor>
+													 <h:outputText value="#{e.nomEtudiant}"></h:outputText>
 												</p:column>
-												<p:column>
+												<p:column width="15%">
 												    <f:facet name="header">
-														<h:outputText value="Commentaires" />
+															<h:outputText value="Prénom" />
 													</f:facet>
-										            <p:cellEditor>
-										               <f:facet name="output"><h:outputText value="#{e.comportement[0]}" style="cursor:pointer" /></f:facet>
-										               <f:facet name="input">
-										                <p:selectOneMenu value="#{e.comportement[0]}" style="width:100%">
-						                                  <f:selectItems value="#{e.comportement}" var="c" itemLabel="#{c}" itemValue="#{c}" />
-						                                </p:selectOneMenu>
-										               </f:facet>
-										            </p:cellEditor>
+												  <h:outputText value="#{e.prenomEtudiant}"></h:outputText>
+												  
 												</p:column>
-												<p:columnGroup type="footer">
-						                          <p:row>
-									                 <p:column colspan="2" style="text-align:center" footerText="Etudiant"/>
-									                
-									                 <p:column colspan="2" footerText="Suivi Prospection"/>
-									              </p:row>
-									            </p:columnGroup>
+												
+												<p:column width="10%" style="text-align:center;">
+												    <f:facet name="header">
+															<h:outputText value="Risque" />
+													</f:facet>
+													<p:dataList  rendered="#{fn:length(e.prospections) > 0}" value="#{e.prospections}" var="p">
+												      <h:outputText  value="#{p.risque}"></h:outputText>
+												   </p:dataList>
+												   <h:outputText style="color:red;" rendered="#{fn:length(e.prospections) == 0}" value="n'est pas encore signalé"></h:outputText>
+												</p:column>
+												<p:column width="58%">
+												    <f:facet name="header">
+															<h:outputText value="Commentaire" />
+													</f:facet>
+													<p:dataList rendered="#{fn:length(e.prospections) > 0}" value="#{e.prospections}" var="p">
+												      <h:outputText value="#{p.commentaire}"></h:outputText>
+												   </p:dataList>
+												   <h:outputText style="color:red;text-align:center!important;margin:auto;display:block" rendered="#{fn:length(e.prospections) == 0}" value="n'est pas encore signalé"></h:outputText>
+												</p:column>
+					                            
+												<p:column width="7%" style="text-align:center;">
+												    <f:facet name="header">
+															<h:outputText value="Action" />
+													</f:facet>
+													<p:commandLink rendered="#{fn:length(e.prospections) > 0}" title="Modifier" oncomplete="PF('actionDialog').show()">
+													    <h:graphicImage name="NiceAdmin/img/pencil.png" style="width:20px;height:20px"></h:graphicImage>
+												        <f:param value="#{e.idEtudiant}" name="idEtudiant" />
+														 <p:ajax update="@form"  event="click" listener="#{scheduleView.getProspectionByEtudiant(e.idEtudiant)}" />
+												    </p:commandLink>
+												</p:column>
 											</p:dataTable>
-											<p:commandButton value="générer un excel" id="xls" ajax="false">  
-									        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-									        <pe:exporter encoding="CP1252" type="xlsx" target="studentTable" fileName="GroupedTable"/>  
-						  
-						                    </p:commandButton>  
-						                    
-						                    <p:commandButton value="générer un pdf"  id="pdf" ajax="false">  
-									        <f:setPropertyActionListener value="false" target="#{exporterController.customExporter}" />  
-									        <pe:exporter encoding="CP1252" type="pdf" target="studentTable" fileName="GroupedTable"/>  
-						  
-						                    </p:commandButton> 
 											
+											   <p:dialog header="Module Info" widgetVar="actionDialog" modal="true"
+														showEffect="blind" hideEffect="explode" resizable="false">
+														<p:outputPanel id="moduleDetail" style="text-align:center;">
+															<h:outputText value="Nom" />
+															<br />
+															<h:inputText value="#{scheduleView.prospection.etudiant.nomEtudiant}" disabled="true"/>
+															<br/><br/>
+															<h:outputText value="prénom" />
+															<br />
+															<h:inputText value="#{scheduleView.prospection.etudiant.prenomEtudiant}" disabled="true"/>
+															<br/><br/>
+															<h:outputText value="Risque" />
+															<br />
+														     <p:selectOneMenu style="width:100%" value="#{scheduleView.prospection.risque}">
+																
+																
+																<f:selectItem itemLabel="Faible"
+																itemValue="Faible" />
+																<f:selectItem itemLabel="Moyen"
+																itemValue="Moyen" />
+																<f:selectItem itemLabel="Élevé"
+																 itemValue="Élevé" />
+																									
+															</p:selectOneMenu>
+															<br />
+															
+															<h:outputText value="Commentaire" />
+															<br />
+														     <p:selectOneMenu style="width:100%" value="#{scheduleView.prospection.commentaire}">
+																						
+																<f:selectItems  value="#{scheduleView.comportement}" var="c" itemLabel="#{c}" itemValue="#{c}"></f:selectItems>	
+																									
+															</p:selectOneMenu>
+														</p:outputPanel>
+														<br />
+														<br />
+														<p:commandButton update="@form" oncomplete="PF('actionDialog').hide()" value="Modifier" action="#{scheduleView.update(scheduleView.prospection.etudiant.idEtudiant)}"></p:commandButton>
+													</p:dialog> 
 										</div>
-									</c:if>
                                   </h:form>
                               </div>
                           </div>

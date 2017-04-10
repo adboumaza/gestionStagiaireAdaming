@@ -72,8 +72,10 @@ public class ClassementBean implements Serializable {
 	private IQuestionService serviceQuestions;
 	@Inject
 	private UserAuthentificationBean userAuthentification;
-
-	private Long idModule;
+    @Inject
+	private ScheduleView scheduleViewBean;
+	
+    private Long idModule;
 	private SessionEtudiant sessionEtudiant;
 	private List<Object[]> notes;
 	private Etudiant etudiant;
@@ -138,7 +140,7 @@ public class ClassementBean implements Serializable {
 		etudiant = serviceEtudiant.getEtudiant(userAuthentification.getName());
 		return etudiant;
 	}
-
+    /*recupérer la litse des notes par etudiant*/
 	public String getAllNotesByStudents() {
 		etudiant = createEtudiant();
 		notesByStudents = serviceNotes.getAllNotesByStudent(etudiant
@@ -163,14 +165,17 @@ public class ClassementBean implements Serializable {
 
 	}
 
-	/** cette méthode permet de faire un classement des etudiants */
+	/** cette méthode permet de faire un classement des etudiants 
+	 * acces etudiants */
 	public String getClassementGeneral() {
 		getEtudiantByName();
 		if (sessionEtudiant != null) {
-
+			barModel.clear();
+			barModel = new BarChartModel();
 			LoggerConfig.logInfo("la session en Cours" + sessionEtudiant);
 			try {
 				setCustomException("");
+				moyenneGeneral = new Double(0);
 				List<Object[]> classement = serviceNotes
 						.getClassementGeneralBySession(sessionEtudiant
 								.getIdSession());
@@ -198,6 +203,55 @@ public class ClassementBean implements Serializable {
 
 			} catch (VerificationInDataBaseException e) {
 				setCustomException(e.getMessage());
+				setMoyenneGeneral(null);
+			}
+
+		}
+
+		return "classement_general?faces-redirect=true";
+	}
+	
+	
+	/** cette méthode permet de faire un classement des etudiants 
+	 * pour l'acces Formateur */
+	public String getClassementGeneralFormateur() {
+		SessionEtudiant sessionFormateur = scheduleViewBean.initReporting();
+		
+		if (sessionFormateur != null) {
+			barModel.clear();
+			barModel = new BarChartModel();
+			LoggerConfig.logInfo("la session en Cours" + sessionFormateur);
+			try {
+				setCustomException("");
+				moyenneGeneral = new Double(0);
+				List<Object[]> classement = serviceNotes
+						.getClassementGeneralBySession(sessionFormateur
+								.getIdSession());
+				LoggerConfig.logInfo("liste des etudiants qui ont une note"
+						+ classement);
+
+				ChartSeries chartBare = new ChartSeries();
+				for (Object[] cc : classement) {
+					String prenomEtudiant = (String) cc[1];
+					Double moyenne = (Double) cc[2];
+					chartBare.set(prenomEtudiant, new Double(moyenne));
+					LoggerConfig.logInfo("moyenne" + moyenne);
+				}
+
+				barModel.addSeries(chartBare);
+				moyenneGeneral = serviceNotes
+						.getMoyenneGeneralBySession(sessionFormateur
+								.getIdSession());
+				pieModel3.set("La Moyenne Générale", moyenneGeneral);
+				pieModel3.set("Rest", 20 - moyenneGeneral);
+				LoggerConfig.logInfo("Moyenne général" + moyenneGeneral);
+				customChart(pieModel3,
+						"la Moyenne Générale de la session numéro "
+								+ sessionFormateur.getIdSession());
+
+			} catch (VerificationInDataBaseException e) {
+				setCustomException(e.getMessage());
+				setMoyenneGeneral(null);
 			}
 
 		}
@@ -342,5 +396,21 @@ public class ClassementBean implements Serializable {
 	public void setCustomException(String customException) {
 		this.customException = customException;
 	}
+
+	/**
+	 * @return the scheduleViewBean
+	 */
+	public ScheduleView getScheduleViewBean() {
+		return scheduleViewBean;
+	}
+
+	/**
+	 * @param scheduleViewBean the scheduleViewBean to set
+	 */
+	public void setScheduleViewBean(ScheduleView scheduleViewBean) {
+		this.scheduleViewBean = scheduleViewBean;
+	}
+	
+	
 
 }

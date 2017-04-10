@@ -60,8 +60,8 @@ public class NotesServiceTestU {
 
 	
 	@Test
-	public void getClassementGenral(){
-		Double moyenneGeneral = serviceNotes.getClassementGeneralBySession(1L, 11L);
+	public void getClassementGenral() throws VerificationInDataBaseException{
+		List<Object[]> moyenneGeneral = serviceNotes.getClassementGeneralBySession(1L);
 	    System.out.println("Moyenne : "+moyenneGeneral);
 	}
 	

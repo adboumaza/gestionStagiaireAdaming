@@ -14,6 +14,8 @@ import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.adaming.myapp.entities.Etudiant;
+import com.adaming.myapp.entities.Role;
+import com.adaming.myapp.entities.User;
 import com.adaming.myapp.etudiant.service.IEtudiantService;
 import com.adaming.myapp.exception.AddEtudiantException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
@@ -40,7 +42,7 @@ public class EtudiantServiceTestU {
 	public void testAddStudent() throws VerificationInDataBaseException {
 		Etudiant e = new Etudiant("nomEtudiant2", "prenomEtudiant2", new Date(), "formationInitial", "ecole", new Date(), "numTel", "mail2",null);
 		try {
-			serviceEtudiant.addStudent(e,1L);
+			serviceEtudiant.addStudent(e, 1L, new User(), new Role());
 			assertNotNull(e.getIdEtudiant());
 		} catch (VerificationInDataBaseException e1) {
 			System.out.println(e1.getMessage());

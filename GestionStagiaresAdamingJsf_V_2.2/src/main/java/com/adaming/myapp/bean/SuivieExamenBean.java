@@ -9,6 +9,10 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import org.primefaces.model.chart.Axis;
+import org.primefaces.model.chart.AxisType;
+import org.primefaces.model.chart.BarChartModel;
+import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.PieChartModel;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,6 +27,7 @@ import com.adaming.myapp.notes.service.INotesService;
 import com.adaming.myapp.session.service.ISessionService;
 import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.Utilitaire;
+import com.sun.faces.facelets.impl.IdMapper;
 /**
  * 
  * @author adel
@@ -44,6 +49,8 @@ public class SuivieExamenBean implements Serializable{
 	private UserAuthentificationBean userAuthentificationBean;
 	@Inject
     private IFormateurService serviceFormateur;
+	@Inject
+	private INotesService serviceNotes;
 	
 	private Long idSession;
 	private List<Object[]> sessionEnCours;
@@ -53,7 +60,11 @@ public class SuivieExamenBean implements Serializable{
 	private Double moyenne;
 	private Double moyenneModule;
 	private PieChartModel pieModel1;
+	private BarChartModel barModel;
+	private PieChartModel pieModel2;
+	private Double moyenneGeneral;
 	private SessionEtudiant sessionFormateur;
+	private String customException;
 	
 	public String init(){
 		idSession = null;
@@ -64,10 +75,14 @@ public class SuivieExamenBean implements Serializable{
 	@PostConstruct
 	public void initChart(){
 		pieModel1 = new PieChartModel();
+		pieModel2 = new PieChartModel();
+		barModel = new BarChartModel();
+		createBarModel();
 	}
 	
 	/** cette method permet de vérifier est ce que le module à été passée ou non 
 	 *  espace admin
+	 *  si un module est passé par la session on récupère le classement
 	 * **/
 	public void getModulesBySession(){
 		modules=serviceModule.getModulesBySessionV2(idSession);
@@ -77,10 +92,13 @@ public class SuivieExamenBean implements Serializable{
 				moyenne = serviceNote.getMoyenne(idSession,idModule);
 				if(moyenne != null){
 					m[2] = true;
+					/*si des modules ont déja passé par la session  on récupére le classement*/
+					
 					LoggerConfig.logDebug("module "+m[0]+"--"+moyenne);
 				}else{
 					m[2] = false;
 					LoggerConfig.logDebug("module "+m[0]+"--"+moyenne);
+				
 				}
 				
 			}
@@ -133,15 +151,71 @@ public class SuivieExamenBean implements Serializable{
 		moyenneModule = serviceNote.getMoyenne(idSession, idModule);
 		pieModel1.set("Moyenne", moyenneModule);
 		pieModel1.set("Rest", 20 - moyenneModule);
-		pieModel1.setTitle("la moyenne du module numéro"+idModule);
-	    pieModel1.setLegendPosition("e");
-        pieModel1.setFill(false);
-        pieModel1.setShowDataLabels(true);
-        pieModel1.setDiameter(150);
+		customChart(pieModel1, "la moyenne du module numéro"+idModule);
 		return "notes?faces-redirect=true";
 	}
 	
+	/** cette méthode permet de faire un classement des etudiants 
+	 * acces admin */
+	public String getClassementGeneral(Long idSession,Long idModule) {
+			barModel.clear();
+			barModel = new BarChartModel();
+			LoggerConfig.logInfo("la session en Cours" + idSession);
+			try {
+				setCustomException("");
+				moyenneGeneral = new Double(0);
+				List<Object[]> classement = serviceNotes
+						.getClassementGeneralBySession(idSession);
+				LoggerConfig.logInfo("liste des etudiants qui ont une note"
+						+ classement);
+
+				ChartSeries chartBare = new ChartSeries();
+				for (Object[] cc : classement) {
+					String prenomEtudiant = (String) cc[1];
+					Double moyenne = (Double) cc[2];
+					chartBare.set(prenomEtudiant, new Double(moyenne));
+					LoggerConfig.logInfo("moyenne" + moyenne);
+				}
+
+				barModel.addSeries(chartBare);
+				moyenneGeneral = serviceNotes
+						.getMoyenneGeneralBySession(idSession);
+				moyenneModule = serviceNote.getMoyenne(idSession, idModule);
+				pieModel2.set("La Moyenne Générale", moyenneModule);
+				pieModel2.set("Rest", 20 - moyenneModule);
+				LoggerConfig.logInfo("Moyenne général" + moyenneGeneral);
+				customChart(pieModel2,
+						"la Moyenne Générale du module N° "+idModule);
+
+			} catch (VerificationInDataBaseException e) {
+				setCustomException(e.getMessage());
+				setMoyenneGeneral(null);
+			}
+			return "classement_general?faces-redirect=true";
+	}
 	
+	private void createBarModel() {
+
+		barModel.setTitle("le classement Général");
+		barModel.setLegendPosition("ne");
+
+		Axis xAxis = barModel.getAxis(AxisType.X);
+		xAxis.setLabel("Etudiant");
+
+		Axis yAxis = barModel.getAxis(AxisType.Y);
+		yAxis.setLabel("Moyenne");
+		yAxis.setMin(0);
+		yAxis.setMax(20);
+	}
+	
+	private PieChartModel customChart(PieChartModel pieModel2, String title) {
+		pieModel2.setLegendPosition("e");
+		pieModel2.setFill(false);
+		pieModel2.setShowDataLabels(true);
+		pieModel2.setDiameter(150);
+		pieModel2.setTitle(title);
+		return pieModel2;
+	}
 
 	public Long getIdSession() {
 		return idSession;
@@ -239,6 +313,54 @@ public class SuivieExamenBean implements Serializable{
 	 */
 	public void setSessionFormateur(SessionEtudiant sessionFormateur) {
 		this.sessionFormateur = sessionFormateur;
+	}
+	/**
+	 * @return the barModel
+	 */
+	public BarChartModel getBarModel() {
+		return barModel;
+	}
+	/**
+	 * @param barModel the barModel to set
+	 */
+	public void setBarModel(BarChartModel barModel) {
+		this.barModel = barModel;
+	}
+	/**
+	 * @return the pieModel2
+	 */
+	public PieChartModel getPieModel2() {
+		return pieModel2;
+	}
+	/**
+	 * @param pieModel2 the pieModel2 to set
+	 */
+	public void setPieModel2(PieChartModel pieModel2) {
+		this.pieModel2 = pieModel2;
+	}
+	/**
+	 * @return the customException
+	 */
+	public String getCustomException() {
+		return customException;
+	}
+	/**
+	 * @param customException the customException to set
+	 */
+	public void setCustomException(String customException) {
+		this.customException = customException;
+	}
+	/**
+	 * @return the moyenneGeneral
+	 */
+	public Double getMoyenneGeneral() {
+		return moyenneGeneral;
+	}
+	/**
+	 * @param moyenneGeneral the moyenneGeneral to set
+	 */
+	public void setMoyenneGeneral(Double moyenneGeneral) {
+		this.moyenneGeneral = moyenneGeneral;
 	}
 	
 	

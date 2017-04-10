@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
+import org.primefaces.event.RowEditEvent;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Formateur;
 import com.adaming.myapp.entities.Module;
+import com.adaming.myapp.entities.Prospection;
 import com.adaming.myapp.entities.Questions;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.etudiant.service.IEtudiantService;
@@ -29,6 +31,7 @@ import com.adaming.myapp.exception.EvenementNotFoundException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.formateur.service.IFormateurService;
 import com.adaming.myapp.module.service.IModuleService;
+import com.adaming.myapp.prospection.service.IProspectionService;
 import com.adaming.myapp.question.service.IQuestionService;
 import com.adaming.myapp.session.service.ISessionService;
 import com.adaming.myapp.tools.LoggerConfig;
@@ -49,6 +52,9 @@ public class ScheduleView  implements Serializable {
 	 * @see org.apache.log4j.Logger
 	 */
     
+	@Inject
+	private IProspectionService serviceProspection;
+	
     @Inject
     private SessionBean sessionBean; 
     
@@ -72,6 +78,16 @@ public class ScheduleView  implements Serializable {
 	@Inject
 	private UserAuthentificationBean userAuthentificationBean;
     
+	/*prospection*/
+	 @NotEmpty(message="Veuillez sélectionner un niveau de risque")
+	private String risque;
+	 @NotEmpty(message="Veuillez sélectionner un commentaire")
+	private String commentaire;
+	private final static String [] comportement = {"Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique satisfaisant.  Sérieux et appliqué.bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique satisfaisant.  Personne sérieuse, autonome, motivée  et appliquée,bonne communication,  Parmis  les meilleurs elements.","Niveau technique moyen, motivée, ralleur .","Niveau technique satisfaisant. autonome et motivé mais distrait quelques fois, bonne capacité à comprendre, Parmi les meilleurs de la session.","Niveau technique satisfaisant. Tres bonne progression. Sérieux et bonne communication.","Niveau technique satisfaisant.  Autonome, Parmis  les meilleurs elements de la session,Communique peut.","Niveau technique moyen,  Assez discret,  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique moyen,Communique peut.","Niveau technique satisfaisant, autonome,  Parmis  les meilleurs elements,bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Est un peu plus lent, mais sera operationnel au terme de la formation ","A ne pas Envoyer"};
+    private Prospection prospection = null;
+    private Etudiant etudiant;
+    
+	/*evaluation*/
 	@NotNull(message="Veuillez sélectionner un Module")
 	private Long idModule;
 	private Long idSpecialite;
@@ -80,14 +96,16 @@ public class ScheduleView  implements Serializable {
 	private List<Object[]> modules;
 	private Module module;
 	private Set<Questions> questions;
-
+   
+	/*absence*/
 	private Date dateIn;
 	private String[] dateString;
 	private DateTime[] joursSemaine;
 	private int annee;
 	private int semaine;
 	private boolean dispo;
-	/**@evenement */
+	
+	/** evenement */
     @NotNull(message="Veuillez sélectionner un étudiant")
 	private Long idEtudiant;
     @NotNull(message="Veuillez sélectionner une Date de début")
@@ -173,11 +191,42 @@ public class ScheduleView  implements Serializable {
 		}
 
 	}*/
-
-
+    /*cette methode permet d'ajouter l'objet prospection */
+	public void addProspection(Long idEtudiant,String risque,String commentaire){
+		try {
+			serviceProspection.addProspection(new Prospection(risque, commentaire), idEtudiant);
+			Utilitaire.displayMessageInfo("Succès");
+		    getStudentsBySession();
+			resetProspection();
+		} catch (VerificationInDataBaseException e) {
+			Utilitaire.displayMessageWarning(e.getMessage());
+		}
+	   
+	}
+	
+	private void resetProspection(){
+		commentaire = null;
+		risque = null;
+		idEtudiant = null;
+	}
+	
+	public void getProspectionByEtudiant(Long idEtudiant){
+		LoggerConfig.logInfo("idEtudiant"+idEtudiant);
+		prospection = new Prospection();
+		prospection = serviceProspection.getProspectionByEtudiant(idEtudiant);
+	    LoggerConfig.logInfo("Prospection En Cours!"+prospection);
+	   
+	}
+	
+	public void update(Long idEtudiant){
+		serviceProspection.updateProspection(prospection, idEtudiant);
+		getStudentsBySession();
+	}
+    
 	public String initProspection() throws VerificationInDataBaseException {
 		initReporting();
 		getStudentsBySession();
+		resetProspection();
 		return "prospection?redirect=true";
 	}
 
@@ -721,6 +770,71 @@ public class ScheduleView  implements Serializable {
 	public void setSessionBean(SessionBean sessionBean) {
 		this.sessionBean = sessionBean;
 	}
+
+	/**
+	 * @return the risque
+	 */
+	public String getRisque() {
+		return risque;
+	}
+
+	/**
+	 * @param risque the risque to set
+	 */
+	public void setRisque(String risque) {
+		this.risque = risque;
+	}
+
+	/**
+	 * @return the commentaire
+	 */
+	public String getCommentaire() {
+		return commentaire;
+	}
+
+	/**
+	 * @param commentaire the commentaire to set
+	 */
+	public void setCommentaire(String commentaire) {
+		this.commentaire = commentaire;
+	}
+
+	/**
+	 * @return the comportement
+	 */
+	public String[] getComportement() {
+		return comportement;
+	}
+
+	/**
+	 * @return the prospection
+	 */
+	public Prospection getProspection() {
+		return prospection;
+	}
+
+	/**
+	 * @param prospection the prospection to set
+	 */
+	public void setProspection(Prospection prospection) {
+		this.prospection = prospection;
+	}
+
+	/**
+	 * @return the etudiant
+	 */
+	public Etudiant getEtudiant() {
+		return etudiant;
+	}
+
+	/**
+	 * @param etudiant the etudiant to set
+	 */
+	public void setEtudiant(Etudiant etudiant) {
+		this.etudiant = etudiant;
+	}
+	
+	
 	
 	
 	

@@ -4,12 +4,14 @@ import java.util.Date;
 import java.util.List;
 
 import com.adaming.myapp.entities.Formateur;
+import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.SessionEtudiant;
+import com.adaming.myapp.entities.User;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 
 public interface IFormateurService {
 
-	 Formateur addFormateur(final Formateur f)
+	 Formateur addFormateur(final Formateur f,final User user,final Role role)
 			throws VerificationInDataBaseException;
 
 	 SessionEtudiant verifyExistingAffectation(final Long idFormateur,final Long idSession) throws VerificationInDataBaseException;

@@ -64,6 +64,23 @@
 										     <p:column headerText="Mail">
 										        <h:outputText value="#{event.etudiant.mail}" />
 										    </p:column>
+										    <c:if test="#{sessionBean.choix eq 'ABSENCE'}">
+												<p:column headerText="De">
+													<h:outputText  value="#{event.startDate}" />
+												</p:column>
+												<p:column headerText="A">
+													<h:outputText value="#{event.endDate}" />
+												</p:column>
+											</c:if>
+											
+											<c:if test="#{sessionBean.choix eq 'RETARD'}">
+												<p:column headerText="Durée">
+														<h:outputText rendered="#{(event.endDate.time - event.startDate.time)/(1000*60) gt 60}" value="#{(event.endDate.time - event.startDate.time)/(1000*60*60)} hrs"/>
+														<h:outputText rendered="#{(event.endDate.time - event.startDate.time)/(1000*60) eq 60}" value="#{(event.endDate.time - event.startDate.time)/(1000*60*60)} hrs"/>
+														<h:outputText rendered="#{(event.endDate.time - event.startDate.time)/(1000*60) lt 60}" value="#{(event.endDate.time - event.startDate.time)/(1000*60)} min"/>
+											   </p:column>
+										   </c:if>
+															
 										</p:dataTable>
                                   </h:form>
                           </div>
