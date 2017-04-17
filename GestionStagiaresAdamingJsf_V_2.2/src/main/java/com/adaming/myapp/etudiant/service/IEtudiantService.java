@@ -3,6 +3,7 @@ package com.adaming.myapp.etudiant.service;
 import java.util.Date;
 import java.util.List;
 
+import com.adaming.myapp.dto.EtudiantDto;
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.User;
@@ -82,5 +83,5 @@ public interface IEtudiantService {
 
 	Etudiant verifyExistingEtudiant(final String name, final Date dateDeNaissance);
 
-	
+	EtudiantDto getStudentDto(Long idStudent);
 }

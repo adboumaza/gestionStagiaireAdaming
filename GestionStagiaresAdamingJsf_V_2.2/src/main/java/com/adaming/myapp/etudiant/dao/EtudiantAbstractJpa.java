@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import com.adaming.myapp.dto.EtudiantDto;
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Module;
 import com.adaming.myapp.entities.SessionEtudiant;
@@ -160,5 +161,30 @@ public abstract class EtudiantAbstractJpa {
 			 etudiant = (Etudiant) query.getResultList().get(0);
 		 }
 		return etudiant;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public List<Etudiant> getEvaluationBySessionAndModuleAbstractJpa(final Long idSession,final Long idModule){
+		final String SQL = "From Etudiant e join fetch e.sessionEtudiant se join fetch e.evaluations ev join fetch ev.module mo where se.idSession =:x and mo.idModule=:y";
+		Query query = entityManager.createQuery(SQL).setParameter("x",idSession).setParameter("y",idModule);
+		return query.getResultList();
+	}
+	
+	public EtudiantDto getStudentDtoAbstractJpa(Long idStudent){
+		EtudiantDto dto = new EtudiantDto();
+		Etudiant et = entityManager.find(Etudiant.class, idStudent);
+	    if(et != null){
+	    	dto.setIdEtudiant(et.getIdEtudiant());
+	    	dto.setNomEtudiant(et.getNomEtudiant());
+	    	dto.setPrenomEtudiant(et.getPrenomEtudiant());
+	    	dto.setDateDeNaissance(et.getDateDeNaissance());
+	    	dto.setDateObtention(et.getDateObtention());
+	    	dto.getAdresseDto().setVille(et.getAdresse().getVille());
+	    	dto.getAdresseDto().setPays(et.getAdresse().getPays());
+	    	dto.getAdresseDto().setCodePostal(et.getAdresse().getCodePostal());
+	    	dto.getAdresseDto().setAdresse(et.getAdresse().getAdresse());
+	    }
+	    return dto;
 	}
 }

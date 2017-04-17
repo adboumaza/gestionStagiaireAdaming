@@ -3,6 +3,7 @@ package com.adaming.myapp.bean;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import com.adaming.myapp.etudiant.service.IEtudiantService;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.role.service.IRoleService;
 import com.adaming.myapp.session.service.ISessionService;
+import com.adaming.myapp.tools.DataUtil;
 import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.SendEmailUtil;
 import com.adaming.myapp.tools.Utilitaire;
@@ -116,7 +118,7 @@ public class EtudiantBean implements Serializable {
 	private String passwordRandom;
 	private String passwordCrypted;
 	private Date currentTime;
-	private List<Toponym> villes;
+	private List<String> villes ;
 
 	/**
 	 ** @throws URISyntaxException 
@@ -232,7 +234,7 @@ public class EtudiantBean implements Serializable {
 	 */
 	public String resetAndRedirect() {
 		reset();
-		setEtudiants(null);
+		init();
 		return "etudiant?faces-redirect=true";
 	}
 
@@ -243,14 +245,22 @@ public class EtudiantBean implements Serializable {
 	}
 
 	/*
-	 * get all sessions in progress and getAllSessions evry load page
+	 * get all sessions in progress
 	 */
 	public void init() {
 		sessionsEncours = serviceSession.getAllSessionsInProgressV2();
-		allSessions = serviceSession.getAllSessionsV2();
 		LoggerConfig.logInfo("Sessions en Cours : " + sessionsEncours);
-		LoggerConfig.logInfo("Toutes Les Sessions : " + sessionsEncours);
 		
+	}
+	
+	/*
+	 *  getAllSessions pour afficher la liste des etudiants en cas de modification
+	 */
+	public String initListeEtudiant() {
+		setEtudiants(null);
+		allSessions = serviceSession.getAllSessionsV2();
+		LoggerConfig.logInfo("Toutes Les Sessions : " + allSessions);
+		return "liste_etudiants?faces-redirect=true";
 	}
 
 	/**@throws VerificationInDataBaseException 
@@ -272,7 +282,7 @@ public class EtudiantBean implements Serializable {
 	 * de l'étudiant n'a pas été faite sur l'adresse mail
 	 * au cas contraire on modifie aussi le name de 
 	 * l'utilisateur (le mail de connection)*/
-	public String edit() throws VerificationInDataBaseException {
+	public void edit() throws VerificationInDataBaseException {
 	   
 		if(!user.getName().equals(etudiant.getMail()))
 		{
@@ -281,7 +291,7 @@ public class EtudiantBean implements Serializable {
 		}
 		serviceEtudiant.updateStudent(etudiant, idSession);
 	
-		return "etudiant?faces-redirect=true";
+		
 	}
 
 	/* get all students by session */
@@ -294,10 +304,39 @@ public class EtudiantBean implements Serializable {
 			setEtudiants(null);
 		}
 	}
-	public List<Toponym> getVillesByCp(String codePostal){
-		villes = new ArrayList<Toponym>();
+	/*cette methode permet de recupérer les villes depuis un code postal*/
+	public List<String> getVillesByCp(String codePostal){
+		villes = new ArrayList<String>();
 		villes = formateurBean.getVillesByCp(codePostal);
 		return villes;
+	}
+	/*cette methode permet de filter les villes obtenu depuis le web service, et la methode getVillesByCP*/
+	public List<String> getVillesFiltred(String query){
+		List<String> filtred = null;
+		if(villes == null){
+			villes = new ArrayList<String>();
+			LoggerConfig.logInfo("KO");
+		}
+		else if(!villes.isEmpty() && villes != null){
+			filtred = new ArrayList<String>();
+			filtred = Utilitaire.filterObject(query, villes);
+					LoggerConfig.logInfo("OK");
+		}
+		return filtred;
+		
+	}
+	
+	/**
+	 * la methode getPays permet de faire l'autocomplétion,
+	 * remplir le tableau de pays affecter à chaque formateur
+	 * 
+	 * @param  query le mot cle tapé dans le formulaire
+	 * @return la liste des pays trouvées
+	 * @see com.adaming.myapp.tools.Utilitaire.filterObject
+	 **/
+	public List<String> getPaysData(String query){
+		List<String> pays = formateurBean.getPaysData(query);
+		return pays;
 	}
 
 	public Long getIdEtudiant() {
@@ -478,11 +517,11 @@ public class EtudiantBean implements Serializable {
 		this.formateurBean = formateurBean;
 	}
 
-	public List<Toponym> getVilles() {
+	public List<String> getVilles() {
 		return villes;
 	}
 
-	public void setVilles(List<Toponym> villes) {
+	public void setVilles(List<String> villes) {
 		this.villes = villes;
 	}
 

@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+<ui:composition>
+	<br> </br>
+	<br> </br>
+	<br> </br>
+	<p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
+              <div class="sk-circle">
+			  <div class="sk-circle1 sk-child"></div>
+			  <div class="sk-circle2 sk-child"></div>
+			  <div class="sk-circle3 sk-child"></div>
+			  <div class="sk-circle4 sk-child"></div>
+			  <div class="sk-circle5 sk-child"></div>
+			  <div class="sk-circle6 sk-child"></div>
+			  <div class="sk-circle7 sk-child"></div>
+			  <div class="sk-circle8 sk-child"></div>
+			  <div class="sk-circle9 sk-child"></div>
+			  <div class="sk-circle10 sk-child"></div>
+			  <div class="sk-circle11 sk-child"></div>
+			  <div class="sk-circle12 sk-child"></div>
+			</div>
+        </p:dialog>
+	<div class="well container">
+		<br />
+		 <!-- messages errors + exception -->  
+		<p:growl id="growler" showDetail="true"  autoUpdate="true" severity="warn,info"></p:growl>
+		
+		<section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-12">
+					<ol class="breadcrumb">
+						<h3 class="page-header"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Évaluation <span style="color:red;">Module #{scheduleView.module.nomModule}</span></h3>
+					</ol>
+				</div>
+			</div>            
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Évaluations étudiants pour le module #{scheduleView.module.nomModule}
+                          </header>
+                          <div class="panel-body">
+                              <div class="form">
+                                  <h:form class="form-validate form-horizontal">
+                                     <p:growl id="growl" showDetail="true" showSummary="true" severity="info,warning" life="2000" autoUpdate="true"></p:growl>
+									 <c:if test="#{fn:length(scheduleView.students) >0 }">
+									  <div class="form-group ">
+	                                          <label for="etudiant" class="control-label col-lg-2">Etudiant <span class="required">*</span></label>
+	                                          <div class="col-lg-10">
+	                                              <h:selectOneMenu id="etudiant" style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker"
+													value="#{scheduleView.idEtudiant}">
+													<f:selectItem itemDisabled="true" itemLabel="Sélectionnez un etudiant"
+														itemValue="#{null}" />
+													<f:selectItems value="#{scheduleView.students}" var="e"
+														itemLabel="#{e.nomEtudiant},#{e.prenomEtudiant}"
+														itemValue="#{e.idEtudiant}" />
+												</h:selectOneMenu>
+	                                          </div>
+	                                          <br></br>
+	                                          <h:message for="etudiant" style="text-align:center;color:red;display:block"></h:message>
+	                                    </div>
+	                                    <br></br>
+	                                    <br></br>
+	                                    <div class="form-group ">
+	                                          <label for="comprehension" class="control-label col-lg-2">Compréhension <span class="required">*</span></label>
+	                                          <div class="col-lg-10">
+	                                              <h:selectOneRadio styleClass="myRadioCtrl" id="comprehension" required="true" requiredMessage="1 - Veuillez Sélectionner  Un niveau de Compréhension" value="#{scheduleView.comprehension}" style="color:black!important;">
+												       <f:selectItems value="#{scheduleView.comprehensionData}" var="c" itemLabel="#{c}" itemValue="#{c}"></f:selectItems>
+												 </h:selectOneRadio>
+	                                          </div>
+	                                          <br></br>
+	                                          <h:message for="comprehension" style="text-align:center;color:red;display:block"></h:message>
+	                                       </div>
+										
+											<div class="form-group ">
+		                                          <label for="participation" class="control-label col-lg-2">Participation <span class="required">*</span></label>
+		                                          <div class="col-lg-10">
+		                                              <h:selectOneRadio styleClass="myRadioCtrl" id="participation" required="true" requiredMessage="2 - Veuillez Sélectionner Un niveau de Participation" value="#{scheduleView.participation}" style="color:black!important">
+													     <f:selectItems value="#{scheduleView.participationData}" var="p" itemLabel="#{p}" itemValue="#{p}"></f:selectItems>
+													 </h:selectOneRadio>
+		                                          </div>
+		                                          <br></br>
+		                                          <h:message for="participation" style="text-align:center;color:red;display:block"></h:message>
+		                                       </div>
+	                                        <div class="form-group ">
+	                                          <label for="applicationTp" class="control-label col-lg-2">Application TP <span class="required">*</span></label>
+	                                          <div class="col-lg-10">
+	                                             <h:selectOneRadio styleClass="myRadioCtrl" id="applicationTp" required="true" requiredMessage="3 - Veuillez Sélectionner Un niveau d'Application TP " value="#{scheduleView.applicationTp}" style="color:black!important">
+												      <f:selectItems value="#{scheduleView.applicationTpData}" var="a" itemLabel="#{a}" itemValue="#{a}"></f:selectItems>
+												</h:selectOneRadio>
+												
+	                                          </div>
+	                                          <br></br>
+	                                          <h:message for="applicationTp" style="text-align:center;color:red;display:block"></h:message>
+	                                       </div>
+	                                        <div class="form-group">
+	                                          <div class="col-lg-offset-2 col-lg-10">
+	                                              <h:commandButton  action="#{scheduleView.addEvaluation(scheduleView.idEtudiant,scheduleView.module.idModule)}" value="Enregistrer" styleClass="btn btn-primary"/>
+	                                          </div>
+	                                        </div>
+	                                      </c:if>
+									</h:form>
+
+
+									<h:form>
+									     
+									     			<div align="center">
+										      <!-- more Informations width tag absence-->
+										      <div class="champsObligatoire">
+										      <h:outputText style="color:black" value="Merci de remplir tous les champs du tableau ci-dessous afin que nous puissions rediriger toutes les informations  vers Nos clients.  " />
+						                      </div>
+										    <br/> <br/>
+										    
+										    <p:dataTable  var="e" value="#{scheduleView.etudiantsEvaluations}"
+												id="studentTable"  style="width:96%;margin-bottom:20px;">
+						
+												<f:facet name="header">
+													<h:outputText value="ÉVALUATION - Session n°: " />
+													<h:outputText style="color:red;font-weight:bold;" value="#{scheduleView.sessionFormateur.idSession}"/>
+													<h:outputText style="color:red;font-weight:bold" value="  Formation : #{scheduleView.sessionFormateur.specialite.designation} ; " />
+													<h:outputText style="color:red;font-weight:bold" value="  Début:#{scheduleView.sessionFormateur.dateDebute} ; "/>
+													<h:outputText style="color:red;font-weight:bold" value="  Fin:#{scheduleView.sessionFormateur.dateFin} ; "/>
+													<h:outputText style="color:black;font-weight:bold" value="  Module:#{scheduleView.module.nomModule}"/>
+												</f:facet>
+												<p:column width="15%">
+													<f:facet name="header">
+															<h:outputText value="Nom" />
+													</f:facet>
+													 <h:outputText value="#{e.nomEtudiant}"></h:outputText>
+												</p:column>
+												<p:column width="15%">
+												    <f:facet name="header">
+															<h:outputText value="Prénom" />
+													</f:facet>
+												  <h:outputText value="#{e.prenomEtudiant}"></h:outputText>
+												  
+												</p:column>
+												
+												<p:column width="21%" style="text-align:center;">
+												    <f:facet name="header">
+															<h:outputText value="comprehension" />
+													</f:facet>
+													<p:dataList  rendered="#{fn:length(e.evaluations) > 0}" value="#{e.evaluations}" var="p">
+												      <h:outputText  value="#{p.comprehension}"></h:outputText>
+												   </p:dataList>
+												 
+												      <h:outputText style="color:red;" rendered="#{e.evaluations.size() == 0}" value="n'est pas encore signalé"></h:outputText>
+												   
+												</p:column>
+												
+												<p:column width="21%">
+												    <f:facet name="header">
+															<h:outputText value="applicationTp" />
+													</f:facet>
+													<p:dataList rendered="#{fn:length(e.evaluations) > 0}" value="#{e.evaluations}" var="p">
+												      <h:outputText value="#{p.applicationTp}"></h:outputText>
+												   </p:dataList>
+												   <h:outputText style="color:red;text-align:center!important;margin:auto;display:block" rendered="#{fn:length(e.evaluations) == 0}" value="n'est pas encore signalé"></h:outputText>
+												</p:column>
+					                            <p:column width="21%">
+												    <f:facet name="header">
+															<h:outputText value="participation" />
+													</f:facet>
+													<p:dataList rendered="#{fn:length(e.evaluations) > 0}" value="#{e.evaluations}" var="p">
+												      <h:outputText value="#{p.participation}"></h:outputText>
+												   </p:dataList>
+												   <h:outputText style="color:red;text-align:center!important;margin:auto;display:block" rendered="#{fn:length(e.evaluations) == 0}" value="n'est pas encore signalé"></h:outputText>
+												   
+												</p:column>
+												<p:column width="7%" style="text-align:center;">
+												    <f:facet name="header">
+															<h:outputText value="Action" />
+													</f:facet>
+													<p:commandLink rendered="#{fn:length(e.evaluations) > 0}" title="Modifier" oncomplete="PF('actionDialog').show()">
+													    <h:graphicImage name="NiceAdmin/img/pencil.png" style="width:20px;height:20px"></h:graphicImage>
+												        <f:param value="#{e.idEtudiant}" name="idEtudiant" />
+														 <p:ajax update="@form"  event="click" listener="#{scheduleView.getEvaluationByEtudiant(scheduleView.module.idModule,e.idEtudiant)}" />
+												    </p:commandLink>
+												</p:column>
+											</p:dataTable>
+									           <p:dialog header="Évaluation Info" widgetVar="actionDialog" modal="true"
+														showEffect="blind" hideEffect="explode" resizable="false">
+														<p:outputPanel id="moduleDetail" style="text-align:center;">
+															<h:outputText value="Module" />
+															<br />
+															<h:inputText value="#{scheduleView.module.nomModule}" disabled="true"/>
+															<br/><br/>
+															<h:outputText value="Nom" />
+															<br />
+															<h:inputText value="#{scheduleView.evaluation.etudiant.nomEtudiant}" disabled="true"/>
+															<br/><br/>
+															<h:outputText value="prénom" />
+															<br />
+															<h:inputText value="#{scheduleView.evaluation.etudiant.prenomEtudiant}" disabled="true"/>
+															<br/><br/>
+															<h:outputText value="Compréhension" />
+															<br />
+														     <p:selectOneMenu style="width:100%" value="#{scheduleView.evaluation.comprehension}">
+																
+																
+																<f:selectItems value="#{scheduleView.comprehensionData}" var="c" itemLabel="#{c}" itemValue="#{c}"></f:selectItems>	
+																									
+															</p:selectOneMenu>
+															<br />
+															
+															<h:outputText value="Application Tp" />
+															<br />
+														     <p:selectOneMenu style="width:100%" value="#{scheduleView.evaluation.applicationTp}">
+																						
+																<f:selectItems  value="#{scheduleView.applicationTpData}" var="ap" itemLabel="#{ap}" itemValue="#{ap}"></f:selectItems>	
+																									
+															</p:selectOneMenu>
+															<br />
+															
+															<h:outputText value="Participation" />
+															<br />
+														     <p:selectOneMenu style="width:100%" value="#{scheduleView.evaluation.participation}">
+																						
+																<f:selectItems  value="#{scheduleView.participationData}" var="p" itemLabel="#{p}" itemValue="#{p}"></f:selectItems>	
+																									
+															</p:selectOneMenu>
+														</p:outputPanel>
+														<br />
+														<br />
+														<p:commandButton update="@form" oncomplete="PF('actionDialog').hide()" value="Modifier" action="#{scheduleView.updateEvaluation(scheduleView.evaluation.etudiant.idEtudiant)}"></p:commandButton>
+													</p:dialog> 
+									       </div>
+									</h:form>
+									 <h:form>
+									        <div class="form-group">
+	                                          <div class="col-lg-offset-2 col-lg-10">
+	                                              <h:commandButton onclick="PF('dlg2').show();" action="evaluation?faces-redirect=true" value="Retour à la page Évaluations" styleClass="btn btn-danger"/>
+	                                          </div>
+	                                        </div>
+									</h:form>
+									</div>
+		                       </div>
+		                  </section>
+		              </div>
+				</div>
+		    </section>
+		</div>
+</ui:composition>
+</html>

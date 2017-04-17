@@ -15,6 +15,24 @@
     <br> </br>
 	<br> </br>
 	<br> </br>
+		<h:form>
+	   <p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
+              <div class="sk-circle">
+			  <div class="sk-circle1 sk-child"></div>
+			  <div class="sk-circle2 sk-child"></div>
+			  <div class="sk-circle3 sk-child"></div>
+			  <div class="sk-circle4 sk-child"></div>
+			  <div class="sk-circle5 sk-child"></div>
+			  <div class="sk-circle6 sk-child"></div>
+			  <div class="sk-circle7 sk-child"></div>
+			  <div class="sk-circle8 sk-child"></div>
+			  <div class="sk-circle9 sk-child"></div>
+			  <div class="sk-circle10 sk-child"></div>
+			  <div class="sk-circle11 sk-child"></div>
+			  <div class="sk-circle12 sk-child"></div>
+			</div>
+        </p:dialog>
+	</h:form>
 <div class="well container">
         <section class="wrapper">
            <div class="row">
@@ -52,7 +70,7 @@
 										 <ui:repeat value="#{dashboardBean.sessionsInProgress}" var="x"> 
 											<tbody>
 												<tr>
-												    <td style="vertical-align: inherit"><h:commandButton action="#{sessionBean.getCureentSessionAndRedirect(x[0])}" style="vertical-align: inherit!important" styleClass="css_btn_class" value="Voir en détail session : #{x[0]}"></h:commandButton></td>
+												    <td style="vertical-align: inherit"><h:commandButton onclick="PF('dlg2').show();" action="#{sessionBean.getCureentSessionAndRedirect(x[0])}" style="vertical-align: inherit!important" styleClass="css_btn_class" value="Voir en détail session : #{x[0]}"></h:commandButton></td>
 												    <td style="vertical-align: inherit!important">#{x[1]}</td>
 													<td style="vertical-align: inherit!important">#{x[2]}</td>
 													<td style="vertical-align: inherit!important">#{x[3]}</td>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+    xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition>
+	<br> </br>
+	<br> </br>
+	<br> </br>
+	
+	<div class="well container">
+		 
+          <!-- get etudiant by session  -->
+        
+          <div class="row">
+               <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                              Afficher la liste des étudiants par session 
+                          </header>
+                          <div class="panel-body">
+                              <div class="form">
+                                <h:form id="form7" class="form-validate form-horizontal">
+									  <p:growl id="growler" showDetail="true" life="5000"  severity="info,warn" />
+									  
+                                      <div class="form-group ">
+                                          <label for="session" class="control-label col-lg-2">Sessions <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:selectOneMenu style="cursor:pointer; height:35px;width:75%;color:#797979;font-size:16px;" styleClass="selectpicker" 
+												value="#{etudiantBean.idSession}">
+												<p:ajax event="valueChange"
+												listener="#{etudiantBean.getAllStudentsBySession}"
+												update="@form" />
+												<f:selectItem itemDisabled="true" itemLabel="-------------------------------------------Sélectionnez une session-------------------------------------------"
+													itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems  value="#{etudiantBean.allSessions}" var="s"
+													itemLabel="Session N°:#{s[0]}, #{s[1]}, Début:#{s[2]},Site : #{s[4]}"
+													itemValue="#{s[0]}" />
+											</h:selectOneMenu>
+                                          </div>
+                                      </div>
+									
+								<br />
+								<br />
+								<c:if test="#{fn:length(etudiantBean.etudiants) >0 }">
+									<div align="center">
+										<p:dataTable var="newStudents" value="#{etudiantBean.etudiants}"
+											id="studentTable"
+											paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+											paginator="true" rows="10"  style="width:90%;margin-bottom:20px;">
+					
+											
+											<f:facet name="header">
+												<h:outputText value="Liste Des Etudiants de la Session N° " />
+												<h:outputText style="color:red;font-weight:bold;"
+													value="#{etudiantBean.idSession}" />
+											</f:facet>
+											<p:column style="width:140px;">
+												<f:facet name="header">
+													<h:outputText value="Nom" />
+												</f:facet>
+												<h:outputText value="#{newStudents[1]}" />
+											</p:column>
+											<p:column style="width:140px;">
+												<f:facet name="header">
+													<h:outputText value="Prénom" />
+												</f:facet>
+												<h:outputText value="#{newStudents[2]}" />
+											</p:column>
+											<p:column style="width:130px;">
+												<f:facet name="header">
+													<h:outputText value="Début de Formation" />
+												</f:facet>
+												<h:outputText value="#{newStudents[12]}" />
+											</p:column>
+											<p:column style="width:130px;">
+												<f:facet name="header">
+													<h:outputText value="Fin de Formation" />
+												</f:facet>
+												<h:outputText value="#{newStudents[13]}" />
+											</p:column>
+											<p:column style="width:100px;">
+												<f:facet name="header">
+													<h:outputText value="Statut" />
+												</f:facet>
+												<h:outputText  rendered="#{etudiantBean.currentTime.time le newStudents[13].time}" value="En Cours" />
+												<h:outputText  rendered="#{etudiantBean.currentTime.time gt newStudents[13].time }" value="Terminé" />
+											</p:column>
+										    <p:column exportable="false" style="width:80px;text-align:center;">
+										       <f:facet name="header">
+												 <h:outputText value="Actions" />
+											   </f:facet>
+										       <p:commandLink oncomplete="PF('carDialog').show()"
+												update=":form7:moduleDetail"
+												    title="Modifier">
+												    <h:graphicImage name="NiceAdmin/img/pencil.png" style="width:20px;height:20px"></h:graphicImage>
+													<f:param value="#{newStudents[0]}" name="idEtudiant"/>
+													<f:param value="#{newStudents[11]}" name="idSession"/>
+											        <p:ajax update=":form7:moduleDetail" event="click" listener="#{etudiantBean.getCurrentEtudiant(newStudents[0])}"/>
+												</p:commandLink> 
+										    </p:column>
+										</p:dataTable>
+										<h:form>
+												<h:commandButton style="margin-right: 20px;" styleClass="btn btn-info" value="générer un excel" id="xls" ajax="false">
+													<f:setPropertyActionListener value="false"
+														target="#{exporterController.customExporter}" />
+													<pe:exporter type="xlsx" target=":form7:studentTable" encoding="CP1252"
+														fileName="Session_Etudiant_N_#{etudiantBean.idSession}" />
+									
+												</h:commandButton>
+									
+												<h:commandButton styleClass="btn btn-info" value="générer un pdf" id="pdf" ajax="false">
+													<f:setPropertyActionListener value="false"
+														target="#{exporterController.customExporter}" />
+													<pe:exporter type="pdf" target=":form7:studentTable" encoding="CP1252"
+                                                        fileName="Session_Etudiant_N_#{etudiantBean.idSession}" />
+												</h:commandButton>
+												<!-- add boutton accueil -->
+				
+										</h:form>
+									</div>
+								</c:if>
+							
+								
+								<br />
+								<br />
+								   
+									<p:dialog header="Etudiant Info" widgetVar="carDialog"
+											modal="true" showEffect="blind" hideEffect="explode"
+											resizable="false" width="500px">
+											<p:outputPanel id="moduleDetail" style="text-align:center;overflow:scroll;height:500px;">
+											      <c:if test="#{not empty etudiantBean.etudiant}">
+														<h:inputHidden value="#{etudiantBean.etudiant.idEtudiant}" />
+														<h:inputHidden value="#{etudiantBean.etudiant.sessionEtudiant.idSession}" />
+														<h:outputText value="Nom Etudiant" /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.nomEtudiant}">
+														    <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
+														</h:inputText><br/>
+														<h:outputText value="Prénom Etudiant" /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.prenomEtudiant}">
+														    <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
+														</h:inputText><br/>
+														<h:outputText value="Date De Naissance" /><br/>
+														<p:calendar value="#{etudiantBean.etudiant.dateDeNaissance}" yearRange="c-40:c+0" navigator="true" required="true" locale="fr" lang="fr"/><br/>
+														<h:outputText value="Formation Initial" /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.formationInitial}">
+														    <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
+														</h:inputText><br/>
+														<h:outputText value="Ecole " /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.ecole}">
+														  <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
+														</h:inputText><br/>
+														<h:outputText value="Date d'Obtention " /><br/>
+														<p:calendar value="#{etudiantBean.etudiant.dateObtention}" required="true" yearRange="c-10:c+0" navigator="true" locale="fr" lang="fr" pattern="MM.yyyy"/><br/>
+														<h:outputText value="Adresse Postal" /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.adresse.adresse}" required="true">
+														    <f:validateRegex pattern="[a-z A-ZÉéè 0-9]+$"></f:validateRegex>
+														</h:inputText><br/>
+														<h:outputText value="Code Postal" /><br/>
+														<p:inputMask value="#{etudiantBean.etudiant.adresse.codePostal}" mask="99999" required="true"/><br/> 
+														<h:outputText value="Ville" /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.adresse.ville}" required="true">
+														    <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
+														</h:inputText><br/>
+														<h:outputText value="Pays" /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.adresse.pays}" required="true">
+														    <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
+														</h:inputText><br/>
+														<h:outputText value="Tél" /><br/>
+														<p:inputMask value="#{etudiantBean.etudiant.numTel}" mask="(99) 99-99-99-99" required="true"/><br/>
+														<h:outputText value="Mail" /><br/>
+														<h:inputText value="#{etudiantBean.etudiant.mail}">
+														   <f:validator binding="#{emailValidator}" />
+														</h:inputText><br/>
+														
+											 </c:if>
+											</p:outputPanel>
+											<br/>
+											
+							             <p:commandButton oncomplete="PF('carDialog').hide()" ajax="true" value="Modifier" action="#{etudiantBean.edit()}"/>
+							                
+							            </p:dialog>
+						           
+							    </h:form>
+                              </div>
+                          </div>
+                      </section>
+               </div>
+          </div> 
+          </div>
+        
+</ui:composition>
+</html>

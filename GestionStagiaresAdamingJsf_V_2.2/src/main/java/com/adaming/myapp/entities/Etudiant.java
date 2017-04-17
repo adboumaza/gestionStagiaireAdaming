@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -42,14 +43,6 @@ public class Etudiant implements Serializable {
 	@Transient
 	private  String [] presence = {"OK","OK","OK","OK","OK","OK","OK","OK","OK","OK"};
 	
-	@Transient
-	private final String [] comportement = {"Veuillez Choisir l'un des Commentaires..........","Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique satisfaisant.  Sérieux et appliqué.bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique satisfaisant.  Personne sérieuse, autonome, motivée  et appliquée,bonne communication,  Parmis  les meilleurs elements.","Niveau technique moyen, motivée, ralleur .","Niveau technique satisfaisant. autonome et motivé mais distrait quelques fois, bonne capacité à comprendre, Parmi les meilleurs de la session.","Niveau technique satisfaisant. Tres bonne progression. Sérieux et bonne communication.","Niveau technique satisfaisant.  Autonome, Parmis  les meilleurs elements de la session,Communique peut.","Niveau technique moyen,  Assez discret,  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique moyen,Communique peut.","Niveau technique satisfaisant, autonome,  Parmis  les meilleurs elements,bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage."};
-	
-	@Transient
-	private final String [] risque = {"Veuillez Choisir un Niveau","Moyen","Faible","Élévé"};
-	
-	@Transient
-	private final String [][] evaluation ={{"Veuillez Choisir un Niveau","Excellent","Très Bien","Moyen","Passable","Trop Juste"},{"Veuillez Choisir un Niveau","Excellent","Très Bien","Moyen","Passable","Trop Juste"},{"Veuillez Choisir un Niveau","Excellent","Très Bien","Moyen","Passable","Trop Juste"}} ;
 	
 	/*assoc*/
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -61,6 +54,8 @@ public class Etudiant implements Serializable {
 	private List<Evenement> evenements;
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "etudiant")
 	private List<Prospection> prospections;
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "etudiant")
+	private Set<Evaluation> evaluations;
 
 	/**construct*/
 	public Etudiant() {
@@ -225,24 +220,6 @@ public class Etudiant implements Serializable {
 	}
 
 
-
-	public String[] getComportement() {
-		return comportement;
-	}
-
-
-
-	public String[] getRisque() {
-		return risque;
-	}
-
-
-
-	public String[][] getEvaluation() {
-		return evaluation;
-	}
-
-
 	public List<Evenement> getEvenements() {
 		return evenements;
 	}
@@ -281,6 +258,24 @@ public class Etudiant implements Serializable {
 	 */
 	public void setProspections(List<Prospection> prospections) {
 		this.prospections = prospections;
+	}
+	
+	
+
+
+	/**
+	 * @return the evaluations
+	 */
+	public Set<Evaluation> getEvaluations() {
+		return evaluations;
+	}
+
+
+	/**
+	 * @param evaluations the evaluations to set
+	 */
+	public void setEvaluations(Set<Evaluation> evaluations) {
+		this.evaluations = evaluations;
 	}
 
 

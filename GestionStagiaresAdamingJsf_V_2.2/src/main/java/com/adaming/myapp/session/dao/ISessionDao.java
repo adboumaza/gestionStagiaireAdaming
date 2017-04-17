@@ -1,8 +1,6 @@
 package com.adaming.myapp.session.dao;
 
 import java.util.List;
-
-import com.adaming.myapp.dto.SessionDto;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;

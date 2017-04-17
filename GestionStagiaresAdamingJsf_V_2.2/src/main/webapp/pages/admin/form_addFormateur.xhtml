@@ -90,26 +90,14 @@
                                       <div class="form-group ">
                                           <label for="ville" class="control-label col-lg-2">Ville <span class="required">*</span></label>
                                           <div class="col-lg-10">
-											   <p:selectOneMenu id="ville" filter="true"
-											    filterMatchMode="startsWith" 
-											    value="#{formateurBean.ville}">
-											        <f:selectItem itemLabel="Select One" itemValue=""
-											             noSelectionOption="true" />
-											        <f:selectItems value="#{formateurBean.villes}" var="f" itemValue="#{f.name}" itemLabel="#{f.name}"></f:selectItems>
-											   </p:selectOneMenu>
+                                               <p:autoComplete  placeholder="ex : Paris"  value="#{formateurBean.ville}" completeMethod="#{formateurBean.getVillesFiltred}"  id="ville" scrollHeight="400" />
                                           </div>
                                           <h:message for="ville" style="color:red;text-align:center;display:block"></h:message>
                                       </div>
                                        <div class="form-group ">
                                           <label for="pays" class="control-label col-lg-2">Pays <span class="required">*</span></label>
                                           <div class="col-lg-10">
-											   <p:selectOneMenu id="pays" filter="true"
-											    filterMatchMode="startsWith" 
-											    value="#{formateurBean.pays}">
-											        <f:selectItem itemLabel="Select One" itemValue=""
-											             noSelectionOption="true" />
-											        <f:selectItems value="#{formateurBean.villes}" var="f" itemValue="#{f.countryName}" itemLabel="#{f.countryName}"></f:selectItems>
-											   </p:selectOneMenu>
+											    <p:autoComplete  placeholder="ex : France" value="#{formateurBean.pays}" completeMethod="#{formateurBean.getPaysData}"  id="pays" scrollHeight="400" forceSelection="true"/>
                                           </div>
                                          <h:message for="pays" style="color:red;text-align:center;display:block"></h:message>
                                       </div>

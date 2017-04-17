@@ -1,6 +1,8 @@
 package com.adaming.myapp;
 
 import java.lang.invoke.MethodHandles;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -25,9 +27,12 @@ public class Test {
 	
 	
 	
-	public static void main(String[] args) {
-		String x = generateSessionKey(1);
-		System.out.println(x);
+	public static void main(String[] args) throws ParseException {
+		/*String x = generateSessionKey(1);
+		System.out.println(x);*/
+		
+		
+	
 	}
     
 	public static String generateSessionKey(int length){

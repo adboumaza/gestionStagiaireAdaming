@@ -138,7 +138,7 @@ public class NotesDaoImpl implements INotesDao {
 				+ "on et.idEtudiant = n.ID_ETU_NOTE where se.idSession =:x";*/
 		
 		
-		Query query = em.createNativeQuery("SELECT distinct et.idEtudiant,et.prenomEtudiant,avg(n.score) as moyenne"
+		Query query = em.createNativeQuery("SELECT distinct et.idEtudiant,et.prenomEtudiant,avg(n.score) as moyenne,et.nomEtudiant"
 				+ " FROM note n join sessionEtudiant se on se.idSession = n.ID_SES_NOTE join module m"
 				+ " on m.idModule = n.ID_MOD_NOTE join etudiant et on et.idEtudiant = n.ID_ETU_NOTE"
 				+ " where se.idSession =:x and m.nomModule != 'TEST' group by et.idEtudiant "

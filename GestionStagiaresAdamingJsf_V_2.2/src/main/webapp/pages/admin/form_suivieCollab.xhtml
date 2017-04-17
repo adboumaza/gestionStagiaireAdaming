@@ -40,7 +40,7 @@
                                         <h:selectOneMenu style="height:35px;width:50%;color:#797979;font-size:16px;" styleClass="selectpicker" required="true"
 											requiredMessage="2 - Session En Cours *"
 											value="#{suivieCollaboratifBean.mail}">
-											<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Un Formateur"
+											<f:selectItem  itemLabel="Sélectionnez Un Formateur"
 												itemValue="#{null}" />
 										     <f:selectItems value="#{suivieCollaboratifBean.formateurs}" var="f" 
 											   itemLabel="#{f.nom}---------#{f.prenom}" itemValue="#{f.mail}" />

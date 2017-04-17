@@ -75,12 +75,7 @@
 														value="#{scheduleView.typeEvenement}">
 														<f:selectItem itemLabel="Sélectionnez Un Evénement"
 															itemValue="#{null}" />
-														<f:selectItem itemLabel="Retard"
-															itemValue="retard" />
-														<f:selectItem itemLabel="Absence"
-															itemValue="absence" />
-														<f:selectItem itemLabel="Entretien"
-															itemValue="entretient" />
+														<f:selectItems value="#{scheduleView.evenements}" var="e" itemLabel="#{e}" itemValue="#{e}"></f:selectItems>
 												</h:selectOneMenu>
 	                                          </div>
 	                                          <br></br>

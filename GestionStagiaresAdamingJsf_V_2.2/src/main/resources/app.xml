@@ -20,6 +20,11 @@
        <property name="baseAddress" value="http://localhost:8093/etudiant"></property>
     </bean> -->
     
+     <!-- injection de dépendances Evaluation-->
+    <bean id="EvaluationDao" class="com.adaming.myapp.evaluation.dao.EvaluationDaoImpl"></bean>
+    <bean id="EvaluationService" class="com.adaming.myapp.evaluation.service.EvaluationServiceImpl">
+      <property name="dao" ref="EvaluationDao"></property>
+    </bean>
     
     <!-- injection de dépendances Prospection-->
     <bean id="ProspectionDao" class="com.adaming.myapp.prospection.dao.ProspectionDaoImpl"></bean>
@@ -196,4 +201,18 @@
 			  authorities-by-username-query="select u.name,r.roleName from user u, role r where u.idUser = r.id_users and u.name =? "/>
 		</security:authentication-provider>
 	</security:authentication-manager> 
+	
+	<!-- convert Xml To Object width spring -->
+	
+	<!-- convert Object To Xml width spring -->
+	
+	<bean id="XMLConverter" class="com.adaming.myapp.tools.XMLConverter">
+	    <property name="marshaller" ref="castorMarshaller"></property>
+	    <property name="unmarshaller" ref="castorMarshaller"></property>
+	</bean>
+	
+	<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller"></bean>
+	
+	
+	
 </beans>

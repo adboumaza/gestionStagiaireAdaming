@@ -8,7 +8,9 @@ Website: http://geekslabs.com/
 /* Import fonts */
 @import url(http://fonts.googleapis.com/css?family=Lato:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
 @import url(line-icons.css);
-
+/*evaluation formateur */
+.myRadioCtrl label { padding-right: 10px!important;padding-left: 5px!important; }
+/**/
 .ui-selectonemenu-filter-container {
     width: 98% !important;
 }
@@ -52,6 +54,7 @@ Website: http://geekslabs.com/
     -moz-transition-duration: .8s;
     -o-transition-duration: .8s;
 }
+
 
 /*agenda*/
 

@@ -71,12 +71,6 @@ public final class SendEmailUtil {
         return newUri.toString();
   }
 	
-	
-	
-	
-	
-	
-	
 	public static final void sendMail(String destinataire,String subject,String contentMail){
 		
 		Properties props = System.getProperties();

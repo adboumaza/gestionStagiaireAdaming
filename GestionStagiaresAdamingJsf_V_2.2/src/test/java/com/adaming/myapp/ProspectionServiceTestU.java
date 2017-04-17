@@ -34,7 +34,7 @@ public class ProspectionServiceTestU {
 	}
 
 	@Test
-	public void addProspection(){
+	public void addProspection() throws VerificationInDataBaseException{
 	  serviceProspection.addProspection(new Prospection("elevé", "autre"), 1L);
 	}
 

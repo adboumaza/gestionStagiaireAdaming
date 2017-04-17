@@ -176,9 +176,13 @@ public class SessionBean implements Serializable{
 	/**@method cette methode permet de recupérer les informations liées à une session et faire une redirection*/
 	public String getCureentSessionAndRedirect(Long idSession){
 		getCurrentSession(idSession);
+		resetInformationSession();
+		return "informationSession?faces-redirect=true";
+	}
+	
+	public void resetInformationSession(){
 		evenements = null;
 		choix      = null;
-		return "informationSession?faces-redirect=true";
 	}
 	
 	public void getMoreInformation(Long idSession,String choix){

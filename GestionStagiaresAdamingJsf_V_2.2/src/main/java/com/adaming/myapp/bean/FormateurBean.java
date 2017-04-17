@@ -29,7 +29,9 @@ import com.adaming.myapp.entities.User;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.formateur.service.IFormateurService;
 import com.adaming.myapp.role.service.IRoleService;
+import com.adaming.myapp.tools.DataEnum;
 import com.adaming.myapp.tools.DataUtil;
+import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.SendEmailUtil;
 import com.adaming.myapp.tools.Utilitaire;
 import com.adaming.myapp.user.service.IUserService;
@@ -95,7 +97,7 @@ public class FormateurBean implements Serializable{
 	private Role role;
 	private String passwordRandom;
 	private String passwordCrypted;
-	private List<Toponym> villes;
+	private List<String> villes;
 	
 	 // Query Operations
 	
@@ -246,7 +248,7 @@ public class FormateurBean implements Serializable{
 	 * @see com.adaming.myapp.tools.DataUtil.fillingSpecialites
 	 **/
 	public List<String> specialitesInfo(String query){
-		List<String> specialites = DataUtil.fillingSpecialites(query);
+		List<String> specialites = Arrays.asList(DataUtil.fillingSpecialites(query));
 		List<String> filtred = Utilitaire.filterObject(query, specialites);
 		return filtred;
 	}
@@ -268,6 +270,20 @@ public class FormateurBean implements Serializable{
 	}
 	
 	/**
+	 * la methode getPays permet de faire l'autocomplétion,
+	 * remplir le tableau de pays affecter à chaque formateur
+	 * 
+	 * @param  query le mot cle tapé dans le formulaire
+	 * @return la liste des pays trouvées
+	 * @see com.adaming.myapp.tools.Utilitaire.filterObject
+	 **/
+	public List<String> getPaysData(String query){
+		List<String> pays = Arrays.asList(DataUtil.fillingPays(query));
+		List<String> filtred = Utilitaire.filterObject(query, pays);
+		return filtred;
+	}
+	
+	/**
 	 * la methode getVillesByCp permet de faire une recherche d'une ville, pays, depuis un code postal
 	 * elle permet également de remplir un tableau de villes, afin d'associé le résultat obtenu  à chaque formateur
 	 * 
@@ -275,14 +291,14 @@ public class FormateurBean implements Serializable{
 	 * @return la liste des villes trouvées
 	 * @see com.adaming.myapp.tools.Utilitaire.getVilles
 	 **/
-	public List<Toponym> getVillesByCp(String codePostal){
+	public List<String> getVillesByCp(String codePostal){
 		if(codePostal != null)
 		{
-			villes = new ArrayList<Toponym>();
+			villes = new ArrayList<>();
 			for(Toponym toponym:Utilitaire.getVilles(codePostal))
 			{
 				System.out.println(toponym.getName());
-				villes.add(toponym);
+				villes.add(toponym.getName());
 			}
 			
 		}
@@ -291,6 +307,22 @@ public class FormateurBean implements Serializable{
 			villes.clear();
 		}
 		return villes;
+	}
+	
+	/*cette methode permet de filter les villes obtenu depuis le web service, et la methode getVillesByCP*/
+	public List<String> getVillesFiltred(String query){
+		List<String> filtred = null;
+		if(villes == null){
+			villes = new ArrayList<String>();
+			LoggerConfig.logInfo("KO");
+		}
+		else if(!villes.isEmpty() && villes != null){
+			filtred = new ArrayList<String>();
+			filtred = Utilitaire.filterObject(query, villes);
+					LoggerConfig.logInfo("OK");
+		}
+		return filtred;
+		
 	}
 	
 
@@ -378,11 +410,13 @@ public class FormateurBean implements Serializable{
 	public void setPays(String pays) {
 		this.pays = pays;
 	}
-	public List<Toponym> getVilles() {
+	public List<String> getVilles() {
 		return villes;
 	}
-	public void setVilles(List<Toponym> villes) {
+	public void setVilles(List<String> villes) {
 		this.villes = villes;
 	}
+
+
 
 }

@@ -24,7 +24,7 @@
 					</ol>
 				</div>
 			</div> 
-			  <p:messages id="messages" showDetail="true"  severity="info" closable="true" />             
+			              
               <div class="row">
                   <div class="col-lg-12">
                       <section class="panel">
@@ -34,6 +34,8 @@
                           <div class="panel-body">
                               <div class="form">
                                   <h:form class="form-validate form-horizontal">
+                                       <p:growl id="growler" showDetail="true" life="5000"  severity="info,warn" />
+                                       <p:messages id="messages" showDetail="true"  severity="info" closable="true" /> 
                                       <div class="form-group ">
                                           <label for="session" class="control-label col-lg-2">Session (En Cours) <span class="required">*</span></label>
                                           <div class="col-lg-10">
@@ -87,26 +89,14 @@
                                       <div class="form-group ">
                                           <label for="ville" class="control-label col-lg-2">Ville <span class="required">*</span></label>
                                           <div class="col-lg-10">
-											   <p:selectOneMenu id="ville" filter="true"
-											    filterMatchMode="startsWith" 
-											    value="#{etudiantBean.ville}">
-											        <f:selectItem itemLabel="Select One" itemValue=""
-											             noSelectionOption="true" />
-											        <f:selectItems value="#{etudiantBean.villes}" var="f" itemValue="#{f.name}" itemLabel="#{f.name}"></f:selectItems>
-											   </p:selectOneMenu>
+											   <p:autoComplete  placeholder="ex : Paris"  value="#{etudiantBean.ville}" completeMethod="#{etudiantBean.getVillesFiltred}"  id="ville" scrollHeight="400" />
                                           </div>
                                           <h:message for="ville" style="color:red;text-align:center;display:block"></h:message>
                                       </div>
                                       <div class="form-group ">
                                           <label for="pays" class="control-label col-lg-2">Pays <span class="required">*</span></label>
                                           <div class="col-lg-10">
-											   <p:selectOneMenu id="pays" filter="true"
-											    filterMatchMode="startsWith" 
-											    value="#{etudiantBean.pays}">
-											        <f:selectItem itemLabel="Select One" itemValue=""
-											             noSelectionOption="true" />
-											        <f:selectItems value="#{etudiantBean.villes}" var="f" itemValue="#{f.countryName}" itemLabel="#{f.countryName}"></f:selectItems>
-											   </p:selectOneMenu>
+                                               <p:autoComplete  placeholder="ex : France" value="#{etudiantBean.pays}" completeMethod="#{etudiantBean.getPaysData}"  id="pays" scrollHeight="400" forceSelection="true" />
                                           </div>
                                          <h:message for="pays" style="color:red;text-align:center;display:block"></h:message>
                                       </div>
@@ -173,185 +163,8 @@
                   </div>
               </div>
           </section>
-          
-          <!-- get etudiant by session  -->
         
-          <div class="row">
-               <div class="col-lg-12">
-                      <section class="panel">
-                          <header class="panel-heading">
-                              Afficher la liste des étudiants par session 
-                          </header>
-                          <div class="panel-body">
-                              <div class="form">
-                                <h:form id="form7" class="form-validate form-horizontal">
-									  <p:growl id="growler" showDetail="true" life="5000"  severity="info,warn" />
-									  
-                                      <div class="form-group ">
-                                          <label for="session" class="control-label col-lg-2">Sessions <span class="required">*</span></label>
-                                          <div class="col-lg-10">
-                                              <h:selectOneMenu style="cursor:pointer; height:35px;width:75%;color:#797979;font-size:16px;" styleClass="selectpicker" 
-												value="#{etudiantBean.idSession}">
-												<p:ajax event="valueChange"
-												listener="#{etudiantBean.getAllStudentsBySession}"
-												update="@form" />
-												<f:selectItem itemDisabled="true" itemLabel="-------------------------------------------Sélectionnez une session-------------------------------------------"
-													itemValue="#{null}" noSelectionOption="true" />
-												<f:selectItems  value="#{etudiantBean.allSessions}" var="s"
-													itemLabel="Session N°:#{s[0]}, #{s[1]}, Début:#{s[2]},Site : #{s[4]}"
-													itemValue="#{s[0]}" />
-											</h:selectOneMenu>
-                                          </div>
-                                      </div>
-									
-								<br />
-								<br />
-								<c:if test="#{fn:length(etudiantBean.etudiants) >0 }">
-									<div align="center">
-										<p:dataTable var="newStudents" value="#{etudiantBean.etudiants}"
-											id="studentTable"
-											paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-											paginator="true" rows="10"  style="width:90%;margin-bottom:20px;">
-					
-											
-											<f:facet name="header">
-												<h:outputText value="Liste Des Etudiants de la Session N° " />
-												<h:outputText style="color:red;font-weight:bold;"
-													value="#{etudiantBean.idSession}" />
-											</f:facet>
-											<p:column style="width:140px;">
-												<f:facet name="header">
-													<h:outputText value="Nom" />
-												</f:facet>
-												<h:outputText value="#{newStudents[1]}" />
-											</p:column>
-											<p:column style="width:140px;">
-												<f:facet name="header">
-													<h:outputText value="Prénom" />
-												</f:facet>
-												<h:outputText value="#{newStudents[2]}" />
-											</p:column>
-											<p:column style="width:130px;">
-												<f:facet name="header">
-													<h:outputText value="Début de Formation" />
-												</f:facet>
-												<h:outputText value="#{newStudents[12]}" />
-											</p:column>
-											<p:column style="width:130px;">
-												<f:facet name="header">
-													<h:outputText value="Fin de Formation" />
-												</f:facet>
-												<h:outputText value="#{newStudents[13]}" />
-											</p:column>
-											<p:column style="width:100px;">
-												<f:facet name="header">
-													<h:outputText value="Statut" />
-												</f:facet>
-												<h:outputText  rendered="#{etudiantBean.currentTime.time le newStudents[13].time}" value="En Cours" />
-												<h:outputText  rendered="#{etudiantBean.currentTime.time gt newStudents[13].time }" value="Terminé" />
-											</p:column>
-										    <p:column exportable="false" style="width:80px;text-align:center;">
-										       <f:facet name="header">
-												 <h:outputText value="Actions" />
-											   </f:facet>
-										       <p:commandLink oncomplete="PF('carDialog').show()"
-												update=":form7:moduleDetail"
-												    title="Modifier">
-												    <h:graphicImage name="NiceAdmin/img/pencil.png" style="width:20px;height:20px"></h:graphicImage>
-													<f:param value="#{newStudents[0]}" name="idEtudiant"/>
-													<f:param value="#{newStudents[11]}" name="idSession"/>
-											        <p:ajax update=":form7:moduleDetail" event="click" listener="#{etudiantBean.getCurrentEtudiant(newStudents[0])}"/>
-												</p:commandLink> 
-										    </p:column>
-										</p:dataTable>
-										<h:form>
-												<h:commandButton style="margin-right: 20px;" styleClass="btn btn-info" value="générer un excel" id="xls" ajax="false">
-													<f:setPropertyActionListener value="false"
-														target="#{exporterController.customExporter}" />
-													<pe:exporter type="xlsx" target=":form7:studentTable" encoding="CP1252"
-														fileName="Session_Etudiant_N_#{etudiantBean.idSession}" />
-									
-												</h:commandButton>
-									
-												<h:commandButton styleClass="btn btn-info" value="générer un pdf" id="pdf" ajax="false">
-													<f:setPropertyActionListener value="false"
-														target="#{exporterController.customExporter}" />
-													<pe:exporter type="pdf" target=":form7:studentTable" encoding="CP1252"
-                                                        fileName="Session_Etudiant_N_#{etudiantBean.idSession}" />
-												</h:commandButton>
-												<!-- add boutton accueil -->
-				
-										</h:form>
-									</div>
-								</c:if>
-								<br />
-								<br />
-								<h:form>
-								     <h:commandButton style="display: block;margin: auto" styleClass="btn btn-danger" ajax="false" action="index?faces-redirect=true" value="Retour Accueil"/>
-								</h:form>
-								<br />
-								<br />
-								
-									<p:dialog header="Etudiant Info" widgetVar="carDialog"
-											modal="true" showEffect="blind" hideEffect="explode"
-											resizable="false" width="500px">
-											<p:outputPanel id="moduleDetail" style="text-align:center;overflow:scroll;height:500px;">
-											      <c:if test="#{not empty etudiantBean.etudiant}">
-														<h:inputHidden value="#{etudiantBean.etudiant.idEtudiant}" />
-														<h:inputHidden value="#{etudiantBean.etudiant.sessionEtudiant.idSession}" />
-														<h:outputText value="Nom Etudiant" /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.nomEtudiant}">
-														    <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
-														</h:inputText><br/>
-														<h:outputText value="Prénom Etudiant" /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.prenomEtudiant}">
-														    <f:validateRegex pattern="[a-z A-Z]+$"></f:validateRegex>
-														</h:inputText><br/>
-														<h:outputText value="Date De Naissance" /><br/>
-														<p:calendar value="#{etudiantBean.etudiant.dateDeNaissance}" yearRange="c-40:c+0" navigator="true" required="true" locale="fr" lang="fr"/><br/>
-														<h:outputText value="Formation Initial" /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.formationInitial}">
-														    <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
-														</h:inputText><br/>
-														<h:outputText value="Ecole " /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.ecole}">
-														  <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
-														</h:inputText><br/>
-														<h:outputText value="Date d'Obtention " /><br/>
-														<p:calendar value="#{etudiantBean.etudiant.dateObtention}" required="true" yearRange="c-10:c+0" navigator="true" locale="fr" lang="fr" pattern="MM.yyyy"/><br/>
-														<h:outputText value="Adresse Postal" /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.adresse.adresse}" required="true">
-														    <f:validateRegex pattern="[a-z A-ZÉéè 0-9]+$"></f:validateRegex>
-														</h:inputText><br/>
-														<h:outputText value="Code Postal" /><br/>
-														<p:inputMask value="#{etudiantBean.etudiant.adresse.codePostal}" mask="99999" required="true"/><br/> 
-														<h:outputText value="Ville" /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.adresse.ville}" required="true">
-														    <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
-														</h:inputText><br/>
-														<h:outputText value="Pays" /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.adresse.pays}" required="true">
-														    <f:validateRegex pattern="[a-z A-ZÉéè]+$"></f:validateRegex>
-														</h:inputText><br/>
-														<h:outputText value="Tél" /><br/>
-														<p:inputMask value="#{etudiantBean.etudiant.numTel}" mask="(99) 99-99-99-99" required="true"/><br/>
-														<h:outputText value="Mail" /><br/>
-														<h:inputText value="#{etudiantBean.etudiant.mail}">
-														   <f:validator binding="#{emailValidator}" />
-														</h:inputText><br/>
-														<p:messages id="messages"></p:messages>
-											 </c:if>
-											</p:outputPanel>
-											<br/>
-							             <p:commandButton update="messages" ajax="true" value="Modifier" action="#{etudiantBean.edit}"/>
-							            </p:dialog>
-						           
-							    </h:form>
-                              </div>
-                          </div>
-                      </section>
-               </div>
-          </div> 
+         
 	           <SCRIPT type="text/javascript">
 	                PrimeFaces.locales ['fr'] = { closeText: 'Fermer', prevText: 'Précédent', nextText: 'Suivant', monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre' ], monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc' ], dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'], dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'], dayNamesMin: ['D', 'L', 'M', 'M', 'J', 'V', 'S'], weekHeader: 'Semaine', firstDay: 1, isRTL: false, showMonthAfterYear: false, yearSuffix:'', timeOnlyTitle: 'Choisir l\'heure', timeText: 'Heure', hourText: 'Heures', minuteText: 'Minutes', secondText: 'Secondes', currentText: 'Maintenant', ampm: false, month: 'Mois', week: 'Semaine', day: 'Jour', allDayText: 'Toute la journée' };
 	                                     

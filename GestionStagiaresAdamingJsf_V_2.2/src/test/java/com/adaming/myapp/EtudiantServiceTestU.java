@@ -2,6 +2,7 @@ package com.adaming.myapp;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.adaming.myapp.dto.EtudiantDto;
+import com.adaming.myapp.dto.EtudiantMapper;
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.User;
@@ -20,17 +23,20 @@ import com.adaming.myapp.etudiant.service.IEtudiantService;
 import com.adaming.myapp.exception.AddEtudiantException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.module.service.IModuleService;
+import com.adaming.myapp.tools.XMLConverter;
 
 public class EtudiantServiceTestU {
 
 
 	private static IEtudiantService serviceEtudiant;
+	private static XMLConverter xmlC;
     private static ClassPathXmlApplicationContext context;
     
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		context = new ClassPathXmlApplicationContext("app.xml");
 		serviceEtudiant=(IEtudiantService)context.getBean("EtudiantService");
+	    xmlC = (XMLConverter) context.getBean("XMLConverter");
 	}
 
 	@AfterClass
@@ -51,7 +57,6 @@ public class EtudiantServiceTestU {
 	}
 
 	@Test
-	@Ignore
 	public void testUpdateStudent() {
 		Etudiant e = serviceEtudiant.getStudentById(1L);
 		e.setNomEtudiant("nomModifier");
@@ -69,6 +74,7 @@ public class EtudiantServiceTestU {
 	}
 
 	@Test
+	@Ignore
 	public void testGetStudentById() {
 		Etudiant e = serviceEtudiant.getStudentById(1L);
 		System.out.println(e);
@@ -97,6 +103,18 @@ public class EtudiantServiceTestU {
 			e.printStackTrace();
 			
 		} 
+	}
+	
+	@Test
+	@Ignore
+	public void getStudentDto(){
+		EtudiantDto dto = serviceEtudiant.getStudentDto(1L);
+		try {
+			xmlC.convertFromObjectToXML(dto, "etudiant.xml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 

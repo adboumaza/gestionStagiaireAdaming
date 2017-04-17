@@ -14,6 +14,24 @@
 	<br> </br>
 	<br> </br>
 	<br> </br>
+	<h:form>
+	   <p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
+              <div class="sk-circle">
+			  <div class="sk-circle1 sk-child"></div>
+			  <div class="sk-circle2 sk-child"></div>
+			  <div class="sk-circle3 sk-child"></div>
+			  <div class="sk-circle4 sk-child"></div>
+			  <div class="sk-circle5 sk-child"></div>
+			  <div class="sk-circle6 sk-child"></div>
+			  <div class="sk-circle7 sk-child"></div>
+			  <div class="sk-circle8 sk-child"></div>
+			  <div class="sk-circle9 sk-child"></div>
+			  <div class="sk-circle10 sk-child"></div>
+			  <div class="sk-circle11 sk-child"></div>
+			  <div class="sk-circle12 sk-child"></div>
+			</div>
+        </p:dialog>
+	</h:form>
 	<div class="well container">
 		<br />
 		 <!-- messages errors + exception -->  
@@ -60,151 +78,16 @@
 	                                   
 	                                  <div class="form-group">
 	                                          <div class="col-lg-offset-2 col-lg-10">
-	                                              <h:commandButton
+	                                              <h:commandButton onclick="PF('dlg2').show();"
 														action="#{scheduleView.genererScheduleEvaluations}" 
-														value="Generer" class="btn btn-primary" />
+														value="Évaluation" class="btn btn-primary" />
 	                                          </div>
 	                                   </div>
 										<br />
 										<br />
 										<br />
-									  <c:if test="#{scheduleView.active}">
-										<c:if
-											test="#{fn:length(scheduleView.students) >0 and fn:length(scheduleView.modules)>0}">
-										 
-											<div align="center">
-												<!-- Message obligation-->
-												<div class="champsObligatoire">
-													<h:outputText
-														value="Merci de remplir tous les champs du tableau ci-dessous afin que nous puissions rediriger toutes les informations  vers Nos clients.  " />
-												</div>
-												<br /> <br />
-												<!-- more Informations width tag evaluation-->
-												<ul class="inline">
-													<li>Excellent -</li>
-													<li class="green">.</li>
-													<li>Très Bien -</li>
-													<li class="green2">.</li>
-													<li>Moyen -</li>
-													<li class="yellow">.</li>
-													<li>Passable -</li>
-													<li class="orange">.</li>
-													<li>Trop Juste -</li>
-													<li class="red">.</li>
-												</ul>
-												<br /> <br />
-							
-												<p:dataTable reflow="true" var="e"
-													value="#{scheduleView.students}" id="studentTable"
-													editable="true" editMode="cell" widgetVar="cellSchedule"
-													style="width:96%;margin-bottom:20px;">
-							
-													<f:facet name="header">
-														<h:outputText value="Evaluation - Session n°: " />
-														<h:outputText style="color:red;font-weight:bold;"
-															value="#{scheduleView.sessionFormateur.idSession}" />
-														<h:outputText style="color:red;font-weight:bold"
-															value="  Formation : #{scheduleView.sessionFormateur.specialite.designation} ; " />
-														
-														<h:outputText style="color:red;font-weight:bold"
-															value="  Début:#{scheduleView.sessionFormateur.dateDebute} ; " />
-														<h:outputText style="color:red;font-weight:bold"
-															value="  Fin:#{scheduleView.sessionFormateur.dateFin}" />
-														<h:outputText style="color:red;font-weight:bold"
-															value=" / Module:#{scheduleView.module.nomModule}" />
-													</f:facet>
-							
-													<p:column style="width:100px;">
-														<f:facet name="header">
-															<h:outputText value="Nom" />
-														</f:facet>
-														<h:outputText value="#{e.nomEtudiant}" />
-													</p:column>
-													<p:column style="width:100px;">
-														<f:facet name="header">
-															<h:outputText value="Prenom" />
-														</f:facet>
-														<h:outputText value="#{e.prenomEtudiant}" />
-													</p:column>
-							
-													<p:column style="width:300px;">
-														<f:facet name="header">
-															<h:outputText value="Compréhension" />
-														</f:facet>
-														<p:cellEditor>
-															<f:facet name="output">
-																<h:outputText value="#{e.evaluation[0][0]}" style="cursor:pointer" />
-															</f:facet>
-															<f:facet name="input">
-																<p:selectOneMenu value="#{e.evaluation[0][0]}" style="width:100%">
-																	<f:selectItems value="#{e.evaluation[0]}" var="r"
-																		itemLabel="#{r}" itemValue="#{r}" />
-																</p:selectOneMenu>
-															</f:facet>
-														</p:cellEditor>
-													</p:column>
-													<p:column>
-													    <f:facet name="header">
-															<h:outputText value="Participation" />
-														</f:facet>
-														<p:cellEditor>
-															<f:facet name="output">
-																<h:outputText value="#{e.evaluation[1][0]}" style="cursor:pointer" />
-															</f:facet>
-															<f:facet name="input">
-																<p:selectOneMenu value="#{e.evaluation[1][0]}" style="width:100%">
-																	<f:selectItems value="#{e.evaluation[1]}" var="c"
-																		itemLabel="#{c}" itemValue="#{c}" />
-																</p:selectOneMenu>
-															</f:facet>
-														</p:cellEditor>
-													</p:column>
-													<p:column>
-													    <f:facet name="header">
-															<h:outputText value="Application TP" />
-														</f:facet>
-														<p:cellEditor>
-															<f:facet name="output">
-																<h:outputText value="#{e.evaluation[2][0]}" style="cursor:pointer" />
-															</f:facet>
-															<f:facet name="input">
-																<p:selectOneMenu value="#{e.evaluation[2][0]}" style="width:100%">
-																	<f:selectItems value="#{e.evaluation[2]}" var="c"
-																		itemLabel="#{c}" itemValue="#{c}" />
-																</p:selectOneMenu>
-															</f:facet>
-														</p:cellEditor>
-													</p:column>
-													<p:columnGroup type="footer">
-														<p:row>
-															<p:column colspan="2" style="text-align:center"
-																footerText="Etudiant" />
-															<p:column colspan="3" style="text-align:center;font-wieght:bold"
-																footerText="Evaluation Module : #{scheduleView.module.nomModule}" />
-														</p:row>
-													</p:columnGroup>
-												</p:dataTable>
-							
-												<p:commandButton value="générer un excel" id="xls" ajax="false">
-													<f:setPropertyActionListener value="false"
-														target="#{exporterController.customExporter}" />
-													<pe:exporter type="xlsx" target="studentTable" encoding="CP1252"
-														fileName="GroupedTable" />
-							
-												</p:commandButton>
-							
-												<p:commandButton value="générer un pdf" id="pdf" ajax="false">
-													<f:setPropertyActionListener value="false"
-														target="#{exporterController.customExporter}" />
-													<pe:exporter type="pdf" target="studentTable" encoding="CP1252"
-														fileName="GroupedTable" />
-							
-												</p:commandButton>
-											</div>
-										   </c:if>
-										</c:if>
-										<br />
 									</h:form>
+								
 									</div>
 		                       </div>
 		                  </section>

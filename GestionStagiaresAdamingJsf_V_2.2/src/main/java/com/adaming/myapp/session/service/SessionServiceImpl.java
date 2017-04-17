@@ -8,8 +8,6 @@ import javax.faces.context.FacesContext;
 
 import org.jboss.logging.Logger;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.adaming.myapp.dto.SessionDto;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;

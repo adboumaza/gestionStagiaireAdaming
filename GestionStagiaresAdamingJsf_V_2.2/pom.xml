@@ -148,6 +148,27 @@
 			<artifactId>spring-faces</artifactId>
 			<version>2.4.2.RELEASE</version>
 		</dependency>
+		
+		<!-- start spring oxm pour le parsing java To Xml -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+			<!-- Uses Castor for XML -->
+		<dependency>
+			<groupId>org.codehaus.castor</groupId>
+			<artifactId>castor</artifactId>
+			<version>1.2</version>
+		</dependency>
+	
+		<!-- Castor need this -->
+		<dependency>
+			<groupId>xerces</groupId>
+			<artifactId>xercesImpl</artifactId>
+			<version>2.8.1</version>
+		</dependency>
+	   <!-- end spring oxm pour le parsing java To Xml -->
 
 		<!-- AspectJ -->
 		<dependency>

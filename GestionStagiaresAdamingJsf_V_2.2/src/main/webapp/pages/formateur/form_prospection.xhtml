@@ -84,13 +84,9 @@
 														value="#{scheduleView.risque}">
 														<f:selectItem itemLabel="Quel est le risque"
 															itemValue="#{null}" itemDisabled="true" />
-														<f:selectItem itemLabel="Faible"
-															itemValue="Faible" />
-														<f:selectItem itemLabel="Moyen"
-															itemValue="Moyen" />
-														<f:selectItem itemLabel="Élevé"
-															itemValue="Élevé" />
+														<f:selectItems value="#{scheduleView.risques}" var="r" itemLabel="#{r}" itemValue="#{r}"></f:selectItems>	
 												</h:selectOneMenu>
+												
 	                                          </div>
 	                                          <br></br>
 	                                          <h:message for="risque" style="text-align:center;color:red;display:block"></h:message>
@@ -183,12 +179,7 @@
 														     <p:selectOneMenu style="width:100%" value="#{scheduleView.prospection.risque}">
 																
 																
-																<f:selectItem itemLabel="Faible"
-																itemValue="Faible" />
-																<f:selectItem itemLabel="Moyen"
-																itemValue="Moyen" />
-																<f:selectItem itemLabel="Élevé"
-																 itemValue="Élevé" />
+																<f:selectItems value="#{scheduleView.risques}" var="r" itemLabel="#{r}" itemValue="#{r}"></f:selectItems>	
 																									
 															</p:selectOneMenu>
 															<br />

@@ -173,7 +173,8 @@ public class SuivieExamenBean implements Serializable{
 				for (Object[] cc : classement) {
 					String prenomEtudiant = (String) cc[1];
 					Double moyenne = (Double) cc[2];
-					chartBare.set(prenomEtudiant, new Double(moyenne));
+					String nomEtudiant = (String)cc[3];
+					chartBare.set(prenomEtudiant.concat("-"+nomEtudiant.substring(0,3).toUpperCase()), new Double(moyenne));
 					LoggerConfig.logInfo("moyenne" + moyenne);
 				}
 

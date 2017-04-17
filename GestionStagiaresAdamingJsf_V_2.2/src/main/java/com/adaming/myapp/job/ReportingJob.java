@@ -7,20 +7,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-
-
-
-
-
-
-
-
-
-
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
 import com.adaming.myapp.entities.Formateur;
 import com.adaming.myapp.formateur.service.IFormateurService;
+import com.adaming.myapp.tools.DataEnum;
 import com.adaming.myapp.tools.SendEmailUtil;
 
 @Component("myJob")
@@ -28,16 +20,20 @@ public class ReportingJob  {
  
 	@Inject
 	private IFormateurService formateurService;
+	
 	private List<Formateur> formateurs;
-	private final String message   = " \n\n Merci de procéder à la préparation et l’envoi  de vos «  weekly reports » de la semaine N° ";
-	private final String warning   = " \n\n\n\n Ce message a été generé automatiquement, veuillez ne pas y répondre.";
-	private final String signature = " \n\n L'equipe intiformation.com";
-
+	private final String message   = DataEnum.MESSAGE.getMessage();
+	private final String warning   = DataEnum.WARNING.getMessage();
+	private final String signature = DataEnum.SIGNATURE.getMessage();
 	
 	/**
 	 * 
 	 *0 15 10 ? * THU-FRI	Fire at 10:15am every Thursday and Friday
 	 * */
+	
+	
+	
+	
 	@Scheduled(cron = "0 15 10 ? * THU-FRI")
 	public void send(){
 		final Calendar cal = Calendar.getInstance();

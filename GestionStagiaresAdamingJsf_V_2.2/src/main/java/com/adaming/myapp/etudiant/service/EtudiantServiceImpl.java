@@ -8,6 +8,7 @@ import javax.inject.Inject;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.adaming.myapp.dto.EtudiantDto;
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.User;
@@ -169,6 +170,13 @@ public class EtudiantServiceImpl implements IEtudiantService {
 	public Etudiant verifyExistingEtudiant(final String name, final Date dateDeNaissance) {
 		// TODO Auto-generated method stub
 		return dao.verifyExistingEtudiant(name, dateDeNaissance);
+	}
+
+
+	@Override
+	public EtudiantDto getStudentDto(Long idStudent) {
+		// TODO Auto-generated method stub
+		return dao.getStudentDto(idStudent);
 	}
 
 }

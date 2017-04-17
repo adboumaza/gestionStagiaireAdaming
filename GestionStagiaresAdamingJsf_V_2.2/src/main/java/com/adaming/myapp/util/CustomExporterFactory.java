@@ -9,6 +9,7 @@ import org.primefaces.extensions.component.exporter.ExporterFactory;
 import org.primefaces.extensions.component.exporter.PDFExporter;
 
 import com.adaming.myapp.bean.ExporterController;
+import com.adaming.myapp.tools.LoggerConfig;
 
 /**
  * 
@@ -53,8 +54,10 @@ public class CustomExporterFactory implements ExporterFactory {
 			case XLSX:
 				if (customExport) {
 					exporter = new ExcelCustomExporter();
+					LoggerConfig.logInfo(exporter+"Exporter : if");
 				} else {
 					exporter = new ExcelExporter();
+					LoggerConfig.logInfo(exporter+"Exporter : else");
 				}
 				break;
 

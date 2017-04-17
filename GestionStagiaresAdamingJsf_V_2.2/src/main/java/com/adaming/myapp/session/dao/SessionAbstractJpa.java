@@ -6,6 +6,7 @@ import java.util.List;
 
 
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -20,9 +21,9 @@ import javax.persistence.Query;
 
 
 
+
 import org.springframework.transaction.annotation.Transactional;
 
-import com.adaming.myapp.dto.SessionDto;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Salle;
 import com.adaming.myapp.entities.SessionEtudiant;
@@ -159,6 +160,7 @@ public abstract class SessionAbstractJpa {
 		 return session;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Evenement> getMoreInformationBySessionAbstractJpa(final Long idSession,final String choix){
 		/*final String SQL = "select distinct e from Evenement e join fetch"
         + " e.etudiant et join fetch e.sessionEtudiant se"

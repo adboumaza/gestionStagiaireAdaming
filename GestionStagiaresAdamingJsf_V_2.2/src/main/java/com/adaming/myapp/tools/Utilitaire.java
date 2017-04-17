@@ -28,12 +28,14 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
@@ -48,7 +50,9 @@ import org.geonames.ToponymSearchCriteria;
 import org.geonames.ToponymSearchResult;
 import org.geonames.WebService;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.Interval;
+import org.joda.time.Weeks;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 /**
  * 
@@ -61,6 +65,14 @@ public class Utilitaire {
 	private static ResourceBundle bundle = null;
 	private static String userName;
 	private static String userPassWord;
+	
+	public static int getWeeksOfYears(Date date1)
+	{
+		DateTime dtFr = new DateTime(date1, DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Paris")));
+	    int numberOfWeeck = dtFr.getWeekOfWeekyear();
+	    return numberOfWeeck;
+	}
+	
 	
 	/**
 	 *@message  jsf warning

@@ -1,12 +1,18 @@
 package com.adaming.myapp.bean;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Set;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIColumn;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIData;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
@@ -14,11 +20,14 @@ import javax.validation.constraints.NotNull;
 import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.extensions.component.exporter.Exporter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.adaming.myapp.entities.Etudiant;
+import com.adaming.myapp.entities.Evaluation;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Formateur;
 import com.adaming.myapp.entities.Module;
@@ -26,6 +35,7 @@ import com.adaming.myapp.entities.Prospection;
 import com.adaming.myapp.entities.Questions;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.etudiant.service.IEtudiantService;
+import com.adaming.myapp.evaluation.service.IEvaluationService;
 import com.adaming.myapp.evenement.service.IEvenementService;
 import com.adaming.myapp.exception.EvenementNotFoundException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
@@ -34,8 +44,10 @@ import com.adaming.myapp.module.service.IModuleService;
 import com.adaming.myapp.prospection.service.IProspectionService;
 import com.adaming.myapp.question.service.IQuestionService;
 import com.adaming.myapp.session.service.ISessionService;
+import com.adaming.myapp.tools.DataEnum;
 import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.Utilitaire;
+import com.adaming.myapp.util.ExcelCustomExporter;
 /**
  * 
  * @author adel
@@ -54,6 +66,9 @@ public class ScheduleView  implements Serializable {
     
 	@Inject
 	private IProspectionService serviceProspection;
+	
+	@Inject
+	private IEvaluationService serviceEvaluation;
 	
     @Inject
     private SessionBean sessionBean; 
@@ -83,8 +98,9 @@ public class ScheduleView  implements Serializable {
 	private String risque;
 	 @NotEmpty(message="Veuillez sélectionner un commentaire")
 	private String commentaire;
-	private final static String [] comportement = {"Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique satisfaisant.  Sérieux et appliqué.bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique satisfaisant.  Personne sérieuse, autonome, motivée  et appliquée,bonne communication,  Parmis  les meilleurs elements.","Niveau technique moyen, motivée, ralleur .","Niveau technique satisfaisant. autonome et motivé mais distrait quelques fois, bonne capacité à comprendre, Parmi les meilleurs de la session.","Niveau technique satisfaisant. Tres bonne progression. Sérieux et bonne communication.","Niveau technique satisfaisant.  Autonome, Parmis  les meilleurs elements de la session,Communique peut.","Niveau technique moyen,  Assez discret,  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique moyen,Communique peut.","Niveau technique satisfaisant, autonome,  Parmis  les meilleurs elements,bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Est un peu plus lent, mais sera operationnel au terme de la formation ","A ne pas Envoyer"};
-    private Prospection prospection = null;
+	private final  String [] comportement  = DataEnum.COMPORTEMENT.getData();
+    private final  String [] risques       = DataEnum.RISQUES.getData();
+	private Prospection prospection = null;
     private Etudiant etudiant;
     
 	/*evaluation*/
@@ -93,11 +109,19 @@ public class ScheduleView  implements Serializable {
 	private Long idSpecialite;
 	private List<Object[]> etudiants;
 	private List<Etudiant> students;
+	private List<Etudiant> etudiantsEvaluations;
 	private List<Object[]> modules;
 	private Module module;
 	private Set<Questions> questions;
-   
-	/*absence*/
+	private final String [] comprehensionData = DataEnum.EVALUATIONS.getData();
+	private final String [] applicationTpData = DataEnum.EVALUATIONS.getData();
+	private final String [] participationData = DataEnum.EVALUATIONS.getData();
+    private String comprehension;
+    private String applicationTp;
+    private String participation;
+    private Evaluation evaluation;
+	
+    /*absence*/
 	private Date dateIn;
 	private String[] dateString;
 	private DateTime[] joursSemaine;
@@ -121,6 +145,8 @@ public class ScheduleView  implements Serializable {
 	private SessionEtudiant sessionFormateur;
 	private List<Evenement> events;
 	private Evenement evenement;
+	private final String [] evenements = DataEnum.EVENEMENTS.getData();
+	
 	
 
 	public SessionEtudiant initReporting(){
@@ -138,6 +164,7 @@ public class ScheduleView  implements Serializable {
 	}
 
 	public String initEvenement() throws VerificationInDataBaseException {
+		
 		initReporting();
 		getAllStudentsBySession();
 		return "evenement?redirect=true";
@@ -209,7 +236,7 @@ public class ScheduleView  implements Serializable {
 		risque = null;
 		idEtudiant = null;
 	}
-	
+	/*cette methode permet de récupèrer les infos prospection par son idEtudiant*/
 	public void getProspectionByEtudiant(Long idEtudiant){
 		LoggerConfig.logInfo("idEtudiant"+idEtudiant);
 		prospection = new Prospection();
@@ -217,7 +244,7 @@ public class ScheduleView  implements Serializable {
 	    LoggerConfig.logInfo("Prospection En Cours!"+prospection);
 	   
 	}
-	
+	/*cette methode permet de modifier la prospection*/
 	public void update(Long idEtudiant){
 		serviceProspection.updateProspection(prospection, idEtudiant);
 		getStudentsBySession();
@@ -239,6 +266,60 @@ public class ScheduleView  implements Serializable {
 		setIdModule(null);
 		return "evaluation?faces-redirect=true";
 	}
+	
+	public void addEvaluation(Long idEtudiant,Long idModule){
+		Evaluation evaluation = null;
+		try {
+			evaluation = new Evaluation(applicationTp, comprehension, participation);
+			serviceEvaluation.addEvaluation(evaluation, idEtudiant, idModule);
+			 getAllEvaluationBySessionAndModule();
+			Utilitaire.displayMessageInfo("Bien été Signalé");
+			resetEvaluation();
+		} catch (VerificationInDataBaseException e) {
+			Utilitaire.displayMessageWarning(e.getMessage());
+			resetEvaluation();
+			LoggerConfig.logInfo(e.getMessage());
+		}
+	}
+	
+	/*cette methode permet de récupèrer les infos evaluation par son idEtudiant et le module*/
+	public void getEvaluationByEtudiant(Long idModule,Long idEtudiant){
+		evaluation = new Evaluation();
+		evaluation = serviceEvaluation.getEvaluationByEtudiant(idModule, idEtudiant);
+	    LoggerConfig.logInfo("Evaluation En Cours!"+evaluation);
+	   
+	}
+	/*cette methode permet de modifier les infos evaluation*/
+	public void updateEvaluation(Long idEtudiant){
+	   serviceEvaluation.updateEvaluation(evaluation, module.getIdModule(), idEtudiant);
+	   getAllEvaluationBySessionAndModule();
+	}
+	private void resetEvaluation(){
+		applicationTp = "";
+		comprehension = "";
+		participation = "";
+	}
+	
+	/** @methode generate Evaluations */
+	public String genererScheduleEvaluations(){
+		getStudentsBySession();
+		getModuleById();
+		active=true;
+		if(students.size() == 0){
+			return null;
+		}
+		if (module != null) {
+			getAllEvaluationBySessionAndModule();
+		}
+		return "evaluation_module?faces-redirect=true";
+	}
+	
+	private void getAllEvaluationBySessionAndModule(){
+		etudiantsEvaluations = serviceEvaluation.getAllEvaluationsBySessionAndModule(sessionFormateur.getIdSession(), module.getIdModule());
+	}
+	
+	
+	
 
 	public String initActivationModule() throws VerificationInDataBaseException {
 		 SessionEtudiant se = initReporting();
@@ -273,6 +354,7 @@ public class ScheduleView  implements Serializable {
 	/** get All Evenement par session for reporting*/
 	public String getAllEvenementsBySession(){
 		initReporting();
+		sessionBean.resetInformationSession();
 		if(sessionFormateur != null){
 			return "data_evenements?faces-redirect=true";
 		}else{
@@ -331,12 +413,7 @@ public class ScheduleView  implements Serializable {
 		return "module_update_success?redirect=true";
 	}
 
-	/** @methode generate Evaluations */
-	public void genererScheduleEvaluations() throws VerificationInDataBaseException {
-		getStudentsBySession();
-		getModuleById();
-		active=true;
-	}
+	
 	
 	/**@methode generate date and events**/
 	public void generateEvents() throws VerificationInDataBaseException{
@@ -493,7 +570,7 @@ public class ScheduleView  implements Serializable {
 		}
 	}
 
-	/** @methode signaler un etudiantTop (refactoring) */
+	/**  signaler un etudiantTop (refactoring) */
 	private void signalerUnEtudiantWarning() {
 		Evenement warningEtudiant = null;
 		warningEtudiant = FactoryBean.getEvenementFactory().create("WarningEtudiant");
@@ -516,15 +593,15 @@ public class ScheduleView  implements Serializable {
 	/* @method signaler un evenement */
 	public void signalerEvenement() {
 		if (!typeEvenement.equals(null)) {
-			if (typeEvenement.equals("retard")) {
+			if (typeEvenement.equals("Retard")) {
 				signalerUnRetad();
-			} else if (typeEvenement.equals("absence")) {
+			} else if (typeEvenement.equals("Absence")) {
 				signalerUneAbsence();
-			} else if (typeEvenement.equals("entretient")) {
+			} else if (typeEvenement.equals("Entretien")) {
 				signalerUnEntretien();
-			} else if (typeEvenement.equals("top")) {
+			} else if (typeEvenement.equals("Top")) {
 				signalerUnEtudiantTop();
-			} else if (typeEvenement.equals("warning")) {
+			} else if (typeEvenement.equals("Warning")) {
 				signalerUnEtudiantWarning();
 			}
 		}
@@ -833,10 +910,112 @@ public class ScheduleView  implements Serializable {
 	public void setEtudiant(Etudiant etudiant) {
 		this.etudiant = etudiant;
 	}
-	
-	
-	
-	
+
+	/**
+	 * @return the risques
+	 */
+	public  String[] getRisques() {
+		return risques;
+	}
+
+	/**
+	 * @return the evenements
+	 */
+	public String[] getEvenements() {
+		return evenements;
+	}
+
+	/**
+	 * @return the comprehensionData
+	 */
+	public String[] getComprehensionData() {
+		return comprehensionData;
+	}
+
+	/**
+	 * @return the applicationTpData
+	 */
+	public String[] getApplicationTpData() {
+		return applicationTpData;
+	}
+
+	/**
+	 * @return the participationData
+	 */
+	public String[] getParticipationData() {
+		return participationData;
+	}
+
+	/**
+	 * @return the comprehension
+	 */
+	public String getComprehension() {
+		return comprehension;
+	}
+
+	/**
+	 * @param comprehension the comprehension to set
+	 */
+	public void setComprehension(String comprehension) {
+		this.comprehension = comprehension;
+	}
+
+	/**
+	 * @return the applicationTp
+	 */
+	public String getApplicationTp() {
+		return applicationTp;
+	}
+
+	/**
+	 * @param applicationTp the applicationTp to set
+	 */
+	public void setApplicationTp(String applicationTp) {
+		this.applicationTp = applicationTp;
+	}
+
+	/**
+	 * @return the participation
+	 */
+	public String getParticipation() {
+		return participation;
+	}
+
+	/**
+	 * @param participation the participation to set
+	 */
+	public void setParticipation(String participation) {
+		this.participation = participation;
+	}
+
+	/**
+	 * @return the etudiantsEvaluations
+	 */
+	public List<Etudiant> getEtudiantsEvaluations() {
+		return etudiantsEvaluations;
+	}
+
+	/**
+	 * @param etudiantsEvaluations the etudiantsEvaluations to set
+	 */
+	public void setEtudiantsEvaluations(List<Etudiant> etudiantsEvaluations) {
+		this.etudiantsEvaluations = etudiantsEvaluations;
+	}
+
+	/**
+	 * @return the evaluation
+	 */
+	public Evaluation getEvaluation() {
+		return evaluation;
+	}
+
+	/**
+	 * @param evaluation the evaluation to set
+	 */
+	public void setEvaluation(Evaluation evaluation) {
+		this.evaluation = evaluation;
+	}
+
 	
 
 }

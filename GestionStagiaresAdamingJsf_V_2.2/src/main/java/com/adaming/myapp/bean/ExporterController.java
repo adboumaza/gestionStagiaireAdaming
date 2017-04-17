@@ -31,6 +31,7 @@ public class ExporterController implements Serializable {
 	public ExporterController() {
 		customExporter = false;
 		LoggerConfig.logInfo("init ExporterController");
+		
 	}
 
 	public Boolean getCustomExporter() {
