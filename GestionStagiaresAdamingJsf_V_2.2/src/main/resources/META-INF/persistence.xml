@@ -17,4 +17,5 @@
 			<property name="hibernate.c3p0.timeout" value="1800"></property>
 		</properties>
 	</persistence-unit>
+	
 </persistence>

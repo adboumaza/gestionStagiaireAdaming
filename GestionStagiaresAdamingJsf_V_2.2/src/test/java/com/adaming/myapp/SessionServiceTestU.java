@@ -2,6 +2,8 @@ package com.adaming.myapp;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
@@ -96,6 +99,7 @@ public class SessionServiceTestU {
 	}
 	
 	@Test
+	@Ignore
 	public void getTeamLeaderBySession(){
 		List<Evenement> e;
 		try {
@@ -108,6 +112,21 @@ public class SessionServiceTestU {
 			System.out.println(e1);
 		}
 		
+	}
+	@Test
+	public void getAllSessionsBetweenTwoDates() throws ParseException{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateDebut = sdf.parse("2017-03-31");
+		Date dateFin   = sdf.parse("2017-04-30");
+		List<Object[]> sE;
+		try {
+			sE = serviceSession.getAllSessionsBetwenTwoDates(dateDebut, dateFin);
+			System.out.println(sE);
+		} catch (AddSessionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
 	}
 
 }

@@ -1,29 +1,381 @@
 <!DOCTYPE html>
-<html xmlns = "http://www.w3.org/1999/xhtml"
-	xmlns:b = "http://bootsfaces.net/ui"
-	xmlns:f = "http://java.sun.com/jsf/core"
-	xmlns:h = "http://java.sun.com/jsf/html"
-	xmlns:p = "http://primefaces.org/ui"
-    xmlns:ui= "http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	
     <f:metadata>
 		<f:viewAction action="#{sessionBean.getAllSessions}" />
 	</f:metadata>
 <h:head>
 	<title>Session</title>
-	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-         
-     </f:facet>
+	<f:facet name="middle">
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
+	</f:facet>
 </h:head>
-<h:body>
-<ui:include src="header.xhtml"></ui:include>
-<ui:include src="form_addSession.xhtml"></ui:include>
+<h:body style="background:#f7f7f7">
+	<ui:include src="header.xhtml"></ui:include>
+	
+	 <!-- sidebar menu start-->
+	<aside class="aside">
+          <div id="sidebar"  class="nav-collapse ">
+              <ul class="sidebar-menu">              
+                  <li>
+                      <h:link outcome="dashboard">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone1.png"/></i>
+                          <span style="line-height:36px">Dashboard</span>
+                      </h:link>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone2.png"/></i>
+                          <span style="line-height:36px">Reporting</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{agendaBean.init}" value="Programme semaine"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivi-Collaboratif"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{reportingBean.init}" value="Reporting"/> </h:form></li> 
+                          <li><h:link outcome="admin">Ajouter Un Admin</h:link></li>   
+                      </ul>
+                     
+                   </li> 
+				   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone3.png"/></i>
+                          <span style="line-height:36px">Cursus</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:link outcome="specialite">Ajouter Un Cursus</h:link></li>     
+                      </ul>
+                   </li> 
+                  <li class="sub-menu active">
+                      <a href="javascript:;" class="" style="border-right: none!important">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone4.png"/></i>
+                          <span style="line-height: 36px">Session</span>
+                          <span style="float:right; width: 0;height: 0;border-style: solid;border-width: 15px 15px 15px 0;border-color: transparent #f7f7f7 transparent transparent;"></span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{sessionBean.resetAndRedirect}" value="Ajouter Une Session"/> </h:form></li> 
+                      </ul>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone5.png"/></i>
+                          <span style="line-height:36px">Modules</span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{moduleBean.resetAndRedirect}" value="Ajouter Un Module"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{moduleBean.resetQuestionAndRedirect}" value="Ajouter Un QCM"/> </h:form></li>                                         
+                      </ul>
+                  </li>  
+                  
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage height="36px" width="36px" name="NiceAdmin/img/icons/icone6.png"/></i>
+                          <span style="line-height:36px">Gestion Sites</span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{siteBean.resetAndRedirect}" value="Ajouter Un Site"/> </h:form></li>
+                         <li><h:form><h:commandLink action="#{siteBean.getAll}" value="Liste des Sites"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.resetAndRedirect}" value="Ajouter Une Salle"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.getAllSalle}" value="Liste des Salles"/> </h:form></li>                                                                
+                      </ul>
+                  </li>       
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone7.png"/></i>
+                          <span style="line-height:36px">Etudiant</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{etudiantBean.resetAndRedirect}" value="Ajouter Un Etudiant"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{etudiantBean.initListeEtudiant}" value="Liste des Etudiants"/> </h:form></li>   
+                      </ul>
+                  </li> 
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone8.png"/></i>
+                          <span style="line-height:36px">Formateur</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{formateurBean.init}" value="Ajouter Un Formateur"/> </h:form>  </li>  
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.initAndRedirect}" value="Affecter  Un Formateur"/> </h:form>  </li>
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.getAllFormateurs}" value="Formateurs"/> </h:form>  </li>
+                      </ul>
+                  </li>           
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone9.png"/></i>
+                          <span style="line-height:36px">Notes</span>
+                      </a>
+                      <ul class="sub">
+                            <li><h:form><h:commandLink action="#{suivieExamenBean.init}" value="Suivi Examens"/> </h:form>  </li>
+                      </ul>
+                  </li>        
+                  
+              </ul>
+              <!-- sidebar menu end-->
+             
+          </div>
+      </aside>
+      <!--sidebar end-->
+	
+
+    <!--main content start-->
+   
+	<section id="main-content">
+		<section class="wrapper">
+			<div class="row">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
+					<h3 class="page-header">
+						<h:graphicImage name="NiceAdmin/img/icons/icone2-1.png"/>
+						<span style="color:#00a19a;line-height: 50px;">Form Ajouter Une Session</span>
+					</h3>
+				</div>
+			</div>
+				<div class="col-lg-12">
+					<section class="panel"  style="width: 97%;margin: auto">
+						<header class="panel-heading"></header>
+						<div class="panel-body">
+                              <h:form class="form-validate form-horizontal">
+                                      <p:growl id="growl" autoUpdate="true" showDetail="true" life="5000" /> 
+                                      <div class="form-group ">
+                                          <label for="formation" class="control-label col-lg-2">Formation <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:selectOneMenu style="height:35px;width:30%;color:#797979;font-size:16px;" styleClass="selectpicker"
+												value="#{sessionBean.idSpecialite}">
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Une Formation" itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems value="#{specialiteBean.specialites}" var="spec"
+												itemLabel="#{spec.designation}" itemValue="#{spec.idSpecialite}" />
+											</h:selectOneMenu>
+                                          </div>
+                                          <div class="col-lg-7" style="text-align:center;padding-top:15px;">
+	                                          <c:if  test="#{fn:length(specialiteBean.specialites) eq 0}">
+										     	 <h:graphicImage width="80px" height="80px" name="NiceAdmin/img/picto_not_found.png"></h:graphicImage>
+											     <p style="color:red">
+												 <h:outputText value="Aucune Formation Trouvée...! "></h:outputText>
+											     </p>
+								              </c:if>
+							              </div>
+                                      </div>
+                                       
+                                      <div class="form-group ">
+                                          <label for="site" class="control-label col-lg-2">Site <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:selectOneMenu style="height:35px;width:30%;color:#797979;font-size:16px;" styleClass="selectpicker"
+												value="#{sessionBean.idSite}">
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Un Site" itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems value="#{sessionBean.sites}" var="site"
+												itemLabel="#{site.nomSite}" itemValue="#{site.idSite}" />
+												<f:ajax listener="#{sessionBean.getAllSallesBySite}" render="salle"></f:ajax>
+											</h:selectOneMenu>
+                                          </div>
+                                          <div class="col-lg-7" style="text-align:center;padding-top:15px">
+	                                          <c:if  test="#{fn:length(sessionBean.sites) eq 0}">
+										     	 <h:graphicImage width="80px" height="80px" name="NiceAdmin/img/picto_not_found.png"></h:graphicImage>
+											     <p style="color:red">
+												 <h:outputText value="Aucun Site Trouvé...! "></h:outputText>
+											     </p>
+								              </c:if>
+							              </div>
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="salle" class="control-label col-lg-2">Salles<span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:selectOneMenu id="salle" style="height:35px;width:30%;color:#797979;font-size:16px;" styleClass="selectpicker"
+												value="#{sessionBean.idSalle}">
+												<f:selectItem itemDisabled="true" itemLabel="Sélectionnez Une Salle" itemValue="#{null}" noSelectionOption="true" />
+												<f:selectItems value="#{sessionBean.salles}" var="salle"
+												itemLabel="#{salle[1]}" itemValue="#{salle[0]}" />
+												<f:ajax listener="#{sessionBean.getAllSallesDisponible}"></f:ajax>
+											</h:selectOneMenu>
+                                          </div>
+                                          <div id="confirm"></div>
+                                          
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="effect" class="control-label col-lg-2">Début<span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <p:calendar  styleClass="calendar" id="effect" navigator="true" yearRange="c-0:c+0"
+												value="#{sessionBean.dateDebute}"  effect="fold" locale="fr" lang="fr"
+												 />
+                                          </div>
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="effect2" class="control-label col-lg-2">Fin<span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <p:calendar styleClass="calendar" id="effect2" navigator="true" yearRange="c-0:c+0"
+												value="#{sessionBean.dateFin}"  effect="fold" locale="fr" lang="fr"
+												 />
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                          <div class="col-lg-offset-2 col-lg-10">
+                                              <h:commandButton action="#{sessionBean.addSession}" update="@form" value="Ajouter" class="btn btn-primary"/>
+                                          </div>
+                                      </div>
+                                      </h:form>
+                                      <!-- data table -->
+                                        <br />
+										<br />
+										<h:form id="form10">
+										<div align="center">
+											<p:dataTable  var="newSession" value="#{sessionBean.sessions}"
+												id="studentTable"
+												paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+												rowsPerPageTemplate="5,10,15" paginator="true" rows="10"
+												style="width:98%;margin-bottom:20px;">
+							
+												<f:facet name="{Exporters}">
+													<p:commandLink ajax="false" style="float:right;"
+														title="Fichier XML">
+														<p:graphicImage name="NiceAdmin/img/xml.png" width="24" />
+														<p:dataExporter type="xml" target=":form10:studentTable"
+															fileName="Sessions" />
+													</p:commandLink>
+							
+													<p:commandLink ajax="false" style="float:right;"
+														title="Fichier CSV">
+														<p:graphicImage name="NiceAdmin/img/csv.png" width="24" />
+														<p:dataExporter type="csv" target=":form10:studentTable"
+															fileName="Sessions" />
+													</p:commandLink>
+							
+													<p:commandLink ajax="false" style="float:right;"
+														title="Fichier PDF">
+														<p:graphicImage name="NiceAdmin/img/pdf.png" width="24" />
+														<p:dataExporter type="pdf" target=":form10:studentTable"
+															fileName="Sessions" />
+													</p:commandLink>
+							
+													<p:commandLink ajax="false" style="float:right;"
+														title="Fichier EXCEL">
+														<p:graphicImage name="NiceAdmin/img/excel.png" width="24" />
+														<p:dataExporter type="xls" target=":form10:studentTable"
+															fileName="Sessions" />
+													</p:commandLink>
+												</f:facet>
+												<p:column style="width:20px;">
+													<f:facet name="header">
+														<h:outputText value="N° Se" />
+													</f:facet>
+													<h:outputText value="#{newSession[0]}" />
+												</p:column>
+												<p:column style="width:50px;">
+													<f:facet name="header">
+														<h:outputText value="Specialitee" />
+													</f:facet>
+													<h:outputText value="#{newSession[1]}" />
+												</p:column>
+												
+												<p:column style="width:50px;">
+													<f:facet name="header">
+														<h:outputText value="Début" />
+													</f:facet>
+													<h:outputText value="#{newSession[2]}" />
+												</p:column>
+												<p:column style="width:50px;">
+													<f:facet name="header">
+														<h:outputText value="Fin" />
+													</f:facet>
+													<h:outputText value="#{newSession[3]}" />
+												</p:column>
+												<p:column style="width:50px;">
+													<f:facet name="header">
+														<h:outputText value="Site" />
+													</f:facet>
+													<h:outputText value="#{newSession[4]}" />
+												</p:column>
+												<p:column style="width:50px;">
+													<f:facet name="header">
+														<h:outputText value="Salle" />
+													</f:facet>
+													<h:outputText value="#{newSession[5]}" />
+												</p:column>
+												<p:column style="width:50px;">
+													<f:facet name="header">
+														<h:outputText value="Statut" />
+													</f:facet>
+													<h:outputText  rendered="#{sessionBean.currentTime.time lt newSession[2].time }" value="N'est pas Encore Démarré" />
+													<h:outputText  rendered="#{sessionBean.currentTime.time le newSession[3].time and sessionBean.currentTime.time gt newSession[2].time}" value="En Cours" />
+													<h:outputText  rendered="#{sessionBean.currentTime.time gt newSession[3].time }" value="Terminé" />
+												</p:column>
+												
+												<p:column exportable="false" style="width:50px;text-align:center;">
+													<f:facet name="header">
+														<h:outputText value="Actions" />
+													</f:facet>
+													<p:commandLink oncomplete="PF('carDialog').show()"
+														update=":form3:sessionDetail" title="Modifier">
+														 <h:graphicImage name="NiceAdmin/img/pencil.png"></h:graphicImage>
+														<f:param value="#{newSession[0]}" name="idSession" />
+														<f:param value="#{newSession[1]}"
+															name="idSpecialite" />
+														<p:ajax update=":form3:sessionDetail" event="click"
+															listener="#{sessionBean.getCurrentSession(newSession[0])}" />
+													</p:commandLink>
+												</p:column>
+												 
+											</p:dataTable>
+										</div>
+                                  </h:form>
+                                  <h:form id="form3">
+									<p:dialog header="Session Info" widgetVar="carDialog" modal="true"
+										showEffect="blind" hideEffect="explode" resizable="false">
+										<p:outputPanel id="sessionDetail" style="text-align:center;">
+										 
+										  <c:if test="#{not empty sessionBean.sessionEtudiant}">
+											 
+												<h:inputHidden value="#{sessionBean.sessionEtudiant.idSession}" />
+												<br />
+												<h:outputText value="IdSpecialite" />
+												<h:inputText disabled="true"
+													value="#{sessionBean.sessionEtudiant.specialite.idSpecialite}" />
+												<br />
+												<h:outputText value="IdSite" />
+												<br />
+												<h:inputText disabled="true" value="#{sessionBean.sessionEtudiant.site.idSite}" />
+												<br />
+												<h:outputText value="IdSalle" />
+												<br />
+												<h:inputText disabled="true"
+													value="#{sessionBean.sessionEtudiant.salle.idSalle}" />
+												<br />
+												<h:outputText value="Date début" />
+												<br />
+												<p:calendar navigator="true" yearRange="c-0:c+0" value="#{sessionBean.sessionEtudiant.dateDebute}" locale="fr" lang="fr" />
+												<br />
+												<h:outputText value="Date fin" />
+												<br />
+												<p:calendar navigator="true" yearRange="c-0:c+0" value="#{sessionBean.sessionEtudiant.dateFin}" locale="fr" lang="fr" />
+												<br />
+
+										   </c:if>
+										</p:outputPanel>
+										<br />
+										<br />
+										<p:commandButton value="Modifier"
+											action="#{sessionBean.edit(sessionBean.sessionEtudiant,sessionBean.sessionEtudiant.specialite.idSpecialite,sessionBean.sessionEtudiant.site.idSite,sessionBean.sessionEtudiant.salle.idSalle)}" />
+									</p:dialog>
+		                       </h:form>
+						</div>
+					</section>
+				</div>
+		</section>
+</section>
+
 </h:body>
 </html>

@@ -1,5 +1,7 @@
 package com.adaming.myapp.session.dao;
+import java.util.Date;
 import java.util.List;
+
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
@@ -30,15 +32,6 @@ public class SessionDaoImpl extends SessionAbstractJpa implements ISessionDao{
 		return getSessionEtudiantByIdAbstractJpa(idSessionEtudiant);
 	}
 
-	@Override
-	public List<SessionEtudiant> getAllSessions() {
-		return getAllSessionsAbstractJpa();
-	}
-
-	@Override
-	public List<SessionEtudiant> getAllSessionsInProgress() {
-		return getAllSessionsInProgressAbstractJpa();
-	}
 
 	@Override
 	public List<Object[]> getSallesDisponible(final Long idSalle) {
@@ -74,6 +67,23 @@ public class SessionDaoImpl extends SessionAbstractJpa implements ISessionDao{
 		// TODO Auto-generated method stub
 		return getMoreInformationBySessionAbstractJpa(idSession,choix);
 	}
+	
+	@Override
+	public List<Object[]> getAllSessionsBetwenTwoDates(
+			final Date dateDebut,final Date dateFin) {
+		// TODO Auto-generated method stub
+		return getAllSessionsBetwenTwoDatesAbstractJpa(dateDebut,dateFin);
+	}
+
+	@Override
+	public List<Object[]> getAllSessionsQuiTermineCetteSemaine() {
+		// TODO Auto-generated method stub
+		return getAllSessionsQuiTermineCetteSemaineAbstractJpa();
+	}
+
+
+
+	
 
 	
 	

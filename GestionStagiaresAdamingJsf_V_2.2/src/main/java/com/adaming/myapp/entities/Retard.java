@@ -33,6 +33,4 @@ public class Retard extends Evenement implements Serializable{
 
 	
 	
-
-	
 }

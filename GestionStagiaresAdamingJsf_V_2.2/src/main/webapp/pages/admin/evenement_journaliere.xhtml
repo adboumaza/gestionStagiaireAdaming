@@ -1,32 +1,158 @@
 
 <!DOCTYPE html>
-<html xmlns = "http://www.w3.org/1999/xhtml"
-	xmlns:b = "http://bootsfaces.net/ui"
-	xmlns:f = "http://java.sun.com/jsf/core"
-	xmlns:h = "http://java.sun.com/jsf/html"
-	xmlns:p = "http://primefaces.org/ui"
-    xmlns:ui= "http://java.sun.com/jsf/facelets">
-    
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
        <f:metadata>
 		<f:viewAction action="#{dashboardBean.init}" />
 	   </f:metadata>
 <h:head>
 	<title>Evènement Du jour</title>
-	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-
-     </f:facet>
+	<f:facet name="middle">
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
+	</f:facet>
 </h:head>
-<h:body>
-<ui:include src="header.xhtml"></ui:include>
-<ui:include src="form_evenement_journaliere.xhtml" ></ui:include>
-
+<h:body style="background:#f7f7f7">
+	<ui:include src="header.xhtml"></ui:include>
+	<ui:include src="aside_admin.xhtml"></ui:include>
+    <!--main content start-->
+	<section id="main-content">
+		<section class="wrapper">
+			<div class="row">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
+					<h3 class="page-header">
+						<h:graphicImage name="NiceAdmin/img/icons/icone2-1.png"/>
+						<span style="color:#00a19a;line-height: 50px;">Evènements journalières</span>
+					</h3>
+				</div>
+			</div>
+			    <c:if test="#{fn:length(dashboardBean.absenceJournaliere) > 0}">
+				<div class="col-lg-12">
+				 <section class="panel" style="width: 97%;margin: auto">
+				    <div class="panel-body">
+				          <header class="panel-heading">
+	                          <h4>Evènement journalière <strong> Absence</strong></h4>
+	                      </header>
+	                     <div class="panel-body text-center">
+                           <p:dataTable paginator="true" rows="5" value="#{dashboardBean.absenceJournaliere}" var="a">
+	                              
+						         <p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="N° Session" />
+									</f:facet>
+									<h:outputText value="#{a[8]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="Nom" />
+									</f:facet>
+									<h:outputText value="#{a[6]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="prénom" />
+									</f:facet>
+									<h:outputText value="#{a[7]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="Formateur" />
+									</f:facet>
+									<h:outputText value="#{a[3]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="De" />
+									</f:facet>
+									<h:outputText value="#{a[1]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="A" />
+									</f:facet>
+									<h:outputText value="#{a[2]}" />
+								</p:column>
+	                          </p:dataTable> 
+						 </div>
+				     </div>
+				   </section>
+				</div>
+				</c:if>
+				<c:if test="#{fn:length(dashboardBean.retardsJournaliere) > 0}">
+				<div class="col-lg-12">
+				 <section class="panel" style="width: 97%;margin: auto">
+				    <div class="panel-body">
+				        <header class="panel-heading">
+	                          <h4>Evènement journalière <strong>Retards</strong></h4>
+	                      </header>
+	                     <div class="panel-body text-center">
+	                          <p:dataTable paginator="true" rows="5" value="#{dashboardBean.retardsJournaliere}" var="r">
+	                         
+						          <p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="N° Session" />
+									</f:facet>
+									<h:outputText value="#{r[8]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="Nom" />
+									</f:facet>
+									<h:outputText value="#{r[6]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="prénom" />
+									</f:facet>
+									<h:outputText value="#{r[7]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="Formateur" />
+									</f:facet>
+									<h:outputText value="#{r[3]}" />
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="durée" />
+									</f:facet>
+									<h:outputText rendered="#{(r[2].time - r[1].time)/(1000*60) gt 60}" value="#{(r[2].time - r[1].time)/(1000*60*60)} hrs"/>
+									<h:outputText rendered="#{(r[2].time - r[1].time)/(1000*60) eq 60}" value="#{(r[2].time - r[1].time)/(1000*60*60)} h"/>
+									<h:outputText rendered="#{(r[2].time - r[1].time)/(1000*60) lt 60}" value="#{(r[2].time - r[1].time)/(1000*60)} min"/>
+								</p:column>
+								<p:column style="width:140px;">
+									<f:facet name="header">
+										<h:outputText value="Date" />
+									</f:facet>
+									<h:outputText value="#{r[4]}">
+									  <f:convertDateTime type="date" dateStyle="short"></f:convertDateTime>
+									</h:outputText>
+								</p:column>
+								
+	                          </p:dataTable> 
+						 </div>
+				     </div>
+				   </section>
+				</div>
+				</c:if>
+		</section>
+	</section>
+			
 </h:body>
 </html>

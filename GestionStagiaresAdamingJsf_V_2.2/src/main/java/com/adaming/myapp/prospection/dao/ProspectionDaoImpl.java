@@ -1,5 +1,7 @@
 package com.adaming.myapp.prospection.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -41,6 +43,19 @@ public class ProspectionDaoImpl implements IProspectionDao{
 		prospection.setEtudiant(etudiant);
 		entityManager.merge(prospection);
 		return prospection;
+	}
+
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getAllProspectionBySession(final Long idSession) {
+		final String SQL = "select e.nomEtudiant,e.prenomEtudiant,p.risque,p.commentaire from prospection p " 
+		 + "join etudiant e on e.idEtudiant = p.ID_ETU_PROSPECTION "
+		 + "join sessionEtudiant se on se.idSession = e.ID_SESS_ETUDIANT " 
+		 + "where se.idSession =:id";
+		
+		Query query = entityManager.createNativeQuery(SQL).setParameter("id", idSession);
+		return query.getResultList();
 	}
 
 }

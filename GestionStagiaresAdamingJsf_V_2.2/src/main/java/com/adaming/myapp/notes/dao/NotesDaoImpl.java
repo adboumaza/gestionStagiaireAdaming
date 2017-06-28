@@ -28,14 +28,6 @@ public class NotesDaoImpl implements INotesDao {
 
 
 	@Override
-	@SuppressWarnings("unchecked")
-	public List<Note> getAllNotes() {
-		Query query = em.createQuery("from Note n");
-		LoggerConfig.logInfo("Liste des Notes : " + query.getResultList().size());
-		return query.getResultList();
-	}
-
-	@Override
 	public Note addNoteFinal(final Note note, final Long idSession, final Long idEtudiant,
 			Long idModule) {
 		SessionEtudiant s = em.find(SessionEtudiant.class, idSession);
@@ -94,8 +86,12 @@ public class NotesDaoImpl implements INotesDao {
 	@SuppressWarnings("unchecked")
 	@Override
 	public  List<Object[]> getAllNotesBySession(final Long idSession) {
-		final String SQL = "Select n.idNote,n.score,m.idModule,se.idSession From Note n join n.module m join n.etudiant e join n.sessionEtudiant se where se.idSession=:x";
-		Query query = em.createQuery(SQL).setParameter("x",idSession);
+		final String SQL = "select e.nomEtudiant,e.prenomEtudiant,n.score,m.nomModule from note n "
+		        +"join sessionEtudiant se on se.idSession = n.ID_SES_NOTE "
+				+"join etudiant e on e.idEtudiant = n.ID_ETU_NOTE "
+				+"join module m on m.idModule = n.ID_MOD_NOTE "
+				+"where m.nomModule != 'Test' and se.idSession =:id order by m.nomModule asc ,n.score desc";
+		Query query = em.createNativeQuery(SQL).setParameter("id",idSession);
 		return query.getResultList();
 	}
 
@@ -133,12 +129,8 @@ public class NotesDaoImpl implements INotesDao {
 
 	@Override
 	public List<Object[]> getClassementGeneralBySession(final Long idSession) {
-/*		final String SQL = "SELECT distinct et.idEtudiant,et.prenomEtudiant FROM note n "
-				+ "join sessionEtudiant se on se.idSession = n.ID_SES_NOTE join etudiant et "
-				+ "on et.idEtudiant = n.ID_ETU_NOTE where se.idSession =:x";*/
-		
-		
-		Query query = em.createNativeQuery("SELECT distinct et.idEtudiant,et.prenomEtudiant,avg(n.score) as moyenne,et.nomEtudiant"
+
+		Query query = em.createNativeQuery("SELECT et.idEtudiant,et.prenomEtudiant,avg(n.score) as moyenne,et.nomEtudiant"
 				+ " FROM note n join sessionEtudiant se on se.idSession = n.ID_SES_NOTE join module m"
 				+ " on m.idModule = n.ID_MOD_NOTE join etudiant et on et.idEtudiant = n.ID_ETU_NOTE"
 				+ " where se.idSession =:x and m.nomModule != 'TEST' group by et.idEtudiant "

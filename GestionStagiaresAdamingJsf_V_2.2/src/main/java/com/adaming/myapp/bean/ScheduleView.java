@@ -25,6 +25,7 @@ import org.primefaces.event.RowEditEvent;
 import org.primefaces.extensions.component.exporter.Exporter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.webflow.execution.EnterStateVetoException;
 
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Evaluation;
@@ -121,13 +122,7 @@ public class ScheduleView  implements Serializable {
     private String participation;
     private Evaluation evaluation;
 	
-    /*absence*/
-	private Date dateIn;
-	private String[] dateString;
-	private DateTime[] joursSemaine;
-	private int annee;
-	private int semaine;
-	private boolean dispo;
+   
 	
 	/** evenement */
     @NotNull(message="Veuillez sélectionner un étudiant")
@@ -176,15 +171,7 @@ public class ScheduleView  implements Serializable {
 		return "warning?redirect=true";
 	}
 
-	public String initAbsences() throws VerificationInDataBaseException {
-		initReporting();
-		//getStudentsBySession();
-		dateIn = new Date();
-		active = false;
-		genererDates();
-		//genererSchedule();
-		return "absence?redirect=true";
-	}
+	
 	
 	/*public String colorMoy(String m) {
 		if (m != null && !m.equals("--")) {
@@ -375,10 +362,7 @@ public class ScheduleView  implements Serializable {
 	    Utilitaire.displayMessageInfo("L'évènement a bien été supprimé");
 	}
 	
-	/**  generate Absences **/
-	public void genererSchedule(){
-		getStudentsBySession();
-	}
+	
 
 	public void getAllModulesBySession() {
 		modules = serviceModule.getModulesBySessionV2(sessionFormateur.getIdSession());
@@ -413,52 +397,11 @@ public class ScheduleView  implements Serializable {
 		return "module_update_success?redirect=true";
 	}
 
+
 	
-	
-	/**@methode generate date and events**/
-	public void generateEvents() throws VerificationInDataBaseException{
-		try {
-			events = serviceEvenement
-					.getAllEvenementsBetweenTwoDate(sessionFormateur.getIdSession(), dateIn);
-			genererSchedule();
-			Utilitaire.displayMessageWarning("Les évènements trouvés à partir du "+dateIn+" Veuillez modifié le tableau en dessous");
-			active=true;
-		} catch (EvenementNotFoundException e) {
-			genererSchedule();
-			Utilitaire.displayMessageWarning(e.getMessage());
-			events=null;
-			active=true;
-		}
-		
-
-	}
-
-	/** @method generate date */
-	public void genererDates() {
-		DateTime date = new DateTime(dateIn);
-		final int dayOfWeek = date.getDayOfWeek();
-		annee   = date.getYear();
-		semaine = date.getWeekOfWeekyear();
-
-		// si jour select n'est pas un lundi
-		if (dayOfWeek != 1) {
-			date = date.withDayOfWeek(1);
-		}
-
-		joursSemaine = new DateTime[5];
-		dateString = new String[5];
-		// joursSemaine[0] = date.toDate();
-
-		// on boucle jusqu'a vendredi
-		for (int i = 0; i < 5; i++) {
-			joursSemaine[i] = date.plusDays(i);
-			dateString[i] = joursSemaine[i].getDayOfMonth() + "/"
-					+ joursSemaine[i].getMonthOfYear();
-		}
-	}
 
 	/** @reset evenement */
-	public void resetEvenement() {
+	private void resetEvenement() {
 		dateStart = null;
 		dateEnd = null;
 		idEtudiant = null;
@@ -473,12 +416,16 @@ public class ScheduleView  implements Serializable {
 		retard.setEndDate(dateEnd);
 		retard.setCurentDate(new Date());
 		retard.setSignaleur(userAuthentificationBean.getName());
+		
 		if(retard.getStartDate().after(retard.getEndDate())){
 			Utilitaire.displayMessageWarning("la date de départ ne peut être antérieur ");
 		}
+		else if(Utilitaire.getHoursBetweenTwoDates(retard.getStartDate(), retard.getEndDate()) >= 10){
+			Utilitaire.displayMessageWarning("la durée de retard ne peut pas dépasser 10 heures");
+		}
 		else if(retard.getStartDate().equals(retard.getEndDate()))
 		{
-			Utilitaire.displayMessageWarning("la durré de retard ne peut être 0 min");	
+			Utilitaire.displayMessageWarning("la durée de retard ne peut être 0 min");	
 		}
 		else 
 		{
@@ -504,8 +451,16 @@ public class ScheduleView  implements Serializable {
 		absence.setEndDate(dateEnd);
 		absence.setCurentDate(new Date());
 		absence.setSignaleur(userAuthentificationBean.getName());
+		
 		if(absence.getStartDate().after(absence.getEndDate())){
 			Utilitaire.displayMessageWarning("la date de départ ne peut être antérieur ");
+		}
+		else if(Utilitaire.getHoursBetweenTwoDates(absence.getStartDate(), absence.getEndDate()) < 9){
+			Utilitaire.displayMessageWarning("la durée d'absence doit dépasser une journée soit 9h ou plus, Veuillez changer le type <--RETARD--> ");
+		}
+		else if(absence.getStartDate().equals(absence.getEndDate()))
+		{
+			Utilitaire.displayMessageWarning("la durée d'absence ne peut être 0 min");	
 		}
 		else 
 		{
@@ -531,8 +486,16 @@ public class ScheduleView  implements Serializable {
 		entretien.setEndDate(dateEnd);
 		entretien.setCurentDate(new Date());
 		entretien.setSignaleur(userAuthentificationBean.getName());
+		
 		if(entretien.getStartDate().after(entretien.getEndDate())){
 			Utilitaire.displayMessageWarning("la date de départ ne peut être antérieur ");
+		}
+		else if(Utilitaire.getHoursBetweenTwoDates(entretien.getStartDate(), entretien.getEndDate()) > 11){
+			Utilitaire.displayMessageWarning("la durée d'entretien ne doit pas dépasser une journée");
+		}
+		else if(entretien.getStartDate().equals(entretien.getEndDate()))
+		{
+			Utilitaire.displayMessageWarning("la durée d'entretien ne peut être 0 min");	
 		}
 		else
 		{
@@ -610,46 +573,7 @@ public class ScheduleView  implements Serializable {
 
 	/** :::::::::::::::::::::: **/
 
-	
-	public Date getDateIn() {
-		return dateIn;
-	}
 
-	public void setDateIn(Date dateIn) {
-		this.dateIn = dateIn;
-	}
-
-	public String[] getDateString() {
-		return dateString;
-	}
-
-	public void setDateString(String[] dateString) {
-		this.dateString = dateString;
-	}
-
-	public int getAnnee() {
-		return annee;
-	}
-
-	public void setAnnee(int annee) {
-		this.annee = annee;
-	}
-
-	public int getSemaine() {
-		return semaine;
-	}
-
-	public void setSemaine(int semaine) {
-		this.semaine = semaine;
-	}
-
-	public boolean isDispo() {
-		return dispo;
-	}
-
-	public void setDispo(boolean dispo) {
-		this.dispo = dispo;
-	}
 
 	
 
@@ -772,14 +696,7 @@ public class ScheduleView  implements Serializable {
 		this.events = events;
 	}
 
-	public DateTime[] getJoursSemaine() {
-		return joursSemaine;
-	}
-
-	public void setJoursSemaine(DateTime[] joursSemaine) {
-		this.joursSemaine = joursSemaine;
-	}
-
+	
 	public boolean isActive() {
 		return active;
 	}

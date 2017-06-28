@@ -10,25 +10,24 @@
 
 <ui:composition>
 	<br> </br>
-	<br> </br>
-	<br> </br>
+	<br></br>
 	
-	<div class="well container">
-	<p:messages autoUpdate="true" closable="true" showDetail="true" showSummary="true"></p:messages>
-	<p:growl id="growl" showDetail="true" life="5000" /> 
+	<section id="main-content">
+
+	<p:growl id="growl" showDetail="true" sticky="true"  /> 
 	<c:if test="#{fn:length(classementBean.modules) > 0}">
 	    <section class="wrapper">
 		  <div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
 					<ol class="breadcrumb">
-						<h3 class="page-header"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Classement</h3>
+						<h3 class="page-header" style="color:#00a19a;"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Classement</h3>
 					</ol>
 				</div>
 			</div>  
 			           
               <div class="row">
                   <div class="col-lg-12">
-                      <section class="panel">
+                      <section class="panel" style="width: 97%;margin: auto">
                           <header class="panel-heading">
                               Sélectionnez un Module
                           </header>
@@ -62,7 +61,7 @@
 			</div>
 			<div class="row">
                   <div class="col-lg-12">
-                      <section class="panel">
+                      <section class="panel" style="width: 97%;margin: auto">
                           <header class="panel-heading">
                               Classement
                           </header>
@@ -100,6 +99,6 @@
 			</div>
 		</section>
 		</c:if>
-	</div>
+	</section>
 </ui:composition>
 </html>

@@ -1,6 +1,8 @@
 package com.adaming.myapp.session.dao;
 
+import java.util.Date;
 import java.util.List;
+
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
@@ -18,10 +20,6 @@ public interface ISessionDao {
 			 final Long idSpecialite,final Long idSite,final Long idSalle);
 	
 	 SessionEtudiant getSessionEtudiantById(final Long idSessionEtudiant);
-	
-	 List<SessionEtudiant> getAllSessions();
-	
-	 List<SessionEtudiant> getAllSessionsInProgress();
 	 
      List<Object[]> getSallesDisponible(final Long idSalle);
      
@@ -34,4 +32,10 @@ public interface ISessionDao {
      SessionEtudiant getSessionByEtudiant(final Long idEtudiant);
 	
      List<Evenement> getMoreInformationBySession(final Long idSession,final String choix);
+     
+     List<Object[]> getAllSessionsBetwenTwoDates(final Date dateDebut,final Date dateFin);
+     
+     List<Object[]> getAllSessionsQuiTermineCetteSemaine();
+     
+    
 }

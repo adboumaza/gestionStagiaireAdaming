@@ -10,16 +10,19 @@
 	   </f:metadata>
 <h:head>
 	<title>Examen</title>
-	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-
+	   	  <f:facet name="middle">
+        <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
      </f:facet>
 <SCRIPT type="text/javascript">
     window.history.forward();
@@ -31,6 +34,7 @@
 onpageshow="if (event.persisted) noBack();" onunload="">
 
 <ui:include src="header.xhtml" ></ui:include>
+<ui:include src="aside_etudiant.xhtml" ></ui:include>
 <ui:include src="form_addExamen.xhtml"></ui:include>
 
 </h:body>

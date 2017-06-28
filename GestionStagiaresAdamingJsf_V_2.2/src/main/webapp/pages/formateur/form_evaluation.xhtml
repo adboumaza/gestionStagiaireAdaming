@@ -12,50 +12,32 @@
 
 <ui:composition>
 	<br> </br>
-	<br> </br>
-	<br> </br>
 	<h:form>
-	   <p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
-              <div class="sk-circle">
-			  <div class="sk-circle1 sk-child"></div>
-			  <div class="sk-circle2 sk-child"></div>
-			  <div class="sk-circle3 sk-child"></div>
-			  <div class="sk-circle4 sk-child"></div>
-			  <div class="sk-circle5 sk-child"></div>
-			  <div class="sk-circle6 sk-child"></div>
-			  <div class="sk-circle7 sk-child"></div>
-			  <div class="sk-circle8 sk-child"></div>
-			  <div class="sk-circle9 sk-child"></div>
-			  <div class="sk-circle10 sk-child"></div>
-			  <div class="sk-circle11 sk-child"></div>
-			  <div class="sk-circle12 sk-child"></div>
-			</div>
+	   <p:dialog  closable="false" widgetVar="dlg2"  modal="true" showEffect="explode">
+				  <div style="margin:auto;text-align: center">
+	                <h:graphicImage name="NiceAdmin/img/chargement_1.gif"></h:graphicImage>
+	              </div>
         </p:dialog>
 	</h:form>
-	<div class="well container">
-		<br />
+	<section id="main-content">
 		 <!-- messages errors + exception -->  
 		<p:growl id="growler" showDetail="true"  autoUpdate="true" severity="warn,info"></p:growl>
 		<c:if test="#{fn:length(scheduleView.modules) > 0}">
 		<section class="wrapper">
 		  <div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
 					<ol class="breadcrumb">
-						<h3 class="page-header"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Évaluation</h3>
+						<h3 class="page-header" style="color:#00a19a"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Évaluation</h3>
 					</ol>
 				</div>
 			</div>            
               <div class="row">
                   <div class="col-lg-12">
-                      <section class="panel">
-                          <header class="panel-heading">
-                              Évaluation étudiant
-                          </header>
+                      <section class="panel" style="width: 97%;margin: auto">
                           <div class="panel-body">
                               <div class="form">
                                   <h:form class="form-validate form-horizontal">
 			                        <div class="form-group ">
-                                          <label for="session" class="control-label col-lg-2">Session en Cours :</label>
                                           <div class="col-lg-10">
 											<h:outputText value="Formation: #{scheduleView.sessionFormateur.specialite.designation}"/><br />
 											
@@ -80,9 +62,10 @@
 	                                          <div class="col-lg-offset-2 col-lg-10">
 	                                              <h:commandButton onclick="PF('dlg2').show();"
 														action="#{scheduleView.genererScheduleEvaluations}" 
-														value="Évaluation" class="btn btn-primary" />
+														value="Suivant" class="btn btn-primary" />
 	                                          </div>
 	                                   </div>
+	                                   <p:commandButton value="get" onclick="PF('dlg2').show();" ></p:commandButton>
 										<br />
 										<br />
 										<br />
@@ -95,6 +78,6 @@
 				</div>
 		    </section>
 		    </c:if>
-		</div>
+		</section>
 </ui:composition>
 </html>

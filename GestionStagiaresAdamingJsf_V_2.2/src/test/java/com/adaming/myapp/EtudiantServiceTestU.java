@@ -3,8 +3,11 @@ package com.adaming.myapp;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hamcrest.core.IsEqual;
 import org.junit.AfterClass;
@@ -17,6 +20,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.adaming.myapp.dto.EtudiantDto;
 import com.adaming.myapp.dto.EtudiantMapper;
 import com.adaming.myapp.entities.Etudiant;
+import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.User;
 import com.adaming.myapp.etudiant.service.IEtudiantService;
@@ -57,6 +61,7 @@ public class EtudiantServiceTestU {
 	}
 
 	@Test
+	@Ignore
 	public void testUpdateStudent() {
 		Etudiant e = serviceEtudiant.getStudentById(1L);
 		e.setNomEtudiant("nomModifier");
@@ -116,6 +121,7 @@ public class EtudiantServiceTestU {
 			e.printStackTrace();
 		}
 	}
+
 
 
 }

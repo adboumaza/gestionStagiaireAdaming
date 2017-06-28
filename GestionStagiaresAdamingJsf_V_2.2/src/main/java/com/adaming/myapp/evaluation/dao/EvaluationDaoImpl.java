@@ -68,4 +68,17 @@ public class EvaluationDaoImpl extends EtudiantAbstractJpa implements IEvaluatio
 		return evaluation;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Object[]> getAllEvaluationsBySession(Long idSession) {
+	final String SQL ="select e.nomEtudiant,e.prenomEtudiant,ev.applicationTp,ev.comprehension,ev.participation,m.nomModule "
+			    +"from evaluation ev join etudiant e on e.idEtudiant = ev.ID_ETU_EVALUATION "
+				+"join module m on m.idModule = ev.ID_MOD_EVALUATION "
+				+"join sessionEtudiant se on se.idSession = e.ID_SESS_ETUDIANT "
+				+"where se.idSession =:id";
+	 Query query = entityManager.createNativeQuery(SQL).setParameter("id", idSession);
+	
+	 return query.getResultList();
+	}
+
 }

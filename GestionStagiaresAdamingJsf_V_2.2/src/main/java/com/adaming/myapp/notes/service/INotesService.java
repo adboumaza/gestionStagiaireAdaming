@@ -12,7 +12,6 @@ import com.adaming.myapp.exception.VerificationInDataBaseException;
  * */
 public interface INotesService {
 
-	 List<Note> getAllNotes();
 
 	 Note addNoteFinal(final Note note, final Long idSession, final Long idEtudiant,
 			Long idModule) throws VerificationInDataBaseException;
@@ -24,7 +23,7 @@ public interface INotesService {
 	
 	 List<Note> getAllNotesByStudent(final Long idEtudiant);
 	
-	 List<Object[]> getAllNotesBySession(final Long idSession);
+	 List<Object[]> getAllNotesBySession(final Long idSession) throws VerificationInDataBaseException;
 	 
 	 Double getMoyenne(final Long idSession,final Long idModule);
 	 

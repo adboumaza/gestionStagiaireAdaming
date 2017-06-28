@@ -7,22 +7,129 @@
     xmlns:ui= "http://java.sun.com/jsf/facelets">
   
 <h:head>
-	<title>Etudiant Modification Success</title>
-	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-         
-     </f:facet>
+	<title>succès</title>
+	<f:facet name="middle">
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
+	</f:facet>
 </h:head>
 <h:body>
-<ui:include src="header.xhtml"></ui:include>
-<!--ui:include src="aside.xhtml" ></ui:include-->
+<h:body style="background:#f7f7f7">
+	<ui:include src="header.xhtml"></ui:include>
+    
+    <!-- sidebar menu start-->
+	<aside class="aside">
+          <div id="sidebar"  class="nav-collapse ">
+              <ul class="sidebar-menu">              
+                  <li>
+                      <h:link outcome="dashboard">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone1.png"/></i>
+                          <span style="line-height:36px">Dashboard</span>
+                      </h:link>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone2.png"/></i>
+                          <span style="line-height:36px">Reporting</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{agendaBean.init}" value="Programme semaine"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivi-Collaboratif"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{reportingBean.init}" value="Reporting"/> </h:form></li> 
+                          <li><h:link outcome="admin">Ajouter Un Admin</h:link></li>   
+                      </ul>
+                     
+                   </li> 
+				   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone3.png"/></i>
+                          <span style="line-height:36px">Cursus</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:link outcome="specialite">Ajouter Un Cursus</h:link></li>     
+                      </ul>
+                   </li> 
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone4.png"/></i>
+                          <span style="line-height: 36px">Session</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{sessionBean.resetAndRedirect}" value="Ajouter Une Session"/> </h:form></li> 
+                      </ul>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone5.png"/></i>
+                          <span style="line-height:36px">Modules</span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{moduleBean.resetAndRedirect}" value="Ajouter Un Module"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{moduleBean.resetQuestionAndRedirect}" value="Ajouter Un QCM"/> </h:form></li>                                         
+                      </ul>
+                  </li>  
+                  
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage height="36px" width="36px" name="NiceAdmin/img/icons/icone6.png"/></i>
+                          <span style="line-height:36px">Gestion Sites</span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{siteBean.resetAndRedirect}" value="Ajouter Un Site"/> </h:form></li>
+                         <li><h:form><h:commandLink action="#{siteBean.getAll}" value="Liste des Sites"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.resetAndRedirect}" value="Ajouter Une Salle"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.getAllSalle}" value="Liste des Salles"/> </h:form></li>                                                                
+                      </ul>
+                  </li>       
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone7.png"/></i>
+                          <span style="line-height:36px">Etudiant</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{etudiantBean.resetAndRedirect}" value="Ajouter Un Etudiant"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{etudiantBean.initListeEtudiant}" value="Liste des Etudiants"/> </h:form></li>   
+                      </ul>
+                  </li> 
+                  <li class="sub-menu active">
+                      <a href="javascript:;" class="" style="border-right:none!important">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone8.png"/></i>
+                          <span style="line-height:36px">Formateur</span>
+                          <span style="float:right; width: 0;height: 0;border-style: solid;border-width: 15px 15px 15px 0;border-color: transparent #f7f7f7 transparent transparent;"></span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{formateurBean.init}" value="Ajouter Un Formateur"/> </h:form>  </li>  
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.initAndRedirect}" value="Affecter  Un Formateur"/> </h:form>  </li>
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.getAllFormateurs}" value="Formateurs"/> </h:form>  </li>
+                      </ul>
+                  </li>           
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone9.png"/></i>
+                          <span style="line-height:36px">Notes</span>
+                      </a>
+                      <ul class="sub">
+                            <li><h:form><h:commandLink action="#{suivieExamenBean.init}" value="Suivi Examens"/> </h:form>  </li>
+                      </ul>
+                  </li>        
+                  
+              </ul>
+              <!-- sidebar menu end-->
+             
+          </div>
+      </aside>
+      <!--sidebar end-->
+    
 <br/>
 <br/>
 <br/>

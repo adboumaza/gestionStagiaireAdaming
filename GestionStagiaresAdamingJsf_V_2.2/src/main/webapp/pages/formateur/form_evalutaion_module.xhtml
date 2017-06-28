@@ -12,8 +12,6 @@
 
 <ui:composition>
 	<br> </br>
-	<br> </br>
-	<br> </br>
 	<p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
               <div class="sk-circle">
 			  <div class="sk-circle1 sk-child"></div>
@@ -30,25 +28,22 @@
 			  <div class="sk-circle12 sk-child"></div>
 			</div>
         </p:dialog>
-	<div class="well container">
-		<br />
+<section id="main-content">
 		 <!-- messages errors + exception -->  
 		<p:growl id="growler" showDetail="true"  autoUpdate="true" severity="warn,info"></p:growl>
 		
 		<section class="wrapper">
 		  <div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
 					<ol class="breadcrumb">
-						<h3 class="page-header"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Évaluation <span style="color:red;">Module #{scheduleView.module.nomModule}</span></h3>
+						<h3 class="page-header" style="color:#00a19a"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Évaluation <span style="color:red;">Module #{scheduleView.module.nomModule}</span></h3>
 					</ol>
 				</div>
 			</div>            
               <div class="row">
                   <div class="col-lg-12">
-                      <section class="panel">
-                          <header class="panel-heading">
-                              Évaluations étudiants pour le module #{scheduleView.module.nomModule}
-                          </header>
+                      <section class="panel" style="width: 97%;margin: auto">
+                         
                           <div class="panel-body">
                               <div class="form">
                                   <h:form class="form-validate form-horizontal">
@@ -182,7 +177,7 @@
 															<h:outputText value="Action" />
 													</f:facet>
 													<p:commandLink rendered="#{fn:length(e.evaluations) > 0}" title="Modifier" oncomplete="PF('actionDialog').show()">
-													    <h:graphicImage name="NiceAdmin/img/pencil.png" style="width:20px;height:20px"></h:graphicImage>
+													    <h:graphicImage name="NiceAdmin/img/pencil.png"></h:graphicImage>
 												        <f:param value="#{e.idEtudiant}" name="idEtudiant" />
 														 <p:ajax update="@form"  event="click" listener="#{scheduleView.getEvaluationByEtudiant(scheduleView.module.idModule,e.idEtudiant)}" />
 												    </p:commandLink>
@@ -249,6 +244,6 @@
 		              </div>
 				</div>
 		    </section>
-		</div>
+		</section>
 </ui:composition>
 </html>

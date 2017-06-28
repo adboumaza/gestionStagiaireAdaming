@@ -51,7 +51,7 @@ public class ReportingJob  {
 	
 	private List<Formateur> getAllFormateur(){
 		List<Formateur> formateurs = new ArrayList<Formateur>();
-		formateurs = formateurService.getAllFormateurs();
+		formateurs = formateurService.getFormateursInSessionEncours();
 		return formateurs;
 	}
 

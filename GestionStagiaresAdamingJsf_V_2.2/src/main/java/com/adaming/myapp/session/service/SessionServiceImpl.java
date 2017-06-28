@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 
 import org.jboss.logging.Logger;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
@@ -81,18 +82,9 @@ public class SessionServiceImpl implements ISessionService{
 		return dao.getSessionEtudiantById(idSessionEtudiant);
 	}
 
-	@Override
-	public List<SessionEtudiant> getAllSessions() {
-		// TODO Auto-generated method stub
-		return dao.getAllSessions();
-	}
+	
 
-	@Override
-	public List<SessionEtudiant> getAllSessionsInProgress() {
-		// TODO Auto-generated method stub
-		return dao.getAllSessionsInProgress();
-	}
-
+	
 	@Override
 	public List<Object[]> getSallesDisponible(final Long idSalle) {
 		// TODO Auto-generated method stub
@@ -153,6 +145,27 @@ public class SessionServiceImpl implements ISessionService{
 		}
 		return evenements;
 	}
+
+	@Override
+	public List<Object[]> getAllSessionsBetwenTwoDates(
+			final Date dateDebut,final Date dateFin) throws AddSessionException {
+		if(dateDebut.after(dateFin))
+	    {
+			throw new AddSessionException("Veuillez vous assurer que la date de Fin est postérieure à la date de début.");
+		}
+		else if(dao.getAllSessionsBetwenTwoDates(dateDebut,dateFin).size() == 0){
+			throw new AddSessionException("Aucun reporting trouvé..!");
+		}
+		return dao.getAllSessionsBetwenTwoDates(dateDebut,dateFin);
+	}
+
+	@Override
+	public List<Object[]> getAllSessionsQuiTermineCetteSemaine() {
+		// TODO Auto-generated method stub
+		return dao.getAllSessionsQuiTermineCetteSemaine();
+	}
+
+	
 
 
 

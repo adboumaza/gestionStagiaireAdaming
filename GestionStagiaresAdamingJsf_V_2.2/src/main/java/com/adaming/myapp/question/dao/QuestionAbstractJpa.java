@@ -48,7 +48,7 @@ public abstract class QuestionAbstractJpa {
 	}
 	
 	public Questions verifyExistingQuestionsAbstractJpa(final String label){
-		 final String SQL = "select distinct q from Questions q where q.label =:x";     
+		 final String SQL = "select q from Questions q where q.label =:x";     
 		 Questions question = null;
          Query query =  em.createQuery(SQL)
 				       .setParameter("x", label);

@@ -46,7 +46,7 @@ public abstract class EtudiantAbstractJpa {
 	 * {@inheritDoc} 
 	 * @see com.adaming.myapp.etudiant.dao.IEtudiantDao.addStudent
 	**/
-	public Etudiant addStudentAbstractJpa(Etudiant e, Long idSession) {
+	public Etudiant addStudentAbstractJpa(final Etudiant e, final Long idSession) {
 
 		SessionEtudiant s = entityManager.find(SessionEtudiant.class, idSession);
 		e.setSessionEtudiant(s);
@@ -63,7 +63,7 @@ public abstract class EtudiantAbstractJpa {
 	 * {@inheritDoc} 
 	 * @see com.adaming.myapp.etudiant.dao.IEtudiantDao.updateStudent
 	**/
-	public Etudiant updateStudentAbstractJpa(Etudiant e, Long idSession) {
+	public Etudiant updateStudentAbstractJpa(final Etudiant e, final Long idSession) {
 		SessionEtudiant s = entityManager.find(SessionEtudiant.class, idSession);
 		e.setSessionEtudiant(s);
 		entityManager.merge(e);
@@ -78,7 +78,7 @@ public abstract class EtudiantAbstractJpa {
 	 * {@inheritDoc} 
 	 * @see com.adaming.myapp.etudiant.dao.IEtudiantDao.removeStudent
 	**/
-	public Etudiant removeStudentAbstractJpa(Long idStudent) {
+	public Etudiant removeStudentAbstractJpa(final Long idStudent) {
 		Etudiant e = entityManager.find(Etudiant.class, idStudent);
 		entityManager.remove(e);
 		LoggerConfig.logInfo("l'etudiant " + e.getIdEtudiant() + " a bien été supprime");
@@ -92,8 +92,8 @@ public abstract class EtudiantAbstractJpa {
 	 * {@inheritDoc} 
 	 * @see com.adaming.myapp.etudiant.dao.IEtudiantDao.getStudentById
 	**/
-	public Etudiant getStudentByIdAbstractJpa(Long idStudent) {
-		final String SQL = "select distinct e from Etudiant e " +
+	public Etudiant getStudentByIdAbstractJpa(final Long idStudent) {
+		final String SQL = "select e from Etudiant e " +
                 "join fetch e.sessionEtudiant " +
                 "where e.idEtudiant = :x";
 
@@ -112,7 +112,7 @@ public abstract class EtudiantAbstractJpa {
 	 * @see com.adaming.myapp.etudiant.dao.IEtudiantDao.getEtudiantBySession
 	**/
 	@SuppressWarnings("unchecked")
-	public List<Object[]> getEtudiantBySessionAbstractJpa(Long idSession) {
+	public List<Object[]> getEtudiantBySessionAbstractJpa(final Long idSession) {
 
 		final String SQL = "Select e.idEtudiant,e.nomEtudiant,e.prenomEtudiant,e.dateDeNaissance,e.formationInitial,e.ecole,e.dateObtention,e.adresse.adresse,e.adresse.codePostal,e.numTel,e.mail,se.idSession,se.dateDebute,se.dateFin,e.adresse.ville,e.adresse.pays FROM Etudiant e join e.sessionEtudiant se where se.idSession=:x";
         Query query = entityManager.createQuery(SQL);
@@ -122,17 +122,14 @@ public abstract class EtudiantAbstractJpa {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Etudiant> getStudentsBySessionAbstractJpa(Long idSession){
+	public List<Etudiant> getStudentsBySessionAbstractJpa(final Long idSession){
 		
 		final String SQL = "From Etudiant e join fetch e.sessionEtudiant se left join fetch e.prospections pr where se.idSession =:x";
 		Query query = entityManager.createQuery(SQL).setParameter("x",idSession);
 		return query.getResultList();
 	}
+	
 
-	
-	
-	
-	
 	
 	/**
 	 * {@inheritDoc} 
@@ -140,7 +137,7 @@ public abstract class EtudiantAbstractJpa {
 	**/
 
 	public Etudiant getEtudiantAbstractJpa(String mail) {
-		final String SQL = "select distinct e From Etudiant e where e.mail=:x";
+		final String SQL = "From Etudiant e where e.mail=:x";
 		Query query = entityManager
 				.createQuery(SQL).setParameter("x", mail);
 
@@ -152,7 +149,7 @@ public abstract class EtudiantAbstractJpa {
 	}
     
 	public Etudiant verifyExistingEtudiantAbstractJpa(String name, Date dateDeNaissance) {
-		final String SQL = "select distinct e From Etudiant e where e.nomEtudiant=:x and e.dateDeNaissance =:y";
+		final String SQL = "From Etudiant e where e.nomEtudiant=:x and e.dateDeNaissance =:y";
 		Query query = entityManager
 				.createQuery(SQL).setParameter("x", name).setParameter("y",dateDeNaissance);
 
@@ -187,4 +184,6 @@ public abstract class EtudiantAbstractJpa {
 	    }
 	    return dto;
 	}
+	
+	
 }

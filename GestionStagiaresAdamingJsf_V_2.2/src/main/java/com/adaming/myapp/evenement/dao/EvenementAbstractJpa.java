@@ -1,4 +1,8 @@
 package com.adaming.myapp.evenement.dao;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -9,6 +13,13 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.joda.time.DateTime;
+
+
+
+
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Evenement;
@@ -174,28 +185,6 @@ public abstract class EvenementAbstractJpa {
 		return query.getResultList();
 	}
 
-	
-	@SuppressWarnings("unchecked")
-	public List<Evenement> getAllEvenementsAbstractJpa() {
-		Query query = em
-				.createQuery("from Evenement e ORDER BY e.idEvenement DESC");
-		LoggerConfig.logInfo("il existe :" + query.getResultList().size()
-				+ "evenements dans la base de données");
-		return query.getResultList();
-	}
-
-
-	@SuppressWarnings("unchecked")
-	public List<Evenement> getAllEvenementsBySessionAbstractJpa(Long idSession) {
-		Query query = em
-				.createQuery("from Evenement e join fetch e.etudiant et join fetch e.sessionEtudiant se where se.idSession=:x ORDER BY e.idEvenement DESC");
-		query.setParameter("x", idSession);
-		LoggerConfig.logInfo("il existe :" + query.getResultList().size()
-				+ "evenements dans la session");
-		return query.getResultList();
-	}
-	
-
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getEventsExisteAbstractJpa(final Long idEtudiant) {
 		Query query = em.createQuery("Select e.startDate,e.endDate,e.etudiant.idEtudiant"
@@ -206,81 +195,9 @@ public abstract class EvenementAbstractJpa {
 		return query.getResultList();
 	}
 	
-
-	public long getNumberOfRetardsAbstractJpa() {
-		Date tomorrow    = DateUtils.addDays(new Date(), +1);
-		Date yesterday   = DateUtils.addDays(new Date(), -1);
-		final String SQL = "SELECT count(e.idEvenement)"
-				         + " FROM Evenement e"
-				         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
-				.createQuery(SQL);
-		query.setParameter("x", "RETARD");
-		query.setParameter("y", yesterday, TemporalType.DATE);
-		query.setParameter("t", tomorrow, TemporalType.DATE);
-		long count =(Long) query.getSingleResult();
-		LoggerConfig.logInfo("les retards d'aujourdhuit sont :"
-				+count);
-		return count;
-	}
-
-	
-	public long getNumberOfAbsenceAbstractJpa() {
-		Date tomorrow    = DateUtils.addDays(new Date(), +1);
-		Date yesterday   = DateUtils.addDays(new Date(), -1);
-		final String SQL = "SELECT count(e.idEvenement)"
-				         + " FROM Evenement e"
-				         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
-				.createQuery(SQL);
-		query.setParameter("x", "ABSENCE");
-		query.setParameter("y", yesterday, TemporalType.DATE);
-		query.setParameter("t", tomorrow, TemporalType.DATE);
-		long count =(Long) query.getSingleResult();
-		LoggerConfig.logInfo("les absences d'aujourdhuit sont :"
-				+count);
-		return count;
-	}
-
-	
-	public long getNumberOfWarningAbstractJpa() {
-		Date tomorrow    = DateUtils.addDays(new Date(), +1);
-		Date yesterday   = DateUtils.addDays(new Date(), -1);
-		final String SQL = "SELECT count(e.idEvenement)"
-				         + " FROM Evenement e"
-				         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
-				.createQuery(SQL);
-		query.setParameter("x", "WARNING");
-		query.setParameter("y", yesterday, TemporalType.DATE);
-		query.setParameter("t", tomorrow, TemporalType.DATE);
-		long count =(Long) query.getSingleResult();
-		LoggerConfig.logInfo("les warning d'aujourdhuit sont :"
-				+count);
-		return count;
-	}
-
-	
-	public long getNumberOfOfTopAbstractJpa() {
-		Date tomorrow    = DateUtils.addDays(new Date(), +1);
-		Date yesterday   = DateUtils.addDays(new Date(), -1);
-		final String SQL = "SELECT count(e.idEvenement)"
-				         + " FROM Evenement e"
-				         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
-				.createQuery(SQL);
-		query.setParameter("x", "TOP");
-		query.setParameter("y", yesterday, TemporalType.DATE);
-		query.setParameter("t", tomorrow, TemporalType.DATE);
-		long count =(Long) query.getSingleResult();
-		LoggerConfig.logInfo("les TOPS d'aujourdhuit sont :"
-				+count);
-		return count;
-	}
-
 	
 	public Evenement verifyExistingEventAbstractJpa(final Long idEtudiant){
-		final String SQL = "Select distinct e from Evenement e join e.etudiant et where TYPE_EVENEMENT =:x or TYPE_EVENEMENT =:y and et.idEtudiant =:z";
+		final String SQL = "select e from Evenement e join e.etudiant et where (TYPE_EVENEMENT =:x or TYPE_EVENEMENT =:y) and et.idEtudiant =:z";
 		Evenement event = null;
 		Query query = em.createQuery(SQL).setParameter("x","WARNING").setParameter("y","TOP").setParameter("z",idEtudiant);
 		if(query.getResultList().size() > 0 && query.getResultList() != null){
@@ -301,6 +218,32 @@ public abstract class EvenementAbstractJpa {
 		evenement.setEtudiant(etudiant);
 		em.merge(evenement);
 		return evenement;
+	}
+	
+	public Object [] getEventByStudentBetweenTwoDatesAbstractJpa(Long idSession,String nomEtudiant,DateTime date){
+
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MM-dd");
+		String dtStr = fmt.print(date);
+		
+		final String SQL = "SELECT e.nomEtudiant,ev.startDate, ev.endDate,ev.TYPE_EVENEMENT " + 
+        "FROM evenement ev join etudiant e on ev.ID_EVE_ETUDIANT = e.idEtudiant " + 
+		"join sessionEtudiant se on se.idSession = ev.ID_EVE_SESSION " + 
+		"where se.idSession =:id and e.nomEtudiant =:nom and (:date  >= cast(ev.startDate as date) and :date <= cast(ev.endDate as date) ) "
+		+"and (TYPE_EVENEMENT =:r or TYPE_EVENEMENT =:a or TYPE_EVENEMENT =:e)" ;
+
+		Query query = em.createNativeQuery(SQL).
+				setParameter("id",idSession).
+				setParameter("nom", nomEtudiant).
+				setParameter("date",dtStr).
+				setParameter("a", "ABSENCE").
+				setParameter("r", "RETARD").
+				setParameter("e", "ENTRETIENT");
+		Object [] event= null;
+		if(query.getResultList().size() > 0 && query.getResultList() != null){
+			event = (Object[]) query.getResultList().get(0);
+		}
+		return event;
+		
 	}
 	
 

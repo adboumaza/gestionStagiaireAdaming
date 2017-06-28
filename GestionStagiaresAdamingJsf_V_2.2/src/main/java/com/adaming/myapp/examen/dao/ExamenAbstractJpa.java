@@ -1,11 +1,17 @@
 package com.adaming.myapp.examen.dao;
 
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
+
+
+import org.hibernate.JDBCException;
 
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Examen;
@@ -40,7 +46,7 @@ public abstract class ExamenAbstractJpa {
 
 	public Examen verifyExistingExamenAbstractJpa(final Long idEtdudiant, final Long idModule,
 			final Long idSession) {
-		final String SQL = "Select distinct e from Examen e join e.etudiant et join e.module m join e.sessionEtudiant se "
+		final String SQL = "select e from Examen e join e.etudiant et join e.module m join e.sessionEtudiant se "
 				+ "where et.idEtudiant =:x and m.idModule =:y and se.idSession =:z";
 		Query query = entityManager.createQuery(SQL)
 				.setParameter("x", idEtdudiant).setParameter("y", idModule)
@@ -50,6 +56,29 @@ public abstract class ExamenAbstractJpa {
 			 examen = (Examen) query.getResultList().get(0);
 		 }
 		return examen;
+	}
+	
+	public List<Object[]> sqlQuizAbstractJpa(final String sql) throws javax.persistence.PersistenceException{
+		Query query = entityManager.createNativeQuery(sql);
+		List<Object[]> result = null;
+		
+		
+		if(sql != null){
+			
+           if(query.getResultList().size() == 0){
+				return result;
+			}
+			else if(query.getResultList().size() > 1){
+				result = query.getResultList();
+				return result;
+			}else if(query.getResultList().size() == 1){
+				result = new ArrayList<Object[]>();
+				result.add((Object[]) query.getResultList().get(0));
+			}
+		}
+		
+		return result;
+	
 	}
 
 }

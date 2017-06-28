@@ -9,42 +9,42 @@
 <h:head>
 	<title>Session Modification Success</title>
 	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-            <h:outputScript  name="NiceAdmin/js/jquery.scrollTo.min.js" />
-            <h:outputScript  name="NiceAdmin/js/jquery.nicescroll.js" />
-            <h:outputScript  name="NiceAdmin/js/jquery.customSelect.min.js" />
-            <h:outputScript  name="NiceAdmin/js/scripts.js" />
+        <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
      </f:facet>
 </h:head>
 <h:body>
 <ui:include src="header.xhtml"></ui:include>
-<!--ui:include src="aside.xhtml" ></ui:include-->
+<ui:include src="aside_etudiant.xhtml" ></ui:include>
 <br/>
 <br/>
 <br/>
 <br/>
-<br/>
-<br/>
-<div class="well container">
+<section id="main-content">
+   <div class="col-lg-12" style="width: 97%;margin: auto">
 		<div class="alert alert-info" style="text-align:center; margin-bottom:0px!important;">
-		   <h:outputText style="color:black" value="le mail a bien été envoyé"/><br/>
+		   <h:outputText style="color:black" value="le mail a bien été envoyé">
+           </h:outputText>
 		</div> 
-		<h:form>
-			   <div class="form-group">
-	                  <div class="col-lg-offset-2 col-lg-10">
-	                     <h:commandButton action="#{mailBean.resetMail}"  value="Retour à la Page d'accueil" class="btn btn-primary"/>
-	                  </div>
-	            </div>
-        </h:form>
-		  
-</div>
+		 <h:form>
+				   <div class="form-group">
+		                  <div class="col-lg-offset-2 col-lg-10">
+		                     <h:commandButton action="#{mailBean.resetMail}"  value="Retour à la Page d'accueil" class="btn btn-primary"/>
+		                  </div>
+		            </div>
+	      </h:form>
+   </div>		  
+</section>
 
 
 </h:body>

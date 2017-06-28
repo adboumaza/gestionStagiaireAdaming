@@ -60,4 +60,13 @@ public class EvaluationServiceImpl implements IEvaluationService {
 		return dao.updateEvaluation(evaluation,idModule, idEtudiant);
 	}
 
+	@Override
+	public List<Object[]> getAllEvaluationsBySession(Long idSession) throws VerificationInDataBaseException {
+		List<Object[]> results = dao.getAllEvaluationsBySession(idSession);
+		if(results.isEmpty()){
+			throw new VerificationInDataBaseException("n'est pas encore signalé,veuillez communiquer avec le formateur");
+		}
+		return results;
+	}
+
 }

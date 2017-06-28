@@ -80,4 +80,6 @@ public interface IEtudiantDao {
 	  Etudiant verifyExistingEtudiant(final String name,final Date dateDeNaissance);
 	  
       EtudiantDto getStudentDto(Long idStudent);
+      
+     
 }

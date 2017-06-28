@@ -1,7 +1,10 @@
 package com.adaming.myapp.evenement.dao;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.exception.EvenementNotFoundException;
@@ -17,8 +20,6 @@ public interface IEvenementDao {
 			Long idEtudiant);
 	 
 	 List<Object[]> getEventsExiste(final Long idEtudiant);
-	 
-	 //List<Object[]> getEventsTopExiste(final Long idEtudiant);
 
 	/* toutes les evenements par semaine */
 
@@ -38,24 +39,9 @@ public interface IEvenementDao {
 	 List<Object[]> getDailyCountOfWarning();
 
 	 List<Object[]> getDailyCountOfTop();
-	 
-	 /* evenement du jour */
-
-	 long getNumberOfRetards();
-
-	 long getNumberOfAbsence();
-
-	 long getNumberOfWarning();
-
-	 long getNumberOfTop();
-
 
 	/* toutes les evenements */
 
-
-	 List<Evenement> getAllEvenements();
-
-	 List<Evenement> getAllEvenementsBySession(final Long idSession);
 	 
 	 /**@verification*/
 	 Evenement verifyExistingEvent(final Long idEtudiant);
@@ -64,4 +50,7 @@ public interface IEvenementDao {
 	 
 	 Evenement updateEvenement(final Evenement evenement,final Long idEtudiant,final Long idSession);
 
+	 Object [] getEventByStudentBetweenTwoDates(Long idSession,String nomEtudiant,DateTime date);
+	 
+	 
 }

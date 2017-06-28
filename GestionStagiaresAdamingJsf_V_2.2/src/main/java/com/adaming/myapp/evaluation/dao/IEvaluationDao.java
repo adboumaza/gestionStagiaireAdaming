@@ -20,4 +20,8 @@ public interface IEvaluationDao {
 			final Long idEtudiant);
 	
 	Evaluation updateEvaluation(final Evaluation evaluation,final Long idModule,final Long idEtudiant);
+	
+	List<Object[]> getAllEvaluationsBySession(final Long idSession);
+	
+	
 }

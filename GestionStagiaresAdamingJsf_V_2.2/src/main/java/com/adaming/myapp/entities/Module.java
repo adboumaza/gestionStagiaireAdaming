@@ -31,6 +31,7 @@ public class Module implements Serializable {
 	private Long idModule;
 	private String nomModule;
 	private boolean actif = false;
+	private String type;
 
 	/* assoc */
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -44,6 +45,15 @@ public class Module implements Serializable {
 	public Module() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	
+
+	public Module(String nomModule,String type) {
+		this.nomModule = nomModule;
+		this.type = type;
+	}
+
+
 
 	public Module(String nomModule) {
 		super();
@@ -90,9 +100,20 @@ public class Module implements Serializable {
 		this.actif = actif;
 	}
 
-	
-	
 
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	@Override
 	public String toString() {

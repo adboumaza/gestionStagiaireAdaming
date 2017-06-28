@@ -23,14 +23,19 @@ public class DeactivatedModuleJob {
 	
 	
 	@Scheduled(cron = "0 01 18 ? * MON-FRI")
-	public void deactivateAllModulesActivated(){
+	public void deactivateAllModulesActivated()
+	{
 		modules = serviceModule.getAllModules();
 		if(modules.size() > 0)
 		{
-			for(Module m:modules){
-				m.setActif(false);
-			    serviceModule.desactivateModule(m);
-			    LoggerConfig.logInfo("Job : Désactivate Module "+m.getNomModule());
+			for(Module m:modules)
+			{
+				if(m.isActif())
+				{
+					m.setActif(false);
+				    serviceModule.desactivateModule(m);
+				    LoggerConfig.logInfo("Job : Désactivate Module "+m.getNomModule());
+				}
 			}
 		}
 		

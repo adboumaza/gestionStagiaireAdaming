@@ -10,8 +10,6 @@
 
 <ui:composition>
 	<br> </br>
-	<br> </br>
-	<br> </br>
       <p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
               <div class="sk-circle">
 			  <div class="sk-circle1 sk-child"></div>
@@ -28,18 +26,18 @@
 			  <div class="sk-circle12 sk-child"></div>
 			</div>
         </p:dialog>
-	<div class="well container">
+	<section id="main-content">
 		<section class="wrapper">
 			<!-- exception add new Etudiant + message success+ error validation-->
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 			<p:growl id="growl" showDetail="true" showSummary="true" autoUpdate="true" severity="warn,info"></p:growl>
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
 					<ol class="breadcrumb">
-						<h3 class="page-header">
+						<h3 class="page-header" style="color:#00a19a">
 							<i><h:graphicImage name="NiceAdmin/img/form.png" /> </i> Form
-							Suivie Examens
+							Suivi Examens
 						</h3>
 					</ol>
 				</div>
@@ -47,11 +45,8 @@
 			
 			<div class="row">
 				<div class="col-lg-12">
-					<section class="panel">
+					<section class="panel" style="width: 97%;margin: auto">
 						<div class="panel-body">
-							<header class="panel-heading">
-								<h4>Suivie Examens</h4>
-							</header>
 							<div class="panel-body text-center">
 							  
 								<h:form id="form20">
@@ -86,18 +81,15 @@
 												</div>
 											</h:graphicImage>
 										</p:column>
-										
 									</p:dataTable>
 								</h:form>
-								
 							</div>
-							
 						</div>
 					</section>
 				</div>
 			</div>
 		</section>
-	</div>
+	</section>
 	<br />
 </ui:composition>
 </html>

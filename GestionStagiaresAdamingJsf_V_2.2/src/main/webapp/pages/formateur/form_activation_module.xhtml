@@ -11,8 +11,6 @@
 
 <ui:composition>
 	<br> </br>
-	<br> </br>
-	<br> </br>
 	<p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
               <div class="sk-circle">
 			  <div class="sk-circle1 sk-child"></div>
@@ -29,29 +27,26 @@
 			  <div class="sk-circle12 sk-child"></div>
 			</div>
         </p:dialog>
-	<div class="well container">
+	<section id="main-content">
         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
         <p:growl id="growl" showDetail="true" autoUpdate="true" closable="true" />
 		<c:if test="#{fn:length(scheduleView.modules) > 0}">
 		<section class="wrapper">
 		  <div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
 					<ol class="breadcrumb">
-						<h3 class="page-header"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Activation Module</h3>
+						<h3 class="page-header" style="color:#00a19a"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Activation Module</h3>
 					</ol>
 				</div>
 			</div>            
               <div class="row">
                   <div class="col-lg-12">
-                      <section class="panel">
-                          <header class="panel-heading">
-                              Activation Module
-                          </header>
+                      <section class="panel" style="width: 97%;margin: auto">
                           <div class="panel-body">
                               <div class="form">
                                   <div class="form-validate form-horizontal">
 			                        <div class="form-group ">
-                                          <label for="session" class="control-label col-lg-2">Session en Cours :</label>
+                                          
                                           <div class="col-lg-10">
 											<h:outputText value="Formation: #{scheduleView.sessionFormateur.specialite.designation}"/><br />
                                           </div>
@@ -87,7 +82,7 @@
 													       </f:facet>
 													       <p:commandLink oncomplete="PF('actionDialog').show()"
 															update=":form10:moduleDetail" title="Modifier">
-															 <h:graphicImage name="NiceAdmin/img/pencil.png" style="width:20px;height:20px"></h:graphicImage>
+															 <h:graphicImage name="NiceAdmin/img/pencil.png"></h:graphicImage>
 															<f:param value="#{m[0]}" name="idModule" />
 															<p:ajax update=":form10:moduleDetail" event="click"
 																listener="#{scheduleView.getCurrentModule(m[0])}" />
@@ -178,6 +173,6 @@
 				</div>
 		    </section>
 		  </c:if>
-		</div>
+		</section>
 </ui:composition>
 </html>

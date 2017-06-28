@@ -33,7 +33,7 @@ public class ModuleDaoImpl extends AbstractJpaDao<Module> implements IModuleDao{
 
 	@Override
 	public Module getOne(final Long id) {
-		 final String SQL = "select distinct m from Module m " +
+		 final String SQL = "select m from Module m " +
                  "left join fetch m.specialite " +
                  "where m.id = :x";
 
@@ -74,20 +74,14 @@ public class ModuleDaoImpl extends AbstractJpaDao<Module> implements IModuleDao{
 		return modules;
 	}
 
-	@Override
-	public List<Module> getModulesBySession(final Long idSession) {
-		SessionEtudiant session = em.find(SessionEtudiant.class,idSession);
-		List<Module> modules = session.getSpecialite().getModules();
-		LoggerConfig.logInfo("il existe "+modules.size()+" modules dans la sessions Numéro "+idSession);
-		return modules;
-	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Object[]> getModulesBySessionV2(final Long idSession) {
-		final String SQL = "Select m.idModule,m.nomModule,m.actif,sp.idSession From Module m join m.specialite.sessionEtudiant sp where sp.idSession =:x";
+		final String SQL = "Select m.idModule,m.nomModule,m.actif,sp.idSession From Module m join m.specialite.sessionEtudiant sp where sp.idSession =:x and m.type !=:y";
 		Query query = em.createQuery(SQL);
-		query.setParameter("x",idSession);
+		query.setParameter("x",idSession).setParameter("y", "Quiz");
+		LoggerConfig.logInfo("Modules ..."+query.getResultList());
 		return query.getResultList();
 	}
 
@@ -111,7 +105,7 @@ public class ModuleDaoImpl extends AbstractJpaDao<Module> implements IModuleDao{
 
 	@Override
 	public Module verifyExistingModule(final String name) {
-		 final String SQL = "select distinct m from Module m where m.nomModule =:x";     
+		 final String SQL = "select m from Module m where m.nomModule =:x";     
 		 Module module = null;
          Query query =  em.createQuery(SQL)
 				       .setParameter("x", name);

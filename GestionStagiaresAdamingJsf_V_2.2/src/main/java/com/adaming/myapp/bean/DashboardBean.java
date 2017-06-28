@@ -1,6 +1,8 @@
 package com.adaming.myapp.bean;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -78,7 +80,7 @@ public class DashboardBean implements Serializable {
 	private List<Object[]> warningJournaliereLimited;
 	private Date currentTime;
 
-	public void init() {
+	public void init() throws ParseException {
 
         retardNotFoundException = new String();
 		absenceNotFoundException = new String();
@@ -124,16 +126,21 @@ public class DashboardBean implements Serializable {
 		return "informtaionEtudiant?redirect=true";
 	}
 
-	/** @ method pour avoir les jours d'une sessions (progress bar in css) */
-	public void getSessionEnCours() {
+	/** @throws ParseException 
+	 * @ method pour avoir les jours d'une sessions (progress bar in css) */
+	public void getSessionEnCours() throws ParseException {
 		
 		sessionEnCours();
 		/* parcourir chaque session en cours */
 
 			final Date CURRENT_DATE = new Date();
+			final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			for (Object[] s : sessionsInProgress) {
-				Date dateDebutSession = (Date) s[2];
-				Date dateFinSession = (Date) s[3];
+				String dateDebutSessionStr = (String) s[2];
+				String dateFinSessionStr = (String) s[3];
+				Date dateDebutSession = sdf.parse(dateDebutSessionStr);
+				Date dateFinSession = sdf.parse(dateFinSessionStr);
+				
 				// Long nommbreDeJours = (Long)s[6];
 				final long DATE_START_EN_DAY = dateDebutSession.getTime()
 						/ (24 * 60 * 60 * 1000);
@@ -165,7 +172,7 @@ public class DashboardBean implements Serializable {
 		warningHeader();
 	}
 
-	public void retardsHeader() {
+	private void retardsHeader() {
        retardsJournaliere = serviceEvenement.getDailyCountOfRetards();
        countRetards = retardsJournaliere.size();
        retardsJournaliereLimited = new ArrayList<Object[]>();
@@ -176,7 +183,7 @@ public class DashboardBean implements Serializable {
        }
 	}
 
-	public void absenceHeader() {
+	private void absenceHeader() {
       absenceJournaliere = serviceEvenement.getDailyCountOfAbsence();
 	  countAbsence = absenceJournaliere.size();
 	  absenceJournaliereLimited = new ArrayList<Object[]>();
@@ -187,7 +194,7 @@ public class DashboardBean implements Serializable {
       }
 	}
 
-	public void topHeader() {
+	private void topHeader() {
      topJournaliere = serviceEvenement.getDailyCountOfTop();
 	 countTop = topJournaliere.size();
 	 topJournaliereLimited = new ArrayList<Object[]>();
@@ -198,7 +205,7 @@ public class DashboardBean implements Serializable {
      }
 	}
 
-	public void warningHeader() {
+	private void warningHeader() {
      warningJournaliere = serviceEvenement.getDailyCountOfWarning();
 	 countWarning = warningJournaliere.size();
 	 warningJournaliereLimited = new ArrayList<Object[]>();

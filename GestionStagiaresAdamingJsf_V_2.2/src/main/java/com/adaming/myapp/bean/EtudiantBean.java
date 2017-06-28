@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 import org.geonames.Toponym;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.adaming.myapp.dto.EtudiantDto;
@@ -28,6 +29,7 @@ import com.adaming.myapp.entities.Role;
 import com.adaming.myapp.entities.Specialite;
 import com.adaming.myapp.entities.User;
 import com.adaming.myapp.etudiant.service.IEtudiantService;
+import com.adaming.myapp.exception.GetUserException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.role.service.IRoleService;
 import com.adaming.myapp.session.service.ISessionService;
@@ -44,7 +46,7 @@ import com.adaming.myapp.user.service.IUserService;
  * */
 @SuppressWarnings("serial")
 @Component("etudiantBean")
-@ViewScoped
+@Scope(value = "session")
 public class EtudiantBean implements Serializable {
 
 	/**
@@ -258,6 +260,7 @@ public class EtudiantBean implements Serializable {
 	 */
 	public String initListeEtudiant() {
 		setEtudiants(null);
+		setIdSession(null);
 		allSessions = serviceSession.getAllSessionsV2();
 		LoggerConfig.logInfo("Toutes Les Sessions : " + allSessions);
 		return "liste_etudiants?faces-redirect=true";
@@ -271,26 +274,36 @@ public class EtudiantBean implements Serializable {
 	 * @return l'objet user afin de 
 	 * vérifier son adresse mail, histoire d'anticiper les changements sur 
 	 * ce dernier */
-	public void getCurrentEtudiant(Long idEtudiant) throws VerificationInDataBaseException {
+	public String getCurrentEtudiant(Long idEtudiant) throws VerificationInDataBaseException {
 		etudiant = serviceEtudiant.getStudentById(idEtudiant);
 		user = serviceUser.getUserByMail(etudiant.getMail());
-		LoggerConfig.logInfo("Etudiant : " + etudiant);
+		if(etudiant.getSessionEtudiant().getDateFin().before(new Date())){
+			Utilitaire.displayMessageWarning("Impossible de modifier cette session car elle est terminée..!");
+		    return null;
+		}else{
+			init();
+			LoggerConfig.logInfo("Etudiant : " + etudiant);
+		    return "update_etudiant?faces-redirect=true";
+		}
+		
 	}
 
-	/**@throws VerificationInDataBaseException 
+	/**@throws GetUserException 
+	 * @throws VerificationInDataBaseException 
 	 * @methode edit() on vérifier d'abord  que la modification
 	 * de l'étudiant n'a pas été faite sur l'adresse mail
 	 * au cas contraire on modifie aussi le name de 
 	 * l'utilisateur (le mail de connection)*/
-	public void edit() throws VerificationInDataBaseException {
+	public void edit(){
 	   
-		if(!user.getName().equals(etudiant.getMail()))
+		if( ! user.getName().equals(etudiant.getMail()))
 		{
-			user.setName(etudiant.getMail());
-			serviceUser.customPassword(user);
+			
+				user.setName(etudiant.getMail());
+				serviceUser.customPassword(user);
 		}
-		serviceEtudiant.updateStudent(etudiant, idSession);
-	
+		serviceEtudiant.updateStudent(etudiant, etudiant.getSessionEtudiant().getIdSession());
+		Utilitaire.displayMessageInfo("l'étudiant a bien été modifié");
 		
 	}
 

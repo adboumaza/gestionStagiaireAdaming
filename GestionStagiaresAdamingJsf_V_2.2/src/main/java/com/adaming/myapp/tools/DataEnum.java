@@ -2,7 +2,7 @@ package com.adaming.myapp.tools;
 
 public enum DataEnum {
 
-      COMPORTEMENT(new String []{"Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique satisfaisant.  Sérieux et appliqué.bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique satisfaisant.  Personne sérieuse, autonome, motivée  et appliquée,bonne communication,  Parmis  les meilleurs elements.","Niveau technique moyen, motivée, ralleur .","Niveau technique satisfaisant. autonome et motivé mais distrait quelques fois, bonne capacité à comprendre, Parmi les meilleurs de la session.","Niveau technique satisfaisant. Tres bonne progression. Sérieux et bonne communication.","Niveau technique satisfaisant.  Autonome, Parmis  les meilleurs elements de la session,Communique peut.","Niveau technique moyen,  Assez discret,  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique moyen,Communique peut.","Niveau technique satisfaisant, autonome,  Parmis  les meilleurs elements,bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Est un peu plus lent, mais sera operationnel au terme de la formation ","A ne pas Envoyer"}),
+      COMPORTEMENT(new String []{"Niveau technique moyen. Tres bonne progression depuis le debut. Beaucoup de volonté et de serieux malgré quelques difficultés,bonne communication.","Niveau technique satisfaisant.  Sérieux et appliqué.bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique satisfaisant.  Personne sérieuse, autonome, motivée  et appliquée,bonne communication,  Parmis  les meilleurs elements.","Niveau technique moyen, motivée, ralleur .","Niveau technique satisfaisant. autonome et motivé mais distrait quelques fois, bonne capacité à comprendre, Parmi les meilleurs de la session.","Niveau technique satisfaisant. Tres bonne progression. Sérieux et bonne communication.","Niveau technique satisfaisant.  Autonome, Parmis  les meilleurs elements de la session,Communique peut.","Niveau technique moyen,  Assez discret,  Sérieux et motivé mais doit travailler d'avantage.","Niveau technique moyen,Communique peut.","Niveau technique satisfaisant, autonome,  Parmis  les meilleurs elements,bonne communication.","Niveau technique moyen.  Sérieux et motivé mais doit travailler d'avantage.","Est un peu plus lent, mais sera operationnel au terme de la formation ","A ne pas Envoyer"}),
       RISQUES(new String [] {"Faible","Moyen","Élevé"}),
       EVENEMENTS(new String [] {"Retard","Absence","Entretien"}),
       SPECIALITES(new String []{
@@ -71,9 +71,16 @@ public enum DataEnum {
 				"Vietnamien", "Yougoslave", "Zimbabwéen" 
 				}),
     EVALUATIONS(new String[]{"Excellent","Très Bien","Moyen","Passable","Trop Juste"}),
-    MESSAGE(" \n\n Merci de procéder à la préparation et l’envoi  de vos «  weekly reports » de la semaine N° "), 
+    
+    MESSAGE(" \n\n Merci de mettre à jour la blackList,l'Agenda collaboratif, Évaluation Module et le suivi de prospection commerciale, de la semaine N° "), 
     WARNING(" \n\n\n\n Ce message a été generé automatiquement, veuillez ne pas y répondre. "),
-    SIGNATURE(" \n\n L'equipe intiformation.com"),
+    SIGNATURE(" \n\n L'equipe intiformation.fr"),
+    
+    TOP("TOP"),
+    BLACK_LIST("WARNING"),
+    ABSENCE("ABSENCE"),
+    RETARD("RETARD"),
+    
     PAYS(new String[] { "Afghanistan", "Albanie", "Algérie",
 				"Allemagne","Angola","Angleterre", "Argentine",
 				"Arménie", "Aruba", "Australie", "Autriche", "Bahamas",

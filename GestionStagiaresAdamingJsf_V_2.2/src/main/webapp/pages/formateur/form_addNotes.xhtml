@@ -10,37 +10,26 @@
 
 <ui:composition>
 	<br> </br>
-	<br> </br>
-	<br> </br>
-
-	<div class="well container">
+	<section id="main-content">
 		<section class="wrapper">
 			<!-- exception add new Etudiant + message success+ error validation-->
 			<p:messages id="messages" showDetail="true" autoUpdate="true"
 				closable="true" />
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
 					<ol class="breadcrumb">
-						<h3 class="page-header">
-							<i><h:graphicImage name="NiceAdmin/img/form.png" /> </i> Suivie
+						<h3 class="page-header" style="color:#00a19a">
+							<i><h:graphicImage name="NiceAdmin/img/form.png" /> </i> Suivi
 							Notes Session Numéro #{suivieExamenBean.sessionFormateur.idSession}
 						</h3>
 					</ol>
 				</div>
 			</div>
-			
-			<p:chart type="pie" model="#{suivieExamenBean.pieModel1}" style="width:400px;height:300px;display:block;margin:auto" />
-			
 			<div class="row">
 				<div class="col-lg-12">
-					<section class="panel">
+					<section class="panel" style="width: 97%;margin: auto">
 						<div class="panel-body">
-							<header class="panel-heading">
-								<h4>Suivie Examens </h4>
-							</header>
 							<div class="panel-body text-center">
-                                 
-								
 								<br></br>
 								<h:form id="form20">
 									<p:dataTable var="newNote" value="#{suivieExamenBean.results}"
@@ -134,7 +123,7 @@
 				</div>
 			</div>
 		</section>
-	</div>
+	</section>
 	<br />
 </ui:composition>
 </html>

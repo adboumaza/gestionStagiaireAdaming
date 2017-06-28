@@ -1,5 +1,7 @@
 package com.adaming.myapp.prospection.service;
 
+import java.util.List;
+
 import javax.persistence.Query;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -49,6 +51,17 @@ public class ProspectionServiceImpl implements IProspectionService {
 			final Long idEtudiant) {
 		// TODO Auto-generated method stub
 		return dao.updateProspection(prospection, idEtudiant);
+	}
+
+
+
+	@Override
+	public List<Object[]> getAllProspectionBySession(final Long idSession) throws VerificationInDataBaseException {
+		List<Object[]> results = dao.getAllProspectionBySession(idSession);
+		if(results.isEmpty()){
+			throw new VerificationInDataBaseException("la prospection n'est pas encore signalée");
+		}
+		return results;
 	}
 
 }

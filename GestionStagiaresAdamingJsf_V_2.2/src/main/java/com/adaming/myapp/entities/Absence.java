@@ -33,8 +33,6 @@ public class Absence extends Evenement implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	
 
-	
 
 }

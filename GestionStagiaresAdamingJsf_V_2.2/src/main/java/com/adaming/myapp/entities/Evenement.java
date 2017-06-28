@@ -15,6 +15,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 /**
  * 
@@ -38,6 +40,8 @@ public class Evenement implements Serializable {
 	protected Date endDate;
 	protected String signaleur;
 	protected Date curentDate;
+	
+	
 
 
 	/* assoc */
@@ -60,6 +64,12 @@ public class Evenement implements Serializable {
 		this.signaleur = signaleur;
 		this.curentDate = curentDate;
 	}
+	
+	
+
+	
+
+	
 
 	public Evenement(String signaleur, Date curentDate) {
 		super();
@@ -122,6 +132,10 @@ public class Evenement implements Serializable {
 	public void setSignaleur(String signaleur) {
 		this.signaleur = signaleur;
 	}
+	
+	
+
+	
 
 	@Override
 	public String toString() {

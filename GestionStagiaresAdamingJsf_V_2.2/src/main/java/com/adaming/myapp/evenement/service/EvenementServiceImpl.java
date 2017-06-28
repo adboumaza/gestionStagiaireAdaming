@@ -1,5 +1,6 @@
 package com.adaming.myapp.evenement.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,18 +69,7 @@ public class EvenementServiceImpl implements IEvenementService {
 	}
 
 
-	@Override
-	public List<Evenement> getAllEvenements() {
-		// TODO Auto-generated method stub
-		return dao.getAllEvenements();
-	}
 
-	
-
-	@Override
-	public List<Evenement> getAllEvenementsBySession(final Long idSession) {
-		return dao.getAllEvenementsBySession(idSession);
-	}
 
 	@Override
 	@Transactional(readOnly=false)
@@ -118,29 +108,6 @@ public class EvenementServiceImpl implements IEvenementService {
 	}
 
 	@Override
-	public List<Evenement> getAllEvenementsBetweenTwoDate(final Long idSession,
-			Date date) throws EvenementNotFoundException {
-		List<Evenement> events = getAllEvenementsBySession(idSession);
-		List<Evenement> newEvents = null;
-		if(events.size() >0){
-			newEvents = new ArrayList<Evenement>();
-			for(Evenement e:events){
-				if(e.getCurentDate().after(date) || e.getCurentDate().equals(date) ){
-					newEvents.add(e);
-				}
-			}
-			if(newEvents.size() == 0){
-				throw new EvenementNotFoundException("Aucun evènement trouvé à partir de cette date");
-		    }
-		}
-		else{
-			throw new EvenementNotFoundException("Aucun evènement trouvé dans la base de donnée");
-		}
-		
-		return newEvents;
-	}
-
-	@Override
 	public List<Object[]> getEventsExiste(final Long idEtudiant) {
 		// TODO Auto-generated method stub
 		return dao.getEventsExiste(idEtudiant);
@@ -170,29 +137,6 @@ public class EvenementServiceImpl implements IEvenementService {
 		return dao.getDailyCountOfTop();
 	}
 
-	@Override
-	public long getNumberOfRetards() {
-		// TODO Auto-generated method stub
-		return dao.getNumberOfRetards();
-	}
-
-	@Override
-	public long getNumberOfAbsence() {
-		// TODO Auto-generated method stub
-		return dao.getNumberOfAbsence();
-	}
-
-	@Override
-	public long getNumberOfWarning() {
-		// TODO Auto-generated method stub
-		return dao.getNumberOfWarning();
-	}
-
-	@Override
-	public long getNumberOfTop() {
-		// TODO Auto-generated method stub
-		return dao.getNumberOfTop();
-	}
 
 	@Override
 	public Evenement verifyExistingEvent(final Long idEtudiant) {
@@ -219,6 +163,13 @@ public class EvenementServiceImpl implements IEvenementService {
 			throw new Exception("la durré ne peut être 0 min");	
 		}
 		return dao.updateEvenement(evenement, idEtudiant, idSession);
+	}
+
+	@Override
+	public Object [] getEventByStudentBetweenTwoDates(Long idSession,
+			String nomEtudiant, DateTime date){
+		// TODO Auto-generated method stub
+		return dao.getEventByStudentBetweenTwoDates(idSession, nomEtudiant, date);
 	}
 
 }

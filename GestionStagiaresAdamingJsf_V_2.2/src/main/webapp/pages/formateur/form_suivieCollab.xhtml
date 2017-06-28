@@ -10,17 +10,14 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition>
-	<br> </br>
-	<br> </br>
-	<br> </br>
-
-	<div class="well container">
+    <br></br>
+	<section id="main-content">
 		<!-- Form validations -->
 		<section class="wrapper">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
 					<ol class="breadcrumb">
-						<h3 class="page-header">
+						<h3 class="page-header" style="color:#00a19a">
 							<i><h:graphicImage name="NiceAdmin/img/form.png" /> </i>
 							Calendrier collaboratif 
 						</h3>
@@ -29,9 +26,8 @@
 			</div>
 			<div class="row">
 				<div class="col-lg-12">
-					<section class="panel">
-						<header class="panel-heading"> Programme </header>
-						<div class="panel-body">
+					<section class="panel" style="width: 97%;margin: auto">
+                     	<div class="panel-body">
 
 							<h:form>
 							    <div class="form-group ">
@@ -58,13 +54,10 @@
 			
 			<div class="row">
 				<div class="col-lg-12">
-					<section class="panel">
-						<header class="panel-heading"> Programme </header>
+					<section class="panel" style="width: 97%;margin: auto">
 						<div class="panel-body">
-                            
 							<h:form id="form20">
 								<p:growl id="messages" showDetail="true" />
-
 								<h:panelGrid  columnClasses="value">
 									<h3 style="margin-top: 0">Programme de la semaine</h3>
 									<p:schedule showWeekends="false" showWeekNumbers="true"  style="cursor:pointer!important" draggable="false"  id="schedule" value="#{suivieCollaboratifBean.eventModel}"
@@ -131,7 +124,7 @@
 				allDayText : 'Toute la journée'
 			};
 		</SCRIPT>
-	</div>
+	</section>
 
 
 </ui:composition>

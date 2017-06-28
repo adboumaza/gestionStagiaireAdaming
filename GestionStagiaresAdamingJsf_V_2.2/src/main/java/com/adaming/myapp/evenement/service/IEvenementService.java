@@ -1,7 +1,10 @@
 package com.adaming.myapp.evenement.service;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.exception.EvenementNotFoundException;
@@ -38,24 +41,8 @@ public interface IEvenementService {
 
 	 List<Object[]> getDailyCountOfTop();
 	 
-	 /* evenement du jour nombres */
-	 long getNumberOfRetards();
-
-	 long getNumberOfAbsence();
-
-	 long getNumberOfWarning();
-
-	 long getNumberOfTop();
-
-	/* toutes les evenements */
 
 
-	List<Evenement> getAllEvenements();
-
-	List<Evenement> getAllEvenementsBySession(final Long idSession);
-
-	List<Evenement> getAllEvenementsBetweenTwoDate(final Long idSession, final Date date)
-			throws EvenementNotFoundException;
 	
 	/**@verification evenement */
 	 Evenement verifyExistingEvent(final Long idEtudiant);
@@ -63,4 +50,6 @@ public interface IEvenementService {
 	 void deleteEvenement(final Long idEvenement);
 	 
 	 Evenement updateEvenement(final Evenement evenement,final Long idEtudiant,final Long idSession) throws Exception;
+	 
+	 Object [] getEventByStudentBetweenTwoDates(Long idSession,String nomEtudiant,DateTime date);
 }

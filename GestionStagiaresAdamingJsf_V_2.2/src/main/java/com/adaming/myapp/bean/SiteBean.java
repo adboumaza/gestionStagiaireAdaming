@@ -30,6 +30,7 @@ import com.adaming.myapp.entities.Salle;
 import com.adaming.myapp.entities.Site;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.site.service.ISiteService;
+import com.adaming.myapp.tools.LoggerConfig;
 import com.adaming.myapp.tools.Utilitaire;
 /**
  * 
@@ -53,7 +54,7 @@ public class SiteBean implements Serializable {
 	private List<Object[]> salles;
 	private MapModel geoModel;
 	private String centerGeoMap = "41.850033, -87.6500523";
-	private List<Toponym> villes;
+	private List<String> villes;
 
 	@NotEmpty
 	@NotBlank
@@ -142,10 +143,39 @@ public class SiteBean implements Serializable {
 		}
 	}
 	
-	public List<Toponym> getVillesByCp(String codePostal){
-		villes = new ArrayList<Toponym>();
+	public List<String> getVillesByCp(String codePostal){
+		villes = new ArrayList<>();
 		villes = formateurBean.getVillesByCp(codePostal);
 		return villes;
+	}
+	
+	/**
+	 * la methode getPays permet de faire l'autocomplétion,
+	 * remplir le tableau de pays affecter à chaque formateur
+	 * 
+	 * @param  query le mot cle tapé dans le formulaire
+	 * @return la liste des pays trouvées
+	 * @see com.adaming.myapp.tools.Utilitaire.filterObject
+	 **/
+	public List<String> getPaysData(String query){
+		List<String> pays = formateurBean.getPaysData(query);
+		return pays;
+	}
+	
+	/*cette methode permet de filter les villes obtenu depuis le web service, et la methode getVillesByCP*/
+	public List<String> getVillesFiltred(String query){
+		List<String> filtred = null;
+		if(villes == null){
+			villes = new ArrayList<String>();
+			LoggerConfig.logInfo("KO");
+		}
+		else if(!villes.isEmpty() && villes != null){
+			filtred = new ArrayList<String>();
+			filtred = Utilitaire.filterObject(query, villes);
+					LoggerConfig.logInfo("OK");
+		}
+		return filtred;
+		
 	}
 
 	/**
@@ -318,11 +348,11 @@ public class SiteBean implements Serializable {
 		this.centerGeoMap = centerGeoMap;
 	}
 
-	public List<Toponym> getVilles() {
+	public List<String> getVilles() {
 		return villes;
 	}
 
-	public void setVilles(List<Toponym> villes) {
+	public void setVilles(List<String> villes) {
 		this.villes = villes;
 	}
 

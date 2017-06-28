@@ -25,11 +25,6 @@ public class NotesServiceImpl implements INotesService {
 		LoggerConfig.logInfo("<----------- Dao Notes Injected----------->");
 	}
 
-	@Override
-	public List<Note> getAllNotes() {
-		// TODO Auto-generated method stub
-		return dao.getAllNotes();
-	}
 
 	@Override
 	@Transactional(readOnly=false)
@@ -62,9 +57,12 @@ public class NotesServiceImpl implements INotesService {
 	}
 
 	@Override
-	public  List<Object[]> getAllNotesBySession(final Long idSession) {
-		// TODO Auto-generated method stub
-		return dao.getAllNotesBySession(idSession);
+	public  List<Object[]> getAllNotesBySession(final Long idSession) throws VerificationInDataBaseException {
+		List<Object[]> notes = dao.getAllNotesBySession(idSession);
+		if(notes.isEmpty()){
+			throw new VerificationInDataBaseException("Aucune Note trouvée, dans la base de données");
+		}
+		return notes;
 	}
 
 	@Override

@@ -39,11 +39,7 @@ public class Etudiant implements Serializable {
 	private String mail;
 	@Embedded
 	private Adresse adresse;
-	
-	@Transient
-	private  String [] presence = {"OK","OK","OK","OK","OK","OK","OK","OK","OK","OK"};
-	
-	
+
 	/*assoc*/
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="ID_SESS_ETUDIANT")
@@ -215,11 +211,6 @@ public class Etudiant implements Serializable {
 
 
 
-	public String[] getPresence() {
-		return presence;
-	}
-
-
 	public List<Evenement> getEvenements() {
 		return evenements;
 	}
@@ -229,10 +220,6 @@ public class Etudiant implements Serializable {
 		this.evenements = evenements;
 	}
 
-
-	public void setPresence(String[] presence) {
-		this.presence = presence;
-	}
 
 
 	public Adresse getAdresse() {

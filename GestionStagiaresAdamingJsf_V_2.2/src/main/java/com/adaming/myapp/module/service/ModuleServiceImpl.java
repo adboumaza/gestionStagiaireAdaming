@@ -66,11 +66,6 @@ public class ModuleServiceImpl implements IModuleService{
 		return dao.getAll();
 	}
 
-	@Override
-	public List<Module> getModulesBySession(final Long idSession) {
-		// TODO Auto-generated method stub
-		return dao.getModulesBySession(idSession);
-	}
 
 	@Override
 	public List<Object[]> getModulesBySessionV2(final Long idSession) {

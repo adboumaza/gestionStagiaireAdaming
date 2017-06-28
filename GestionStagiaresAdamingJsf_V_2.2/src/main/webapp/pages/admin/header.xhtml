@@ -12,25 +12,28 @@
 </h:head>
 <ui:composition>
 	<header class="header dark-bg">
+	 <div class="layerCustom">
 		<div class="toggle-nav">
 			<div class="icon-reorder tooltips"
 				data-original-title="Toggle Navigation" data-placement="bottom">
-				<i><h:graphicImage width="32px" height="32px" name="NiceAdmin/img/home.png"/></i>
+				<i><h:graphicImage style="position: absolute;top: 0;left: 70px" name="NiceAdmin/img/logointi.png"/></i>
 			</div>
 		</div>
-		<h:link outcome="index" class="logo">INTI 
-        <span class="lite">FORMATION</span>
-		</h:link>
+        <hr class="hrCss"/>
 		<div class="top-nav notification-row">
 			<!-- notificatoin dropdown start-->
 			<ul class="nav pull-right top-menu">
 
-				<li class="dropdown"><a data-toggle="dropdown"
-					class="dropdown-toggle" href="#"> <span class="profile-ava">
-
+				<li class="dropdown">
+				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+				    <span class="profile-ava">
+				        <h:graphicImage style="position: relative;bottom: 22px;left: 50px" name="NiceAdmin/img/icons/iconeUser.png"/>
+				    </span>
+					<span class="username">
+					   #{userAuthentification.user.name}
 					</span>
-					<span class="profile-ava">
-					#{userAuthentification.user.name}</span> <b class="caret"></b></a>
+					 <b class="caret"></b>
+			    </a>
 					<ul class="dropdown-menu extended logout">
 						<div class="log-arrow-up"></div>
 						<li class="eborder-top">
@@ -225,6 +228,7 @@
                     </li>
                      <!-- inbox notificatoin start-->
                     <li id="mail_notificatoin_bar" class="dropdown">
+                   
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <i><h:graphicImage  style="width: 20px;" name="NiceAdmin/img/star.png"/></i>
                            <h:outputLabel value="#{dashboardBean.countTop}"  styleClass="#{dashboardBean.countTop gt 0 ? 'myclassActive':'myclass'}"/>
@@ -282,10 +286,11 @@
                     </li>
                     <!-- inbox notificatoin end -->
                     <!-- alert notification end-->
-                    
+                   
                 </ul>
                 <!-- notificatoin dropdown end-->
             </div>
+        </div>
 	</header>	
 	<!--header end-->
 </ui:composition>

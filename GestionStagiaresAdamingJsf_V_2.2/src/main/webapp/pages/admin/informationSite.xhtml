@@ -1,30 +1,249 @@
-<!DOCTYPE html>
-<html xmlns = "http://www.w3.org/1999/xhtml"
-	xmlns:b = "http://bootsfaces.net/ui"
-	xmlns:f = "http://java.sun.com/jsf/core"
-	xmlns:h = "http://java.sun.com/jsf/html"
-	xmlns:p = "http://primefaces.org/ui"
-    xmlns:ui= "http://java.sun.com/jsf/facelets">
+ <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
 
 <h:head>
-	<title>Inforamations Site</title>
-	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-
-            <script src="http://maps.google.com/maps/api/js?key=AIzaSyC-xuiGJxI0aSPa1kn25ZmBN40q6FpVIDs" type="text/javascript"></script>
-     </f:facet>
+	<title>Information Site</title>
+	<f:facet name="middle">
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
+		<script src="http://maps.google.com/maps/api/js?key=AIzaSyC-xuiGJxI0aSPa1kn25ZmBN40q6FpVIDs" type="text/javascript"></script>
+	</f:facet>
 </h:head>
-<h:body>
-<ui:include src="header.xhtml"></ui:include>
-<!--ui:include src="aside.xhtml" ></ui:include-->
-<ui:include src="form_informationSite.xhtml"></ui:include>
+<h:body style="background:#f7f7f7">
+	<ui:include src="header.xhtml"></ui:include>
+	
+	<!-- sidebar menu start-->
+	<aside class="aside">
+          <div id="sidebar"  class="nav-collapse ">
+              <ul class="sidebar-menu">              
+                  <li>
+                      <h:link outcome="dashboard">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone1.png"/></i>
+                          <span style="line-height:36px">Dashboard</span>
+                      </h:link>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone2.png"/></i>
+                          <span style="line-height:36px">Reporting</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{agendaBean.init}" value="Programme semaine"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivi-Collaboratif"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{reportingBean.init}" value="Reporting"/> </h:form></li> 
+                          <li><h:link outcome="admin">Ajouter Un Admin</h:link></li>   
+                      </ul>
+                     
+                   </li> 
+				   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone3.png"/></i>
+                          <span style="line-height:36px">Cursus</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:link outcome="specialite">Ajouter Un Cursus</h:link></li>     
+                      </ul>
+                   </li> 
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone4.png"/></i>
+                          <span style="line-height: 36px">Session</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{sessionBean.resetAndRedirect}" value="Ajouter Une Session"/> </h:form></li> 
+                      </ul>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone5.png"/></i>
+                          <span style="line-height:36px">Modules</span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{moduleBean.resetAndRedirect}" value="Ajouter Un Module"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{moduleBean.resetQuestionAndRedirect}" value="Ajouter Un QCM"/> </h:form></li>                                         
+                      </ul>
+                  </li>  
+                  
+                  <li class="sub-menu active" style="border-right:none!important">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage height="36px" width="36px" name="NiceAdmin/img/icons/icone6.png"/></i>
+                          <span style="line-height:36px">Gestion Sites</span>
+                          <span style="float:right; width: 0;height: 0;border-style: solid;border-width: 15px 15px 15px 0;border-color: transparent #f7f7f7 transparent transparent;"></span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{siteBean.resetAndRedirect}" value="Ajouter Un Site"/> </h:form></li>
+                         <li><h:form><h:commandLink action="#{siteBean.getAll}" value="Liste des Sites"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.resetAndRedirect}" value="Ajouter Une Salle"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.getAllSalle}" value="Liste des Salles"/> </h:form></li>                                                                
+                      </ul>
+                  </li>       
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone7.png"/></i>
+                          <span style="line-height:36px">Etudiant</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{etudiantBean.resetAndRedirect}" value="Ajouter Un Etudiant"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{etudiantBean.initListeEtudiant}" value="Liste des Etudiants"/> </h:form></li>   
+                      </ul>
+                  </li> 
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone8.png"/></i>
+                          <span style="line-height:36px">Formateur</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{formateurBean.init}" value="Ajouter Un Formateur"/> </h:form>  </li>  
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.initAndRedirect}" value="Affecter  Un Formateur"/> </h:form>  </li>
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.getAllFormateurs}" value="Formateurs"/> </h:form>  </li>
+                      </ul>
+                  </li>           
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone9.png"/></i>
+                          <span style="line-height:36px">Notes</span>
+                      </a>
+                      <ul class="sub">
+                            <li><h:form><h:commandLink action="#{suivieExamenBean.init}" value="Suivi Examens"/> </h:form>  </li>
+                      </ul>
+                  </li>        
+                  
+              </ul>
+              <!-- sidebar menu end-->
+             
+          </div>
+      </aside>
+      <!--sidebar end-->
+	
+    <!--main content start-->
+	<p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
+	              <div class="sk-circle">
+				  <div class="sk-circle1 sk-child"></div>
+				  <div class="sk-circle2 sk-child"></div>
+				  <div class="sk-circle3 sk-child"></div>
+				  <div class="sk-circle4 sk-child"></div>
+				  <div class="sk-circle5 sk-child"></div>
+				  <div class="sk-circle6 sk-child"></div>
+				  <div class="sk-circle7 sk-child"></div>
+				  <div class="sk-circle8 sk-child"></div>
+				  <div class="sk-circle9 sk-child"></div>
+				  <div class="sk-circle10 sk-child"></div>
+				  <div class="sk-circle11 sk-child"></div>
+				  <div class="sk-circle12 sk-child"></div>
+				</div>
+	        </p:dialog>
+	        <iframe style="display:none" onload="geocode()" src="http://www.w3schools.com"></iframe>
+		  <p:growl id="growl" showDetail="true" life="5000" /> 
+	<section id="main-content">
+		<section class="wrapper">
+			<div class="row">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
+					<h3 class="page-header">
+						<h:graphicImage name="NiceAdmin/img/icons/icone2-1.png"/>
+						<span style="color:#00a19a;line-height: 50px;">Information Site #{siteBean.site.nomSite}</span>
+					</h3>
+				</div>
+			</div>
 
-</h:body>
+                  <div class="col-lg-12">
+                      <section class="panel" style="width: 97%;margin: auto">
+                          <header class="panel-heading">
+                          
+                          </header>
+                          <div class="panel-body">
+                              <div class="form">
+                                  <h:form id="form20" class="form-validate form-horizontal">
+                                      <div class="form-group ">
+                                          <label for="numero" class="control-label col-lg-2">Numéro Site <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText disabled="true" value="#{siteBean.site.idSite}" class="form-control" id="numero"  type="text" />
+                                          </div>                                         
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="cname" class="control-label col-lg-2">Nom du Site <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText disabled="true" value="#{siteBean.site.nomSite}" class="form-control" id="cname"  type="text" />
+                                          </div>                                         
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="adresse" class="control-label col-lg-2">Adresse <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText disabled="true" value="#{siteBean.site.adresse.adresse}" class="form-control" id="adresse"  type="text" />
+                                          </div>
+                                          
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="ville" class="control-label col-lg-2">Ville <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText disabled="true" value="#{siteBean.site.adresse.ville}" class="form-control" id="ville"  type="text" />
+                                          </div>
+                                         
+                                      </div>
+                                      <div class="form-group ">
+                                          <label for="codePostal" class="control-label col-lg-2">Code Postal <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                               <p:inputText disabled="true" styleClass="form-control"  id="codePostal" value="#{siteBean.site.adresse.codePostal}"/>
+                                          </div>
+                                          
+                                      </div>
+                                      
+                                      <div class="form-group ">
+                                          <label for="pays" class="control-label col-lg-2">Pays <span class="required">*</span></label>
+                                          <div class="col-lg-10">
+                                              <h:inputText disabled="true" value="#{siteBean.site.adresse.pays}" class="form-control" id="pays"  type="text" />
+                                          </div>
+                                      </div>
+                                      <div class="form-group ">
+                                          <label  class="control-label col-lg-2">Liste Salles </label>
+                                          <div class="col-lg-10">
+                                               <h:commandButton onclick="PF('dlg2').show();" action="#{siteBean.getAllSallesBySite(siteBean.site.idSite)}" value="Voir la liste des Salles du Site #{siteBean.site.nomSite}" class="btn btn-danger"/>
+                                          </div>
+                                      </div>                
+                   
+                                      <div class="form-group">
+                                          <div class="col-lg-offset-2 col-lg-10">
+                                              <h:commandButton action="liste_sites?faces-redirect=true" value="Retour" class="btn btn-danger"/>
+                                          </div>
+                                      </div>
+                                      
+                                      <p:gmap id="geoGmap" widgetVar="geoMap" center="#{siteBean.centerGeoMap}" zoom="18" type="HYBRID" model="#{siteBean.geoModel}" style="width:100%;height:400px">
+								        <p:ajax event="geocode" listener="#{siteBean.onGeocode}" update="@this" />
+								      </p:gmap>
+ 
+                                  </h:form>
+                              </div>
+                          </div>
+                      </section>
+                  </div>
+	                   <script type="text/javascript">
+						    function geocode() {
+						    	var adrs      = document.getElementById('form20:adresse').value;
+						    	var ville     = document.getElementById('form20:ville').value;
+						    	var cPostal   = document.getElementById('form20:codePostal').value;
+						        var pays      = document.getElementById('form20:pays').value;
+						        var adrsCompl = adrs + "," + ville +" " +cPostal + "," + pays;
+						        PF('geoMap').geocode(adrsCompl);
+						       
+						    }
+	                  </script>
+			</section>
+		</section>
+	</h:body>
 </html>

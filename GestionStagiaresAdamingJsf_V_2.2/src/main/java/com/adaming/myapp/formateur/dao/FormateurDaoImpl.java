@@ -94,7 +94,7 @@ public class FormateurDaoImpl extends AbstractJpaDao<Formateur> implements IForm
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Formateur> getFormateursInSessionEncours() {
-		final String SQL = "from Formateur f join fetch f.sessionsEtudiant se where se.dateFin > CURRENT_DATE ORDER BY se.dateFin desc";
+		final String SQL = "from Formateur f join fetch f.sessionsEtudiant se where se.dateFin >= CURRENT_DATE ORDER BY se.dateFin desc";
 		Query query = em.createQuery(SQL);
 		return query.getResultList();
 	}

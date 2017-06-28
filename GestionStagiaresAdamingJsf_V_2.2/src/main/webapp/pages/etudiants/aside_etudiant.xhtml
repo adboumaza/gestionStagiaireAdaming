@@ -12,8 +12,8 @@
               <ul class="sidebar-menu">                
                   <li class="active">
                       <h:link outcome="index">
-                         <i><h:graphicImage width="24px" height="24px" name="NiceAdmin/img/dashboard2.png"/></i>
-                          <span>Dashboard</span>
+                         <i><h:graphicImage width="24px" height="24px" name="NiceAdmin/img/home.png"/></i>
+                          <span>Home</span>
                       </h:link>
                   </li>
                   <li class="sub-menu">
@@ -69,8 +69,19 @@
                       <ul class="sub">
                          <li><h:link outcome="send_mail">Contacter le R-P</h:link></li>                            
                       </ul>
-                  </li>        
-                   <h:graphicImage name="NiceAdmin/img/logoiniti.png" style=" width: 100px; margin: auto;display: block;padding-top: 20px;"/>                 
+                  </li>
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage name="NiceAdmin/img/icons/test.png"/></i>
+                          <span>Quiz</span>
+                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{quizBean.initEntrainementQuiz}" value="Découvrez nos quizz"/> </h:form>  </li>                       
+                         <li><h:form><h:commandLink action="#{quizBean.init}" value="Éditeur SQL"/> </h:form>  </li>                       
+                      </ul>
+                  </li>    
+                          
               </ul>
               <!-- sidebar menu end-->
           </div>

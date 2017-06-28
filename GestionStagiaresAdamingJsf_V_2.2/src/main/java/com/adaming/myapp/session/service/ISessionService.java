@@ -1,6 +1,8 @@
 package com.adaming.myapp.session.service;
 
+import java.util.Date;
 import java.util.List;
+
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddSessionException;
@@ -20,10 +22,6 @@ public interface ISessionService {
 	
 	
 	 SessionEtudiant getSessionEtudiantById(final Long idSessionEtudiant);
-	
-	 List<SessionEtudiant> getAllSessions();
-	
-	 List<SessionEtudiant> getAllSessionsInProgress();
 	 
 	 List<Object[]> getSallesDisponible(final Long idSalle);
 	 
@@ -36,4 +34,10 @@ public interface ISessionService {
 	 SessionEtudiant getSessionByEtudiant(final Long idEtudiant) throws VerificationInDataBaseException;
 	 
 	 List<Evenement> getMoreInformationBySession(final Long idSession,final String choix) throws VerificationInDataBaseException;
+	 
+	 List<Object[]> getAllSessionsBetwenTwoDates(final Date dateDebut,final Date dateFin) throws AddSessionException;
+	 
+	 List<Object[]> getAllSessionsQuiTermineCetteSemaine();
+	 
+     
 }

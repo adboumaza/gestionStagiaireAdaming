@@ -28,29 +28,45 @@
 				<h:outputText value="#{passBean.error}"></h:outputText>
 			</div>
 		</c:if>
-		<form class="login-form" action="j_spring_security_check"
+		<form class="login-form2" action="j_spring_security_check"
 			method="post">
-			<div class="login-wrap">
-				<p class="login-img">
-					<i><img src="resources/NiceAdmin/img/padlock.png"/></i>
-				</p>
-				<div class="input-group">
-					<span class="input-group-addon"> <i><img src="resources/NiceAdmin/img/user.png"/></i>
-					</span> <input type="text" class="form-control" placeholder="Username"
+			
+			<div class="loginBlock">
+			<table>
+			  
+			  <tr>
+			    <td><img src="resources/NiceAdmin/img/logo-inti-connextion.png" style="position: relative;top:-18px;left:50px;margin-right: 70px"/></td>
+			    <br></br>
+			    <br></br>
+			    <td class="input-group" style="padding-bottom: 8px!important;">
+			        <span style="border-radius: 6px 0px 0px 6px!important;" class="input-group-addon"> 
+			            <i><img src="resources/NiceAdmin/img/user.png"/></i>
+					</span> 
+					<input style="width: 270px;border-radius: 0px 6px 6px 0px!important;" type="text" class="form-control" placeholder="adresse mail"
 						 name="j_username"/>
-				</div>
-				<div class="input-group">
-					<span class="input-group-addon"><i><img src="resources/NiceAdmin/img/car-key.png"/></i></span>
-					<input type="password" name="j_password" class="form-control"
-						placeholder="Password"/>
-				</div>
-				<label class="checkbox"> <input type="checkbox"
-					value="remember-me"/> Se souvenir de moi <span class="pull-right">
+				 </td>
+			    <td class="input-group">
+			    <span style="border-radius: 6px 0px 0px 6px!important;" class="input-group-addon"><i><img src="resources/NiceAdmin/img/car-key.png"/></i></span>
+					<input style="width: 270px;border-radius: 0px 6px 6px 0px!important;" type="password" name="j_password" class="form-control"
+						placeholder="********"/>
+				</td>
+				<td class="input-group" style="padding:0px!important">
+			    <label style="color:white" class="checkbox"> <input type="checkbox"
+					name="remember-me"/> Se souvenir de moi <span class="pull-right">
 						
 				</span>
 				</label>
-				<button class="btn btn-primary btn-lg btn-block" type="submit">Connexion</button>
-				
+				</td>
+				 
+			  </tr>
+			</table>
+
+			<div style="padding-right:50px;padding-left:50px">
+				<button style="background:#414141!important;" class="btn btn-primary btn-lg btn-block" type="submit">Connexion</button>
+			</div>
+			
+			<br></br>
+			<br></br>
 			</div>
 		</form>
 	</div>

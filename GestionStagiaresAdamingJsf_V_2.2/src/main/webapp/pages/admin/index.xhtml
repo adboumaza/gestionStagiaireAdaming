@@ -1,34 +1,287 @@
-<!DOCTYPE html>
-<html xmlns = "http://www.w3.org/1999/xhtml"
-	xmlns:b = "http://bootsfaces.net/ui"
-	xmlns:f = "http://java.sun.com/jsf/core"
-	xmlns:h = "http://java.sun.com/jsf/html"
-	xmlns:p = "http://primefaces.org/ui"
-    xmlns:ui= "http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:pe="http://primefaces.org/ui/extensions">
     
        <f:metadata>
 		 <f:viewAction action="#{dashboardBean.initHeader}" />
+		 <f:viewAction action="#{dashboardBean.init()}" />
 	   </f:metadata>
 <h:head>
 	<title>Inti Formation</title>
 	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-            <h:outputScript  name="NiceAdmin/js/jquery.scrollTo.min.js" />
-            <h:outputScript  name="NiceAdmin/js/jquery.nicescroll.js" />
-            <h:outputScript  name="NiceAdmin/js/jquery.customSelect.min.js" />
-            <h:outputScript  name="NiceAdmin/js/scripts.js" />
+        <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
      </f:facet>
 </h:head>
-<h:body styleClass="bodyImg">
-<ui:include src="header.xhtml"></ui:include>
-<ui:include src="aside_admin.xhtml" ></ui:include>
+<h:body style="background:#f7f7f7">
+	<ui:include src="header.xhtml"></ui:include>
+	<ui:include src="aside_admin.xhtml"></ui:include>
+    <!--main content start-->
+	<h:form>
+	   <p:dialog widgetVar="dlg2" width="75%" modal="true" height="490px">
+              <div class="sk-circle">
+			  <div class="sk-circle1 sk-child"></div>
+			  <div class="sk-circle2 sk-child"></div>
+			  <div class="sk-circle3 sk-child"></div>
+			  <div class="sk-circle4 sk-child"></div>
+			  <div class="sk-circle5 sk-child"></div>
+			  <div class="sk-circle6 sk-child"></div>
+			  <div class="sk-circle7 sk-child"></div>
+			  <div class="sk-circle8 sk-child"></div>
+			  <div class="sk-circle9 sk-child"></div>
+			  <div class="sk-circle10 sk-child"></div>
+			  <div class="sk-circle11 sk-child"></div>
+			  <div class="sk-circle12 sk-child"></div>
+			</div>
+        </p:dialog>
+	</h:form>
+	<section id="main-content">
+		<section class="wrapper">
+			<div class="row">
+				<div class="col-lg-12" style="width: 95%;margin: auto">
+					<h3 class="page-header">
+						<h:graphicImage name="NiceAdmin/img/icons/icone2-1.png"/>
+						<span style="color:#00a19a;line-height: 50px;">Dashboard</span>
+					</h3>
+				</div>
+			</div>
 
-</h:body>
+			<div class="col-lg-12">
+			 <section class="panel" style="width: 95%;margin: auto">
+
+			   <div class="panel-body">
+			        <header class="panel-heading">
+                          <h2 style="text-align:center;display:block">Session En Cours</h2>
+                      </header>
+                     <div class="panel-body text-center">
+                                 <c:if test="#{fn:length(dashboardBean.sessionsInProgress) > 0}">
+							     <h:form>
+									<table class="table bootstrap-datatable countries">
+										<thead>
+											<tr>
+											    <th style="text-align: center!important">N°Session</th>
+												<th style="text-align: center!important">Cursus</th>
+												<th style="text-align: center!important">Date Début</th>
+												<th style="text-align: center!important">Date Fin</th>
+												<th style="text-align: center!important">Site</th>					
+												<th style="text-align: center!important">Progressions</th>
+											</tr>
+										</thead>  
+										 <ui:repeat value="#{dashboardBean.sessionsInProgress}" var="x"> 
+											<tbody>
+												<tr>
+												    <td style="vertical-align: inherit"><h:commandButton onclick="PF('dlg2').show();" action="#{sessionBean.getCureentSessionAndRedirect(x[0])}" style="vertical-align: inherit!important" styleClass="css_btn_class" value="Voir en détail session : #{x[0]}"></h:commandButton></td>
+												    <td style="vertical-align: inherit!important">#{x[1]}</td>
+													<td style="vertical-align: inherit!important">#{x[2]}</td>
+													<td style="vertical-align: inherit!important">#{x[3]}</td>
+													<td style="vertical-align: inherit!important">#{x[4]}</td>
+													<td style="width:300px;vertical-align: inherit!important;margin-bottom:0!important">
+								                    <b:progressBar style="margin-bottom:0!important"  look="danger" animated="true"
+														value="#{x[6]}" min="0" max="#{x[5]}"
+														tooltip="il reste #{x[5] - x[6]} Jours" large-screen="two-thirds" />
+												    </td>
+											    </tr>
+											</tbody>
+										  </ui:repeat>
+							        </table>
+							</h:form>
+							</c:if>
+							 <c:if test="#{fn:length(dashboardBean.sessionsInProgress) eq 0}">
+						     	 <h:graphicImage width="270px" height="270px" name="NiceAdmin/img/picto_not_found.png"></h:graphicImage>
+							     <p style="color:red">
+								 <h:outputText value="Aucune Session En Cours...! "></h:outputText>
+								 </p>
+							 </c:if>
+							</div>
+					   </div>
+			   </section>
+			</div>
+              <!-- chart morris start -->
+              <br></br>
+              <br></br>
+              <div class="col-lg-12" style="width: 95%;margin: auto">
+                  <section class="panel" style="margin: auto">
+                      <header class="panel-heading">
+                          <h2 style="text-align:center;display:block">Evénement de cette semaine</h2>
+                      </header>
+
+                      <div class="panel-body">
+                            <div class="tab-pane" id="chartjs">
+                                  <div class="row">
+                                      <!-- Line -->
+                                      <div class="col-lg-6">
+                                          <section class="panel">
+                                              <header class="panel-heading">
+                                                   <h2 style="display:block;text-align:center;padding-top: 10px;padding-bottom: 10px;margin: 0px">RETARD</h2>
+                                              </header>
+                                               <div class="panel-body text-center">
+                                               <c:if test="#{fn:length(dashboardBean.retards) >0 }">
+                                                 <h:form>
+	                                                 <p:dataTable paginator="true" rows="5" value="#{dashboardBean.retards}" var="r">
+							                              
+												          <p:column style="width:60px;">
+															<f:facet name="header">
+																<h:outputText value="N° Session" />
+															</f:facet>
+															<h:outputText value="#{r[7]}" />
+														</p:column>
+														<p:column style="width:130px;">
+															<f:facet name="header">
+																<h:outputText value="Etudiant" />
+															</f:facet>
+															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}" styleClass="css_btn_class"/>
+														</p:column>
+														<p:column style="width:80px;">
+															<f:facet name="header">
+																<h:outputText value="Durée" />
+															</f:facet>
+															<h:outputText rendered="#{(r[2].time - r[1].time)/(1000*60) gt 60}" value="#{(r[2].time - r[1].time)/(1000*60*60)} hrs"/>
+															<h:outputText rendered="#{(r[2].time - r[1].time)/(1000*60) eq 60}" value="#{(r[2].time - r[1].time)/(1000*60*60)} hrs"/>
+															<h:outputText rendered="#{(r[2].time - r[1].time)/(1000*60) lt 60}" value="#{(r[2].time - r[1].time)/(1000*60)} min"/>
+														</p:column>
+														<p:column style="width:80px;">
+															<f:facet name="header">
+																<h:outputText value="Date" />
+															</f:facet>
+															<h:outputText value="#{r[8].time}">
+															 <f:convertDateTime type="date" dateType="short" />
+															</h:outputText>
+														</p:column>
+														
+							                          </p:dataTable>
+							                          
+						                          </h:form>
+							                    </c:if>
+							                    <!-- exception retard not found -->
+							                    <c:if test="#{not empty dashboardBean.retardNotFoundException}">
+							                        <h:graphicImage width="270px" height="270px" name="NiceAdmin/img/picto_not_found.png"></h:graphicImage>
+								                    <p style="color:red">
+								                      #{dashboardBean.retardNotFoundException}
+								                    </p>
+							                    </c:if>
+                                              </div>
+							               
+                                          </section>
+                                      </div>                      
+                                      <!-- end Bar sessions en cours -->
+                                      <div class="col-lg-6">
+                                          <section class="panel">
+                                              <header class="panel-heading">
+                                                  <h2 style="display:block;text-align:center;padding-top: 10px;padding-bottom: 10px;margin: 0px">ABSENCE</h2>
+                                              </header>
+                                              <div class="panel-body text-center">
+                                               <c:if test="#{fn:length(dashboardBean.absences) >0 }">
+                                                  <h:form>
+	                                                 <p:dataTable paginator="true" rows="5" value="#{dashboardBean.absences}" var="r">
+							                              
+												          <p:column style="width:80px;">
+															<f:facet name="header">
+																<h:outputText value="N° Session" />
+															</f:facet>
+															<h:outputText value="#{r[7]}" />
+														</p:column>
+														<p:column style="width:130px;">
+															<f:facet name="header">
+																<h:outputText value="Etudiant" />
+															</f:facet>
+															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}" styleClass="css_btn_class"/>
+														</p:column>
+														<p:column style="width:100px;">
+															<f:facet name="header">
+																<h:outputText value="De" />
+															</f:facet>
+															<h:outputText value="#{r[1].time}">
+															  <f:convertDateTime type="date" dateType="short" />
+															</h:outputText>
+														</p:column>
+														<p:column style="width:100px;">
+															<f:facet name="header">
+																<h:outputText value="A" />
+															</f:facet>
+															<h:outputText value="#{r[2].time}">
+															  <f:convertDateTime type="date" dateType="short" />
+															</h:outputText>
+														</p:column>
+							                          </p:dataTable> 
+						                          </h:form>
+							                </c:if>
+							                 <!-- exception absence not found -->
+							                <c:if test="#{not empty dashboardBean.absenceNotFoundException}">
+							                   <h:graphicImage width="270px" height="270px" name="NiceAdmin/img/picto_not_found.png"></h:graphicImage>
+							                  <p style="color:red"> #{dashboardBean.absenceNotFoundException}</p>
+							                 </c:if>
+                                              </div>
+                                          </section>
+                                      </div>
+                                  </div>
+                                  
+                                      <!-- Entretien -->
+                                      <div class="col-lg-6">
+                                          <section class="panel">
+                                              <header class="panel-heading">
+                                                   <h2 style="display:block;text-align:center;padding-top: 10px;padding-bottom: 10px;margin: 0px">ENTRETIEN</h2>
+                                              </header>
+                                              <div class="panel-body text-center">
+                                              <c:if test="#{fn:length(dashboardBean.entretiens) >0 }">
+                                                 <h:form>
+	                                                 <p:dataTable paginator="true" rows="5" value="#{dashboardBean.entretiens}" var="r">
+							                              
+												          <p:column style="width:80px;">
+															<f:facet name="header">
+																<h:outputText value="N° Session" />
+															</f:facet>
+															<h:outputText value="#{r[7]}" />
+														</p:column>
+														<p:column style="width:130px;">
+															<f:facet name="header">
+																<h:outputText value="Etudiant" />
+															</f:facet>
+															<h:commandButton action="#{dashboardBean.getStudentById(r[4])}" value="#{r[5]},#{r[6]}" styleClass="css_btn_class"/>
+														</p:column>
+														<p:column style="width:100px;">
+															<f:facet name="header">
+																<h:outputText value="Le" />
+															</f:facet>
+															<h:outputText value="#{r[1].time}">
+															   <f:convertDateTime type="date" dateType="short" />
+															</h:outputText>
+														</p:column>
+							                          </p:dataTable> 
+						                          </h:form>
+							                </c:if>
+							               <!-- exception entretien not found -->
+							                <c:if test="#{not empty dashboardBean.entretienNotFoundException}">
+							                    <h:graphicImage width="270px" height="270px" name="NiceAdmin/img/picto_not_found.png"></h:graphicImage>
+								               <p style="color:red">
+								                   #{dashboardBean.entretienNotFoundException}
+								                </p>
+							                </c:if>
+                                              </div>
+                                          </section>
+                                      </div>
+                                 
+                            </div>
+                      </div>
+                  </section>
+              </div>
+			</section>
+		</section>
+	</h:body>
 </html>
+

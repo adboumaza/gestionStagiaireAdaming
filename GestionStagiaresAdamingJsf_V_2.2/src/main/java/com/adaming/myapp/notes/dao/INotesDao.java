@@ -14,7 +14,6 @@ public interface INotesDao {
 	 Note addNoteFinal(final Note note, final Long idSession, final Long idEtudiant,
 			Long idModule);
 
-	 List<Note> getAllNotes();
 
 	 List<Object[]> getNotesBySessionAndModule(final Long idSession, final Long idMoule);
 

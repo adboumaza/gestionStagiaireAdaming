@@ -1,7 +1,10 @@
 package com.adaming.myapp.evenement.dao;
 
 
+import java.text.ParseException;
 import java.util.List;
+
+import org.joda.time.DateTime;
 
 import com.adaming.myapp.entities.Evenement;
 
@@ -57,17 +60,7 @@ public class EvenementDaoImpl extends EvenementAbstractJpa implements
 	}
 
 
-	@Override
-	public List<Evenement> getAllEvenements() {
 
-		return getAllEvenementsAbstractJpa();
-	}
-
-	@Override
-	public List<Evenement> getAllEvenementsBySession(final Long idSession) {
-
-		return getAllEvenementsBySessionAbstractJpa(idSession);
-	}
 
 	@Override
 	public List<Object[]> getEventsExiste(final Long idEtudiant) {
@@ -75,29 +68,7 @@ public class EvenementDaoImpl extends EvenementAbstractJpa implements
 		return getEventsExisteAbstractJpa(idEtudiant);
 	}
 
-	@Override
-	public long getNumberOfRetards() {
-		// TODO Auto-generated method stub
-		return getNumberOfRetardsAbstractJpa();
-	}
-
-	@Override
-	public long getNumberOfAbsence() {
-		// TODO Auto-generated method stub
-		return getNumberOfAbsenceAbstractJpa();
-	}
-
-	@Override
-	public long getNumberOfWarning() {
-		// TODO Auto-generated method stub
-		return getNumberOfWarningAbstractJpa();
-	}
-
-	@Override
-	public long getNumberOfTop() {
-		// TODO Auto-generated method stub
-		return getNumberOfOfTopAbstractJpa();
-	}
+	
 
 	@Override
 	public Evenement verifyExistingEvent(final Long idEtudiant) {
@@ -116,6 +87,13 @@ public class EvenementDaoImpl extends EvenementAbstractJpa implements
 			Long idSession) {
 		// TODO Auto-generated method stub
 		return updateEvenementAbstractJpa(evenement, idEtudiant, idSession);
+	}
+
+	@Override
+	public Object [] getEventByStudentBetweenTwoDates(Long idSession,
+			String nomEtudiant, DateTime date) {
+		// TODO Auto-generated method stub
+		return getEventByStudentBetweenTwoDatesAbstractJpa(idSession, nomEtudiant, date);
 	}
 
 

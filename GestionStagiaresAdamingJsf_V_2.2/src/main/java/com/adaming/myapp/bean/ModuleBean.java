@@ -57,6 +57,9 @@ public class ModuleBean implements Serializable {
 	@Size(max=30,min=2)
 	private String nomModule;
 	
+	@NotEmpty
+	private String type;
+	
 	private Long idSpecialite;
 	private List<Module> modulesBySpecialites;
 	private Module m;
@@ -81,11 +84,16 @@ public class ModuleBean implements Serializable {
 	private Module createModule() {
 		m = FactoryBean.getModuleFactory().create("Module");
 		m.setNomModule(nomModule);
+		m.setType(type);
+		if(m.getType().equals("Quiz")){
+			m.setNomModule("Quiz - ".concat(nomModule));
+		}
 		return m;
 	}
 	
 	public void reset(){
 		nomModule = "";
+		type = "";
 		idSpecialite=null;
 	}
 	/*vider les champs on clickant sur l'aside ajouter un module*/
@@ -156,6 +164,20 @@ public class ModuleBean implements Serializable {
 	}
 	public void setM(Module m) {
 		this.m = m;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public String getType() {
+		return type;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

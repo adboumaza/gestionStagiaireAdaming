@@ -44,7 +44,7 @@ public abstract class AgendaAbstractJpa{
 
 
 	public Agenda getAgendaAbstractJpa(final Long idAgenda) {
-		final String SQL = "Select distinct a from Agenda a join a.user where a.idAgenda =:x";
+		final String SQL = "select a from Agenda a join a.user where a.idAgenda =:x";
 		Query query = entityManager.createQuery(SQL).setParameter("x",idAgenda);
 		Agenda agenda = null;
 		if(query.getResultList().size() > 0 && query.getResultList() != null){

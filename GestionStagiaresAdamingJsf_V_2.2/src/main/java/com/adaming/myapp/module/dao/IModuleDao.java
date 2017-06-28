@@ -21,8 +21,6 @@ public interface IModuleDao extends IGenericDao<Module> {
 	 Module updateModule(final Module m,final Long idSpecialite);
 	
 	 List<Module> getModulesBySpecialite(final Long idSpecialite) throws VerificationInDataBaseException;
-	
-	 List<Module> getModulesBySession(final Long idSession);
 	 
 	 List<Object[]> getModulesBySessionV2(final Long idSession);
 	

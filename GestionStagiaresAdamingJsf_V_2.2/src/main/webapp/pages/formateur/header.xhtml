@@ -4,50 +4,48 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 <h:head>
 	<title>Header</title>
 </h:head>
 <ui:composition>
 	<header class="header dark-bg">
+	 <div class="layerCustom">
 		<div class="toggle-nav">
 			<div class="icon-reorder tooltips"
 				data-original-title="Toggle Navigation" data-placement="bottom">
-				<i><h:graphicImage width="32px" height="32px" name="NiceAdmin/img/home.png"/></i>
-				
+				<i><h:graphicImage style="position: absolute;top: 0;left: 70px" name="NiceAdmin/img/logointi.png"/></i>
 			</div>
 		</div>
-		<h:link outcome="index" class="logo">INTI 
-        <span class="lite">FORMATION</span>
-		</h:link>
 		<div class="top-nav notification-row">
 			<!-- notificatoin dropdown start-->
 			<ul class="nav pull-right top-menu">
 
-				<!-- task notificatoin start -->
-				<li id="task_notificatoin_bar" class="dropdown"><a
-					data-toggle="dropdown" class="dropdown-toggle" href="#"> </a>
-					<ul class="dropdown-menu extended tasks-bar">
-						<div class="notify-arrow notify-arrow-blue"></div>
-						<li>
-							<p class="blue">You have 6 pending letter</p>
-						</li>
-					</ul></li>
-				<li class="dropdown"><a data-toggle="dropdown"
-					class="dropdown-toggle" href="#"> 
-					<span class="profile-ava">
-					#{userAuthentification.user.name}</span> <b class="caret"></b></a>
+				<li class="dropdown">
+				<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+				    <span class="profile-ava">
+				        <h:graphicImage style="position: relative;bottom: 22px;left: 140px" name="NiceAdmin/img/icons/iconeUser.png"/>
+				    </span>
+					<span class="username">
+					   #{userAuthentification.user.name}
+					</span>
+					 <b class="caret"></b>
+			    </a>
 					<ul class="dropdown-menu extended logout">
 						<div class="log-arrow-up"></div>
 						<li class="eborder-top">
-						<h:outputLink value="#{request.contextPath}/j_spring_security_logout"><i><h:graphicImage style="width: 20px" name="NiceAdmin/img/shutdown.png"/></i> Déconnection</h:outputLink></li>
+						<h:outputLink  value="#{request.contextPath}/j_spring_security_logout"><i><h:graphicImage style="width: 20px" name="NiceAdmin/img/shutdown.png"/></i> Déconnection</h:outputLink></li>
 					</ul>
 				</li>
 				<!-- user login dropdown end -->
 			</ul>
 			<!-- notificatoin dropdown end-->
 		</div>
-	</header>
+	
+        </div>
+	</header>	
 	<!--header end-->
 </ui:composition>
 </html>

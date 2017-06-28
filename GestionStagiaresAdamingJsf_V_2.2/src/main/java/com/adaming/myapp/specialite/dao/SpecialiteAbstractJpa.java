@@ -56,7 +56,7 @@ public abstract class SpecialiteAbstractJpa {
 	}
 	
 	public Specialite verifyExistingSpecialiteAbstractJpa(final String name){
-		final String SQL = "select distinct s from Specialite s where s.designation =:x";
+		final String SQL = "select s from Specialite s where s.designation =:x";
         
 		Specialite specialite = null;
         Query query =  em.createQuery(SQL)

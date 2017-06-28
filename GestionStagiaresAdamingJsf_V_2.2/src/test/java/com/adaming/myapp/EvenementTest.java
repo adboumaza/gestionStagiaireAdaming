@@ -2,9 +2,12 @@ package com.adaming.myapp;
 
 import static org.junit.Assert.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.joda.time.DateTime;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -116,9 +119,19 @@ public class EvenementTest {
 	
 	}
 	@Test
+	@Ignore
 	public void verify(){
 		Evenement e = serviceEvenement.verifyExistingEvent(1L);
 		System.out.println(e.getEtudiant().getNomEtudiant() + e.getClass().getSimpleName());
+	}
+	@Test
+	public void getEvenetBetweenTwoDates() throws ParseException{
+		
+		Object [] e = serviceEvenement.getEventByStudentBetweenTwoDates(1L, "boum", new DateTime());
+		Date de =(Date) e[1];
+		Date a = (Date) e[2];
+		
+		
 	}
 
 }

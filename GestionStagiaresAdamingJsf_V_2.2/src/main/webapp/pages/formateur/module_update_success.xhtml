@@ -9,40 +9,50 @@
   
 <h:head>
 	<title>Module Authorisation Success</title>
-	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-           
-            <h:outputScript  name="NiceAdmin/js/jquery.nicescroll.js" />
-            
-            <h:outputScript  name="NiceAdmin/js/scripts.js" />
-    
+	    <f:facet name="middle">
+            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
      </f:facet>
 </h:head>
 <h:body>
 <ui:include src="header.xhtml"></ui:include>
-<!--ui:include src="aside_formateur.xhtml" ></ui:include-->
+<ui:include src="aside_formateur.xhtml" ></ui:include>
 <br/>
 <br/>
 <br/>
 <br/>
 <br/>
 <br/>
-<div class="well container">
-		<div class="alert alert-info" style="text-align:center;margin-bottom: 0px!important;">
-		   <h:outputText style="color:black" value="le Module #{scheduleView.module.nomModule} à bien été"/>
-		   <p:spacer width="5"></p:spacer>
-		   <c:if test="#{not scheduleView.module.actif}">Désactivé</c:if>
-		   <c:if test="#{scheduleView.module.actif}">Activé n'oubliez pas de le désactiver à la fin de l'examen</c:if>
-		   <br/>
-		   <h:link style="color:red;font-weight:bold" outcome="index.xhtml" value="retour à la page d'accueil "/>
-		</div> 
-</div>
+
+	<section id="main-content">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <p:growl id="growl" showDetail="true" autoUpdate="true" closable="true" />
+		<c:if test="#{fn:length(scheduleView.modules) > 0}">
+		<section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
+					<div class="alert alert-info" style="text-align:center;margin-bottom: 0px!important;color:black">
+					   <h:outputText  value="le Module #{scheduleView.module.nomModule} à bien été"/>
+					   <p:spacer width="5"></p:spacer>
+					   <c:if test="#{not scheduleView.module.actif}">Désactivé</c:if>
+					   <c:if test="#{scheduleView.module.actif}">Activé n'oubliez pas de le désactiver à la fin de l'examen</c:if>
+					   <br/>
+					   <h:link style="color:red;font-weight:bold" outcome="index.xhtml" value="retour à la page d'accueil "/>
+		           </div> 
+				</div>
+			</div> 
+			</section>
+		</c:if>
+	</section>
 </h:body>
 </html>

@@ -1,16 +1,10 @@
 package com.adaming.myapp.admin.dao;
 
-import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.adaming.myapp.entities.Admin;
-import com.adaming.myapp.entities.User;
-import com.adaming.myapp.exception.GetUserException;
-import com.adaming.myapp.exception.VerificationInDataBaseException;
-import com.adaming.myapp.user.dao.IUserDao;
 
 
 public abstract class AdminAbstractJpa  {

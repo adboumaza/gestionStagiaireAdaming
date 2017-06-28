@@ -1,27 +1,318 @@
 <!DOCTYPE html>
-<html xmlns = "http://www.w3.org/1999/xhtml"
-	xmlns:b = "http://bootsfaces.net/ui"
-	xmlns:f = "http://java.sun.com/jsf/core"
-	xmlns:h = "http://java.sun.com/jsf/html"
-	xmlns:p = "http://primefaces.org/ui"
-    xmlns:ui= "http://java.sun.com/jsf/facelets">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<title>Question</title>
-	   <f:facet name="middle">
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/style-responsive.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css"/>
-            <h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css"/>
-            <h:outputScript  name="NiceAdmin/js/jquery.js" />
-            <h:outputScript  name="NiceAdmin/js/bootstrap.js" />
-       
-     </f:facet>
+	  	<f:facet name="middle">
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
+	</f:facet>
 </h:head>
-<h:body>
-<ui:include src="header.xhtml"></ui:include>
-<ui:include src="form_addQuestion.xhtml"></ui:include>
+<h:body style="background:#f7f7f7">
+	<ui:include src="header.xhtml"></ui:include>
+	
+	<!-- sidebar menu start-->
+	<aside class="aside">
+          <div id="sidebar"  class="nav-collapse ">
+              <ul class="sidebar-menu">              
+                  <li>
+                      <h:link outcome="dashboard">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone1.png"/></i>
+                          <span style="line-height:36px">Dashboard</span>
+                      </h:link>
+                  </li>
+                   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone2.png"/></i>
+                          <span style="line-height:36px">Reporting</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{agendaBean.init}" value="Programme semaine"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivi-Collaboratif"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{reportingBean.init}" value="Reporting"/> </h:form></li> 
+                          <li><h:link outcome="admin">Ajouter Un Admin</h:link></li>   
+                      </ul>
+                     
+                   </li> 
+				   <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone3.png"/></i>
+                          <span style="line-height:36px">Cursus</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:link outcome="specialite">Ajouter Un Cursus</h:link></li>     
+                      </ul>
+                   </li> 
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone4.png"/></i>
+                          <span style="line-height: 36px">Session</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{sessionBean.resetAndRedirect}" value="Ajouter Une Session"/> </h:form></li> 
+                      </ul>
+                  </li>
+                   <li class="sub-menu active">
+                      <a href="javascript:;" class="" style="border-right:none!important">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone5.png"/></i>
+                          <span style="line-height:36px">Modules</span>
+                          <span style="float:right; width: 0;height: 0;border-style: solid;border-width: 15px 15px 15px 0;border-color: transparent #f7f7f7 transparent transparent;"></span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{moduleBean.resetAndRedirect}" value="Ajouter Un Module"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{moduleBean.resetQuestionAndRedirect}" value="Ajouter Un QCM"/> </h:form></li>                                         
+                      </ul>
+                  </li>  
+                  
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage height="36px" width="36px" name="NiceAdmin/img/icons/icone6.png"/></i>
+                          <span style="line-height:36px">Gestion Sites</span>
+                      </a>
+                      <ul class="sub">
+                         <li><h:form><h:commandLink action="#{siteBean.resetAndRedirect}" value="Ajouter Un Site"/> </h:form></li>
+                         <li><h:form><h:commandLink action="#{siteBean.getAll}" value="Liste des Sites"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.resetAndRedirect}" value="Ajouter Une Salle"/> </h:form></li> 
+                         <li><h:form><h:commandLink action="#{salleBean.getAllSalle}" value="Liste des Salles"/> </h:form></li>                                                                
+                      </ul>
+                  </li>       
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone7.png"/></i>
+                          <span style="line-height:36px">Etudiant</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{etudiantBean.resetAndRedirect}" value="Ajouter Un Etudiant"/> </h:form></li> 
+                          <li><h:form><h:commandLink action="#{etudiantBean.initListeEtudiant}" value="Liste des Etudiants"/> </h:form></li>   
+                      </ul>
+                  </li> 
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone8.png"/></i>
+                          <span style="line-height:36px">Formateur</span>
+                      </a>
+                      <ul class="sub">
+                          <li><h:form><h:commandLink action="#{formateurBean.init}" value="Ajouter Un Formateur"/> </h:form>  </li>  
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.initAndRedirect}" value="Affecter  Un Formateur"/> </h:form>  </li>
+                          <li><h:form><h:commandLink action="#{affectationFormateurBean.getAllFormateurs}" value="Formateurs"/> </h:form>  </li>
+                      </ul>
+                  </li>           
+                  <li class="sub-menu">
+                      <a href="javascript:;" class="">
+                          <i><h:graphicImage width="36" height="36" name="NiceAdmin/img/icons/icone9.png"/></i>
+                          <span style="line-height:36px">Notes</span>
+                      </a>
+                      <ul class="sub">
+                            <li><h:form><h:commandLink action="#{suivieExamenBean.init}" value="Suivi Examens"/> </h:form>  </li>
+                      </ul>
+                  </li>        
+                  
+              </ul>
+              <!-- sidebar menu end-->
+             
+          </div>
+      </aside>
+      <!--sidebar end-->
+	
+    <!--main content start-->
+
+	<section id="main-content">
+		<section class="wrapper">
+			<div class="row">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
+					<h3 class="page-header">
+						<h:graphicImage name="NiceAdmin/img/icons/icone2-1.png"/>
+						<span style="color:#00a19a;line-height: 50px;">Form QCM</span>
+					</h3>
+				</div>
+			</div>
+					<!-- form add Questions for every module -->
+                  <div class="col-lg-12">
+                      <section class="panel" style="width: 97%;margin: auto">
+                          <header class="panel-heading">
+                            
+                          </header>
+                          <div class="panel-body">
+        <h:form id="form4" class="form-validate form-horizontal">
+		    <p:growl id="growl" showDetail="true" life="5000" severity="info,warn"/> 
+		    <br/><br/>
+		         <div align="center">
+					<p:toolbar style="width:98%">
+						<f:facet name="left">
+							<p:selectOneMenu id="select" value="#{moduleBean.idSpecialite}"
+								 style="width:250px">
+										
+								<f:selectItem itemLabel="Sélectionnez Une Specialitée"
+									itemDisabled="true" itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{specialiteBean.specialites}" var="s"
+									itemLabel="#{s.designation}" itemValue="#{s.idSpecialite}" />
+								<p:ajax event="valueChange"
+									listener="#{moduleBean.getModulesBySpecialite}" update="@form" />
+							</p:selectOneMenu>
+							<br />
+							<h:message styleClass="errorValidation" for="select"></h:message>
+						</f:facet>
+					</p:toolbar>
+			     </div>
+			     <!-- data table  -->
+			     <div align="center">
+					<p:dataTable id="tblFields" value="#{bean.fields}" var="field" style="width:98%;margin-bottom:40px;">
+						
+						<p:column headerText="Choisir Un Module * ">
+							<!-- Show  Nombre For Questions -->
+							<p:outputLabel style="color:red;text-align:center;display:block;"
+								id="NombreQuestions"
+								value="#{bean.questions.size()} Questions " />
+							<!-- Show Window Modal -->
+							<p:commandLink oncomplete="PF('questionDialog').show()"
+								update=":form4:carDetail" title="View Détaile">
+								<f:param value="#{bean.idModule}" name="idModule">
+								</f:param>
+								<h:graphicImage style="display: block;margin: auto;"
+									name="NiceAdmin/img/icons/Search.png"></h:graphicImage>
+							</p:commandLink>
+		
+							<p:selectOneMenu id="nomModule" value="#{bean.idModule}"
+								required="true"
+								requiredMessage="Veuillez Selectionnez un Module SVP!!">
+		
+								<f:selectItem itemLabel="Choisir Un Module" itemValue="#{null}"
+									noSelectionOption="true" itemDisabled="true" />
+								<f:selectItems value="#{moduleBean.modulesBySpecialites}"
+									var="module" itemLabel="#{module.nomModule}"
+									itemValue="#{module.idModule}" />
+								<!-- get Nombre Questions By Module -->
+								<p:ajax event="valueChange" update="NombreQuestions,numeroQ,@form"
+									listener="#{bean.getQuestionByModule}" render="NombreQuestions,numeroQ" />
+							</p:selectOneMenu>
+							<p:message for="nomModule"></p:message>
+						</p:column>
+						
+						<p:column headerText="Numero" style="width:70px">
+						<h:outputLabel id="numeroQ" style="display: block;text-align: center" value="#{bean.questions.size() + 1}" />
+						
+						</p:column>
+		
+						<p:column headerText="Question *">
+							<h:inputTextarea a:maxlength="1000" id="question" required="true"
+								requiredMessage="Tapez Une Question SVP" rows="11" cols="16"
+								value="#{bean.label}" />
+							<h:message styleClass="errorValidation" for="question"></h:message>
+						</p:column>
+						<p:column headerText="Réponse 1 *">
+							<p:selectOneMenu value="#{bean.etatOne}" id="bRep1">
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="#{bean.etatOne}" itemValue="#{bean.etatOne}"/>	
+							</p:selectOneMenu>
+							<h:inputTextarea a:maxlength="500" id="rep1" required="true"
+								requiredMessage="Tapez La Réponse 1 SVP" rows="9" cols="16"
+								value="#{bean.reponseOne}" />
+							<h:message styleClass="errorValidation" for="rep1"></h:message>
+							<div  style="text-align :center">
+							   <p:graphicImage id="one" rendered="#{bean.etatOne}"     name="NiceAdmin/img/check.png"/> 
+                               <p:graphicImage id="two" rendered="#{not bean.etatOne}" name="NiceAdmin/img/cross.png"/> 
+							</div>
+						</p:column>
+						<p:column headerText="Réponse 2 *">
+						    <p:selectOneMenu value="#{bean.etatTwo}" id="bRep2">
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="#{bean.etatTwo}" itemValue="#{bean.etatTwo}"/>	
+							</p:selectOneMenu>
+							<h:inputTextarea a:maxlength="500" id="rep2" required="true"
+								requiredMessage="Tapez La Réponse 2 SVP" rows="9" cols="16"
+								value="#{bean.reponseTwo}" />
+							<h:message styleClass="errorValidation" for="rep2"></h:message>
+							<div  style="text-align :center">
+							   <p:graphicImage id="fore" rendered="#{bean.etatTwo}"     name="NiceAdmin/img/check.png"/> 
+                               <p:graphicImage id="three" rendered="#{not bean.etatTwo}" name="NiceAdmin/img/cross.png"/> 
+							</div>
+						</p:column>
+						<p:column headerText="Réponse 3 *">
+						    <p:selectOneMenu value="#{bean.etatThree}" id="bRep3">
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItem itemLabel="#{bean.etatThree}" itemValue="#{bean.etatThree}"/>
+							</p:selectOneMenu>
+							<h:inputTextarea a:maxlength="500" id="rep3" required="true"
+								requiredMessage="Tapez La Réponse 3 SVP" rows="9" cols="16"
+								value="#{bean.reponseThree}" />
+							<h:message styleClass="errorValidation" for="rep3"></h:message>
+						   	<div  style="text-align :center">
+							   <p:graphicImage id="six" rendered="#{bean.etatThree}"     name="NiceAdmin/img/check.png"/> 
+                               <p:graphicImage id="five" rendered="#{not bean.etatThree}" name="NiceAdmin/img/cross.png"/> 
+							</div>
+						</p:column>
+						<p:column headerText="Réponse 4 *">
+						    <p:selectOneMenu value="#{bean.etatFour}" id="bRep4">
+								<f:selectItem itemLabel="Choisir Un Choix" itemDisabled="true" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItem  itemLabel="#{bean.etatFour}" itemValue="#{bean.etatFour}"/>
+							</p:selectOneMenu>
+							<h:inputTextarea a:maxlength="500" id="rep4" required="true"
+								requiredMessage="Tapez La Réponse 4 SVP" rows="9" cols="16"
+								value="#{bean.reponseFour}" />
+							<h:message styleClass="errorValidation" for="rep4"></h:message>
+						   	<div  style="text-align :center">
+						       <p:graphicImage id="seven" rendered="#{bean.etatFour}"     name="NiceAdmin/img/check.png"/> 
+                               <p:graphicImage id="eight" rendered="#{not bean.etatFour}" name="NiceAdmin/img/cross.png"/> 
+						    </div>
+						</p:column>
+						<p:column headerText="Actions"
+							style="width:100px;text-align: center">
+							
+							<p:column>
+								<p:commandButton update="one,two,three,fore,five,six,seven,eight,bRep1,bRep2,bRep3,bRep4" styleClass="btn btn-danger" value="mix"  ajax="true" action="#{bean.mixChoiseOfReponses}" />	
+							</p:column>
+							<p:column>
+								<h:commandButton  styleClass="btn btn-primary" value="Ajouter"  action="#{bean.addQuestion}"/>	
+							</p:column>
+							
+							<br/><br/>
+								<p:column>
+									<p:commandButton update="bRep1,bRep2,bRep3,bRep4,rep4,rep3,rep2,rep1,question" styleClass="btn btn-danger" value="reset"  ajax="true" action="#{bean.reset}" />	
+								</p:column>
+						</p:column>
+					</p:dataTable>
+                </div>
+					<!-- fenetre Modal -->
+					<p:dialog header="Toutes Les Questions" widgetVar="questionDialog"
+						modal="true" showEffect="blind" hideEffect="explode"
+						resizable="false">
+						<p:outputPanel id="carDetail" style="text-align-last: left;">
+							<p:dataList value="#{bean.questions}" var="q" varStatus="iteration">
+								<p:column>
+									<h:outputText value="Q):#{iteration.index+1} "/>
+									<h:outputText value="#{q.label}"/>
+								</p:column>
+							</p:dataList>
+						</p:outputPanel>
+					</p:dialog>
+		      </h:form>
+            </div>
+         </section>
+       </div>
+		</section>
+	</section>
+	
+
 </h:body>
 </html>

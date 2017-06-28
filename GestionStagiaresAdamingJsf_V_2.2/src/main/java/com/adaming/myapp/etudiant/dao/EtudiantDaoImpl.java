@@ -133,4 +133,8 @@ public class EtudiantDaoImpl extends EtudiantAbstractJpa implements IEtudiantDao
 		return getStudentDtoAbstractJpa(idStudent);
 	}
 
+
+
+
+	
 }

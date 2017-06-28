@@ -53,7 +53,7 @@ public class SuivieExamenBean implements Serializable{
 	private INotesService serviceNotes;
 	
 	private Long idSession;
-	private List<Object[]> sessionEnCours;
+	private List<Object[]> allSessions;
 	private List<Object[]> modules;
 	private List<Object[]> notes;
 	private List<Object[]> results;
@@ -69,7 +69,7 @@ public class SuivieExamenBean implements Serializable{
 	public String init(){
 		idSession = null;
 		setModules(null);
-		sessionEnCours = serviceSession.getAllSessionsInProgressV2();
+		allSessions = serviceSession.getAllSessionsV2();
 		return "suivie_examen?faces-redirect=true";
 	}
 	@PostConstruct
@@ -174,11 +174,12 @@ public class SuivieExamenBean implements Serializable{
 					String prenomEtudiant = (String) cc[1];
 					Double moyenne = (Double) cc[2];
 					String nomEtudiant = (String)cc[3];
-					chartBare.set(prenomEtudiant.concat("-"+nomEtudiant.substring(0,3).toUpperCase()), new Double(moyenne));
+					chartBare.set(prenomEtudiant.concat("-"+nomEtudiant.substring(0,2).toUpperCase()), new Double(moyenne));
 					LoggerConfig.logInfo("moyenne" + moyenne);
 				}
 
 				barModel.addSeries(chartBare);
+				barModel.setAnimate(true);
 				moyenneGeneral = serviceNotes
 						.getMoyenneGeneralBySession(idSession);
 				moyenneModule = serviceNote.getMoyenne(idSession, idModule);
@@ -230,13 +231,20 @@ public class SuivieExamenBean implements Serializable{
 	public void setModules(List<Object[]> modules) {
 		this.modules = modules;
 	}
-	public List<Object[]> getSessionEnCours() {
-		return sessionEnCours;
-	}
-	public void setSessionEnCours(List<Object[]> sessionEnCours) {
-		this.sessionEnCours = sessionEnCours;
-	}
+	
 
+	/**
+	 * @return the allSessions
+	 */
+	public List<Object[]> getAllSessions() {
+		return allSessions;
+	}
+	/**
+	 * @param allSessions the allSessions to set
+	 */
+	public void setAllSessions(List<Object[]> allSessions) {
+		this.allSessions = allSessions;
+	}
 	public List<Object[]> getResults() {
 		return results;
 	}

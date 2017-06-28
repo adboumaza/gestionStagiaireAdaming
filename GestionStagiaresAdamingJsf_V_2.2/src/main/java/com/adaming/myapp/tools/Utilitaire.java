@@ -66,6 +66,37 @@ public class Utilitaire {
 	private static String userName;
 	private static String userPassWord;
 	
+	
+	
+	public static long getHoursBetweenTwoDates(Date debut,Date fin){
+		return ((fin.getTime() - debut.getTime())/1000)/3600;
+	}
+	
+	
+	public static DateTime [] holydays(DateTime dateTime){
+		DateTime [] holydays = new DateTime[8];
+		DateTime dt  = new DateTime(dateTime);
+		DateTime dt1 = new DateTime(dt.getYear(), 1, 1, 0, 0, 0, 0);
+		DateTime dt2 = new DateTime(dt.getYear(), 5, 1, 0, 0, 0, 0);
+		DateTime dt3 = new DateTime(dt.getYear(), 5, 8, 0, 0, 0, 0);
+		DateTime dt4 = new DateTime(dt.getYear(), 7, 14, 0, 0, 0, 0);
+		DateTime dt5 = new DateTime(dt.getYear(), 8, 15, 0, 0, 0, 0);
+		DateTime dt6 = new DateTime(dt.getYear(), 9, 1, 0, 0, 0, 0);
+		DateTime dt7 = new DateTime(dt.getYear(), 9, 11, 0, 0, 0, 0);
+		DateTime dt8 = new DateTime(dt.getYear(), 12, 25, 0, 0, 0, 0);
+		holydays[0] = dt1;
+		holydays[1] = dt2;
+		holydays[2] = dt3;
+		holydays[3] = dt4;
+		holydays[4] = dt5;
+		holydays[5] = dt6;
+		holydays[6] = dt7;
+		holydays[7] = dt8;
+		
+		return holydays;
+	}
+	
+	
 	public static int getWeeksOfYears(Date date1)
 	{
 		DateTime dtFr = new DateTime(date1, DateTimeZone.forTimeZone(TimeZone.getTimeZone("Europe/Paris")));

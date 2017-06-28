@@ -12,8 +12,8 @@
               <ul class="sidebar-menu">                
                   <li class="active">
                       <h:link outcome="index">
-                        <i><h:graphicImage width="24px" height="24px" name="NiceAdmin/img/dashboard2.png"/></i>
-                          <span>Dashboard</span>
+                        <i><h:graphicImage width="24px" height="24px" name="NiceAdmin/img/home.png"/></i>
+                          <span>Home</span>
                       </h:link>
                   </li>
                   <li class="sub-menu">
@@ -32,7 +32,7 @@
                       </a>
                       <ul class="sub">
                           <li><h:form><h:commandLink action="#{agendaBean.init}" value="Programme semaine"/> </h:form></li> 
-                           <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivie-Collaboratif"/> </h:form></li> 
+                           <li><h:form><h:commandLink action="#{suivieCollaboratifBean.init}" value="Suivi-Collaboratif"/> </h:form></li> 
                       </ul>
                      
                    </li> 
@@ -44,7 +44,6 @@
                       <ul class="sub">                                    
                            <li><h:form><h:commandLink action="#{scheduleView.initEvenement}" value="Signaler un Évènement"/></h:form></li>
                            <li><h:form><h:commandLink action="#{scheduleView.initWarning}" value="Blacklist et TeamLeader"/></h:form></li>   
-                           <li><h:form><h:commandLink action="#{scheduleView.initAbsences}" value="Gérer les Absences"/></h:form></li>   
                            <li><h:form><h:commandLink action="#{scheduleView.initProspection}" value="Suivi Prospection"/></h:form></li>   
                            <li><h:form><h:commandLink action="#{scheduleView.initEvaluation}" value="Évaluation"/></h:form></li>
                            <li><h:form><h:commandLink action="#{scheduleView.getAllEvenementsBySession}" value="Voir les Évènements"/></h:form></li>                                                                                               
@@ -75,7 +74,7 @@
                           <span>Notes</span>
                       </a>
                        <ul class="sub">
-                         <li><h:form><h:commandLink action="#{suivieExamenBean.getSessionByFormateur}" value="Suivie Examens"/> </h:form>  </li>
+                         <li><h:form><h:commandLink action="#{suivieExamenBean.getSessionByFormateur}" value="Suivi Examens"/> </h:form>  </li>
                       </ul>
                   </li>       
                   <li class="sub-menu">
@@ -87,7 +86,7 @@
                          <li><h:form><h:commandLink action="#{classementBean.getClassementGeneralFormateur}" value="Classement Général"/> </h:form>  </li>
                       </ul>
                   </li>       
-                   <h:graphicImage name="NiceAdmin/img/logoiniti.png" style=" width: 100px; margin: auto;display: block;padding-top: 20px;"/>                 
+                   
               </ul>
               <!-- sidebar menu end-->
           </div>

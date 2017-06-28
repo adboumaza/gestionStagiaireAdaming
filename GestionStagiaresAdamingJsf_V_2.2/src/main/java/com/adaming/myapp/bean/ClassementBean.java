@@ -97,6 +97,7 @@ public class ClassementBean implements Serializable {
 	/* get all notes by session */
 	public String getAllModulesValideBySession() {
 		getEtudiantByName();
+		System.out.println("sessionEtudiant "+sessionEtudiant + "IdSession"+sessionEtudiant.getIdSession());
 		modules = new HashSet<Object[]>();
 		try {
 			modules = serviceModule.getModulesValideBySession(sessionEtudiant
@@ -125,7 +126,8 @@ public class ClassementBean implements Serializable {
 	/* @method get Etudiant By Name */
 	public void getEtudiantByName() {
 		etudiant = createEtudiant();
-		LoggerConfig.logInfo("Etudiant : " + etudiant);
+		LoggerConfig.logInfo("Etudiant : " + etudiant  +"idE"+etudiant.getIdEtudiant());
+		
 		try {
 			sessionEtudiant = serviceSession.getSessionByEtudiant(etudiant
 					.getIdEtudiant());
@@ -183,15 +185,17 @@ public class ClassementBean implements Serializable {
 						+ classement);
 
 				ChartSeries chartBare = new ChartSeries();
+				
 				for (Object[] cc : classement) {
 					String prenomEtudiant = (String) cc[1];
 					Double moyenne = (Double) cc[2];
 					String nomEtudiant = (String)cc[3];
-					chartBare.set(prenomEtudiant.concat("-"+nomEtudiant.substring(0,3).toUpperCase()), new Double(moyenne));
+					chartBare.set(prenomEtudiant.concat("-"+nomEtudiant.substring(0,2).toUpperCase()), new Double(moyenne));
 					LoggerConfig.logInfo("moyenne" + moyenne);
 				}
 
 				barModel.addSeries(chartBare);
+				barModel.setAnimate(true);
 				moyenneGeneral = serviceNotes
 						.getMoyenneGeneralBySession(sessionEtudiant
 								.getIdSession());
@@ -236,11 +240,12 @@ public class ClassementBean implements Serializable {
 					String prenomEtudiant = (String) cc[1];
 					Double moyenne = (Double) cc[2];
 					String nomEtudiant = (String)cc[3];
-					chartBare.set(prenomEtudiant.concat("-"+nomEtudiant.substring(0,3).toUpperCase()), new Double(moyenne));
+					chartBare.set(prenomEtudiant.concat("-"+nomEtudiant.substring(0,2).toUpperCase()), new Double(moyenne));
 					LoggerConfig.logInfo("moyenne" + moyenne);
 				}
-
+                
 				barModel.addSeries(chartBare);
+				barModel.setAnimate(true);
 				moyenneGeneral = serviceNotes
 						.getMoyenneGeneralBySession(sessionFormateur
 								.getIdSession());
@@ -262,10 +267,9 @@ public class ClassementBean implements Serializable {
 	}
 
 	private void createBarModel() {
-
+        
 		barModel.setTitle("le classement Général");
 		barModel.setLegendPosition("ne");
-
 		Axis xAxis = barModel.getAxis(AxisType.X);
 		xAxis.setLabel("Etudiant");
 
@@ -412,7 +416,5 @@ public class ClassementBean implements Serializable {
 	public void setScheduleViewBean(ScheduleView scheduleViewBean) {
 		this.scheduleViewBean = scheduleViewBean;
 	}
-	
-	
 
 }
