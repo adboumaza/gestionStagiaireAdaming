@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+	xmlns:b = "http://bootsfaces.net/ui"
+	xmlns:f = "http://java.sun.com/jsf/core"
+	xmlns:h = "http://java.sun.com/jsf/html"
+	xmlns:p = "http://primefaces.org/ui"
+    xmlns:ui= "http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Inti Formation</title>
+	  <f:facet name="middle">
+        <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
+     </f:facet>
+</h:head>
+<h:body>
+<ui:include src="header.xhtml"></ui:include>
+<ui:include src="aside_etudiant.xhtml" ></ui:include>
+<br></br>
+<section id="main-content">
+		 <!-- Form validations -->  
+		 <section class="wrapper">
+		     <div class="row">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
+					<ol class="breadcrumb">
+						<h3 class="page-header" style="color:#00a19a;"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Travaux pratiques sur le langage SQL</h3>
+					</ol>
+				</div>
+			 </div>
+			 
+			 <div class="row">
+				<div class="col-lg-8">
+					<section class="panel" style="width: 97%;margin: auto">
+                          <header class="panel-heading">
+                              Déclaration SQL:
+                          </header>
+                          <div class="panel-body">
+                            <h:form>
+                              <p:messages autoUpdate="true" id="msg" severity="error" showDetail="true" showSummary="true"></p:messages>
+                              <p:inputTextarea value="#{quizBean.sql}" rows="6" cols="85" counter="display" maxlength="2000" counterTemplate="{0} characters maximum." autoResize="false"/>
+                              <br/>
+                              <h:outputText id="display" />
+                              <br/><br/>
+                              <h:outputText value="Modifiez l'instruction SQL et cliquez sur Exécuter SQL pour voir le résultat."/>
+                              <br/><br/>
+                              <p:commandButton update="@form" action="#{quizBean.executeSql}" value="Exécuter SQL"/>
+                              <br></br>
+                              <br></br>
+                              <h:outputText value="Résultat."></h:outputText>
+                            
+                              <p:dataList value="#{quizBean.results}" var="q" varStatus="iteration" >
+                                       #{q}
+                              </p:dataList>
+                            
+                            </h:form>
+                          </div>
+                     </section>
+				</div>
+				<div class="col-lg-4">
+					<section class="panel" style="width: 97%;margin: auto">
+                          <header class="panel-heading">
+                              Votre base de données
+                          </header>
+                          <div class="panel-body">
+                          </div>
+                     </section>
+				</div>
+			 </div> 
+		</section>
+		
+</section>
+</h:body>
+</html>

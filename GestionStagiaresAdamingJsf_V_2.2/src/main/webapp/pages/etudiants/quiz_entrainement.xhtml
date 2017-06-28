@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html xmlns = "http://www.w3.org/1999/xhtml"
+	xmlns:b = "http://bootsfaces.net/ui"
+	xmlns:f = "http://java.sun.com/jsf/core"
+	xmlns:h = "http://java.sun.com/jsf/html"
+	xmlns:p = "http://primefaces.org/ui"
+    xmlns:ui= "http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Quiz</title>
+	   <f:facet name="middle">
+        <h:outputStylesheet name="NiceAdmin/css/bootstrap.min.css" />
+		<h:outputStylesheet name="NiceAdmin/css/bootstrap-theme.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/style-responsive.css" />
+		<h:outputStylesheet name="NiceAdmin/css/elegant-icons-style.css" />
+		<h:outputStylesheet name="NiceAdmin/css/font-awesome.min.css" />
+		<h:outputScript library="primefaces" name="jquery/jquery.js" />
+		<h:outputScript name="NiceAdmin/js/bootstrap.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.scrollTo.min.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.nicescroll.js" />
+		<h:outputScript name="NiceAdmin/js/jquery.customSelect.min.js" />
+		<h:outputScript name="NiceAdmin/js/scripts.js" />
+     </f:facet>
+</h:head>
+<h:body>
+<ui:include src="header.xhtml"></ui:include>
+<ui:include src="aside_etudiant.xhtml" ></ui:include>
+<br></br>
+<br></br>
+<section id="main-content">
+	    <section class="wrapper">
+		  <div class="row">
+				<div class="col-lg-12" style="width: 97%;margin: auto">
+					<ol class="breadcrumb">
+						<h3 class="page-header"  style="color:#00a19a;"><i><h:graphicImage name="NiceAdmin/img/form.png"/> </i> Form Quiz </h3>
+					</ol>
+				</div>
+			</div>
+            <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel" style="width: 97%;margin: auto">
+                          <div class="form-group ">
+	                                   <label for="session" class="control-label col-lg-2">Module <span class="required">*</span></label>
+	                                   <div class="col-lg-5">
+	                                        <h:selectOneMenu style="height:35px;width:100%;color:#797979;font-size:16px;" styleClass="selectpicker"
+												
+											    value="#{classementBean.idModule}">
+											    <f:selectItem itemDisabled="true" itemLabel="Sélectionnez un Module"
+														itemValue="#{null}" />
+												<f:selectItems value="#{quizBean.modules}" var="m"
+														itemLabel="#{m[1]}"
+														itemValue="#{m[0]}" />
+											</h:selectOneMenu>
+	                                    </div>
+	                       </div>
+					  </section>
+				  </div>
+			</div>
+		   
+		</section>
+	</section>
+
+</h:body>
+</html>
