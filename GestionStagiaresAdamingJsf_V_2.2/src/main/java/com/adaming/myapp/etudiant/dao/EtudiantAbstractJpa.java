@@ -14,6 +14,7 @@ import com.adaming.myapp.entities.Module;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.exception.AddEtudiantException;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
+import com.adaming.myapp.persistence.EntityManagerAbstract;
 import com.adaming.myapp.tools.LoggerConfig;
 /**
  *  @author Adel 
@@ -25,17 +26,9 @@ import com.adaming.myapp.tools.LoggerConfig;
  *  @param mail le mail de l'etudiant
  *  @exception AddEtudiantException vérification dans la base de donnée
  ***/
-public abstract class EtudiantAbstractJpa {
+public abstract class EtudiantAbstractJpa extends EntityManagerAbstract {
     
-	
-	/**
-	 * @see javax.persistence.EntityManager
-	 **/
-	@PersistenceContext
-	private EntityManager entityManager;
-    
-	
-	
+
 	/**
      * Logger @see java.util.logging.Logger
      **/

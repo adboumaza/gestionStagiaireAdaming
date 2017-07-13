@@ -2,8 +2,10 @@ package com.adaming.myapp.examen.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Set;
 
 import javax.management.Query;
+import javax.persistence.PersistenceException;
 
 import org.hibernate.JDBCException;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +14,7 @@ import com.adaming.myapp.entities.Examen;
 import com.adaming.myapp.examen.dao.IExamenDao;
 import com.adaming.myapp.exception.VerificationInDataBaseException;
 import com.adaming.myapp.tools.LoggerConfig;
-import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
+
 @Transactional(readOnly = true)
 public class ExamenServiceImpl implements IExamenService {
     
@@ -42,9 +44,23 @@ public class ExamenServiceImpl implements IExamenService {
 	}
 
 	@Override
-	public List<Object[]> sqlQuiz(final String sql) throws javax.persistence.PersistenceException {
+	public List<Object[]> sqlQuiz(String sql) throws PersistenceException {
 		// TODO Auto-generated method stub
-		return dao.sqlQuiz(sql);
+		return null;
 	}
 
+	@Override
+	public List<Object[]> getAllQuizEntrainement() {
+		// TODO Auto-generated method stub
+		return dao.getAllQuizEntrainement();
+	}
+
+	@Override
+	public Set<Object[]> getAllQuestionsQuizByModule(String nomModule,
+			Integer nbrQuestions) {
+		// TODO Auto-generated method stub
+		return dao.getAllQuestionsQuizByModule(nomModule, nbrQuestions);
+	}
+
+	
 }

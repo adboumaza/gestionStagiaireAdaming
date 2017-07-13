@@ -1,12 +1,9 @@
 package com.adaming.myapp.examen.dao;
-import java.sql.SQLException;
 import java.util.List;
-
-import org.hibernate.HibernateException;
-import org.hibernate.JDBCException;
+import java.util.Set;
 
 import com.adaming.myapp.entities.Examen;
-import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
+
 
 public class ExamenDaoImpl extends ExamenAbstractJpa implements IExamenDao{
 
@@ -28,5 +25,19 @@ public class ExamenDaoImpl extends ExamenAbstractJpa implements IExamenDao{
 		// TODO Auto-generated method stub
 		return sqlQuizAbstractJpa(sql);
 	}
+
+	@Override
+	public List<Object[]> getAllQuizEntrainement() {
+		// TODO Auto-generated method stub
+		return getAllQuizEntrainementAbstractJpa();
+	}
+
+	@Override
+	public Set<Object[]> getAllQuestionsQuizByModule(String nomModule,Integer nbrQuestions) {
+		// TODO Auto-generated method stub
+		return getAllQuestionsQuizByModuleAbstractJpa(nomModule, nbrQuestions);
+	}
+
+	
 
 }

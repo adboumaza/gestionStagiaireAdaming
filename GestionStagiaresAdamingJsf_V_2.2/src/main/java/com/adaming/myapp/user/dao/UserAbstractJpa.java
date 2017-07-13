@@ -1,28 +1,27 @@
 package com.adaming.myapp.user.dao;
 
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.adaming.myapp.entities.User;
 import com.adaming.myapp.exception.GetUserException;
-import com.adaming.myapp.exception.VerificationInDataBaseException;
+import com.adaming.myapp.persistence.EntityManagerAbstract;
 import com.adaming.myapp.tools.LoggerConfig;
-import com.adaming.myapp.tools.Utilitaire;
+
 /**
  * 
  * @author adel
  * @date 10/10/2016
  * @version 1.0.0
  * */
-public abstract class UserAbstractJpa {
+public abstract class UserAbstractJpa extends EntityManagerAbstract {
 
-	@PersistenceContext
-	private EntityManager em;
 
 	public User saveUserAbstractJpa(final User u) {
-		em.persist(u);
+		entityManager.persist(u);
 		LoggerConfig.logInfo("l'identifiant et le mot de passe ont bien Générées"+"USER N° : "+"psseudo Name : "+u.getName()+" Password: "+u.getPassword());
 		return null;
 	}
@@ -30,7 +29,7 @@ public abstract class UserAbstractJpa {
 	public List<User> getUsersByMailAbstractJpa(final String mail){
 		final String SQL = "From User u where u.name=:x";
 		List<User> u = null;
-		Query query = em.createQuery(SQL).setParameter("x", mail);
+		Query query = entityManager.createQuery(SQL).setParameter("x", mail);
 		u = query.getResultList();
 		return u;
 	}
@@ -53,7 +52,7 @@ public abstract class UserAbstractJpa {
 	public User getUserByMailAbstractJpa(final String mail) {
 		
 		final String SQL = "From User u where u.name =:x";
-		Query query = em.createQuery(SQL).setParameter("x",mail);
+		Query query = entityManager.createQuery(SQL).setParameter("x",mail);
 		User u = null;
 		if(!query.getResultList().isEmpty() && query.getResultList() != null){
 			u = (User) query.getResultList().get(0);
@@ -62,7 +61,7 @@ public abstract class UserAbstractJpa {
 	}
 	
 	public User customPasswordAbstractJpa(final User u){
-		  em.merge(u);
+		  entityManager.merge(u);
 		  return u;
 	}
 

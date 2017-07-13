@@ -1,21 +1,16 @@
 package com.adaming.myapp.admin.dao;
 
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import com.adaming.myapp.entities.Admin;
+import com.adaming.myapp.persistence.EntityManagerAbstract;
 
 
-public abstract class AdminAbstractJpa  {
+
+public abstract class AdminAbstractJpa  extends EntityManagerAbstract {
 
 	
-	@PersistenceContext
-	private EntityManager entityManger;
- 
-
 	public Admin createAdminAbstractJpa(Admin admin){
-		entityManger.persist(admin);
+		entityManager.persist(admin);
 		
 		return admin;
 	}
@@ -23,19 +18,19 @@ public abstract class AdminAbstractJpa  {
 	
 	public Admin deleteAdminAbstractJpa(final Long idAdmin) {
 		Admin admin = getOneAdminAbstractJpa(idAdmin);
-		entityManger.remove(admin);
+		entityManager.remove(admin);
 		return admin;
 	}
 
 	
 	public Admin updateAdminAbstractJpa(final Admin admin) {
-		entityManger.merge(admin);
+		entityManager.merge(admin);
 		return admin;
 	}
 
 
 	public Admin getOneAdminAbstractJpa(Long idAdmin) {
-		Admin admin = entityManger.find(Admin.class, idAdmin);
+		Admin admin = entityManager.find(Admin.class, idAdmin);
 		return admin;
 	}
 	

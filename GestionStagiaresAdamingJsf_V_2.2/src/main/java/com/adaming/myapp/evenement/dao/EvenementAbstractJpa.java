@@ -1,45 +1,29 @@
 package com.adaming.myapp.evenement.dao;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Logger;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.joda.time.DateTime;
-
-
-
-
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.SessionEtudiant;
-import com.adaming.myapp.exception.EvenementNotFoundException;
-import com.adaming.myapp.exception.VerificationInDataBaseException;
+import com.adaming.myapp.persistence.EntityManagerAbstract;
 import com.adaming.myapp.tools.LoggerConfig;
 
-public abstract class EvenementAbstractJpa {
-	
-	@PersistenceContext
-	private EntityManager em;
+public abstract class EvenementAbstractJpa extends EntityManagerAbstract {
+
 
 	public Evenement addEvenementAbstractJpa(final Evenement e, final Long idSession, final Long idEtudiant)
 			{
-		SessionEtudiant se = em.find(SessionEtudiant.class, idSession);
-		Etudiant e1 = em.find(Etudiant.class, idEtudiant);
+		SessionEtudiant se = entityManager.find(SessionEtudiant.class, idSession);
+		Etudiant e1 = entityManager.find(Etudiant.class, idEtudiant);
 		e.setEtudiant(e1);
 		e.setSessionEtudiant(se);
-		em.persist(e);
+		entityManager.persist(e);
 		LoggerConfig.logInfo("l'evenement a bien été enregistrer " + "Session id : "
 				+ idSession + "etudiant :" + idEtudiant);
 		return e;
@@ -48,11 +32,11 @@ public abstract class EvenementAbstractJpa {
 	
 	public Evenement addWarningAndTopAbstractJpa(final Evenement e, final Long idSession,
 			final Long idEtudiant) {
-		SessionEtudiant se = em.find(SessionEtudiant.class, idSession);
-		Etudiant e1 = em.find(Etudiant.class, idEtudiant);
+		SessionEtudiant se = entityManager.find(SessionEtudiant.class, idSession);
+		Etudiant e1 = entityManager.find(Etudiant.class, idEtudiant);
 		e.setEtudiant(e1);
 		e.setSessionEtudiant(se);
-		em.persist(e);
+		entityManager.persist(e);
 		LoggerConfig.logInfo("l'evenement a bien été enregistrer " + "Session id : "
 				+ idSession + "etudiant :" + idEtudiant);
 		return e;
@@ -63,7 +47,7 @@ public abstract class EvenementAbstractJpa {
 	public List<Object[]> getEvenementsRetardsAbstractJpa()
 			 {
 		Date weeckAgo = DateUtils.addDays(new Date(), -6);
-		Query query = em
+		Query query = entityManager
 				.createQuery("Select e.idEvenement,e.startDate,e.endDate,e.signaleur,et.idEtudiant,et.nomEtudiant,et.prenomEtudiant,se.idSession,e.curentDate "
 						   + "from Evenement e join e.sessionEtudiant se join e.etudiant et where TYPE_EVENEMENT =:x and e.curentDate >= :y ORDER BY e.idEvenement DESC");
 		query.setParameter("y", weeckAgo);
@@ -80,7 +64,7 @@ public abstract class EvenementAbstractJpa {
 	public List<Object[]> getEvenementsAbsencesAbstractJpa()
 			 {
 		Date weeckAgo = DateUtils.addDays(new Date(), -6);
-		Query query = em
+		Query query = entityManager
 				.createQuery("Select e.idEvenement,e.startDate,e.endDate,e.signaleur,et.idEtudiant,et.nomEtudiant,et.prenomEtudiant,se.idSession,e.curentDate "
 						    + "from Evenement e join e.sessionEtudiant se join e.etudiant et where TYPE_EVENEMENT =:x and e.curentDate >= :y ORDER BY e.idEvenement DESC");
 		query.setParameter("y", weeckAgo);
@@ -96,7 +80,7 @@ public abstract class EvenementAbstractJpa {
 	public List<Object[]> getEvenementsEntretienAbstractJpa()
 			 {
 		Date weeckAgo = DateUtils.addDays(new Date(), -6);
-		Query query = em
+		Query query = entityManager
 				.createQuery("Select e.idEvenement,e.startDate,e.endDate,e.signaleur,et.idEtudiant,et.nomEtudiant,et.prenomEtudiant,se.idSession,e.curentDate "
 						+ "from Evenement e join e.sessionEtudiant se join e.etudiant et where TYPE_EVENEMENT=:x and e.curentDate >= :y ORDER BY e.idEvenement DESC");
 		query.setParameter("y", weeckAgo);
@@ -116,7 +100,7 @@ public abstract class EvenementAbstractJpa {
 		final String SQL = "SELECT e.idEvenement,e.startDate,e.endDate,e.signaleur,e.curentDate,et.idEtudiant,et.nomEtudiant,et.prenomEtudiant,se.idSession"
 				         + " FROM Evenement e join e.etudiant et join e.sessionEtudiant se"
 				         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
+		Query query = entityManager
 				.createQuery(SQL);
 		query.setParameter("x", "RETARD");
 		query.setParameter("y", yesterday, TemporalType.DATE);
@@ -135,7 +119,7 @@ public abstract class EvenementAbstractJpa {
 		final String SQL = "SELECT e.idEvenement,e.startDate,e.endDate,e.signaleur,e.curentDate,et.idEtudiant,et.nomEtudiant,et.prenomEtudiant,se.idSession"
 		         + " FROM Evenement e join e.etudiant et join e.sessionEtudiant se"
 		         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
+		Query query = entityManager
 				.createQuery(SQL);
 		query.setParameter("x", "ABSENCE");
 		query.setParameter("y", yesterday, TemporalType.DATE);
@@ -155,7 +139,7 @@ public abstract class EvenementAbstractJpa {
 		final String SQL = "SELECT e.idEvenement,e.startDate,e.endDate,e.signaleur,e.curentDate,et.idEtudiant,et.nomEtudiant,et.prenomEtudiant,se.idSession"
 		         + " FROM Evenement e join e.etudiant et join e.sessionEtudiant se"
 		         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
+		Query query = entityManager
 				.createQuery(SQL);
 		query.setParameter("x", "WARNING");
 		query.setParameter("y", yesterday, TemporalType.DATE);
@@ -175,7 +159,7 @@ public abstract class EvenementAbstractJpa {
 		final String SQL = "SELECT e.idEvenement,e.startDate,e.endDate,e.signaleur,e.curentDate,et.idEtudiant,et.nomEtudiant,et.prenomEtudiant,se.idSession"
 		         + " FROM Evenement e join e.etudiant et join e.sessionEtudiant se"
 		         + " where TYPE_EVENEMENT=:x and e.curentDate BETWEEN :y AND :t ORDER BY e.idEvenement DESC";
-		Query query = em
+		Query query = entityManager
 				.createQuery(SQL);
 		query.setParameter("x", "TOP");
 		query.setParameter("y", yesterday, TemporalType.DATE);
@@ -187,7 +171,7 @@ public abstract class EvenementAbstractJpa {
 
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getEventsExisteAbstractJpa(final Long idEtudiant) {
-		Query query = em.createQuery("Select e.startDate,e.endDate,e.etudiant.idEtudiant"
+		Query query = entityManager.createQuery("Select e.startDate,e.endDate,e.etudiant.idEtudiant"
 				+ " from Evenement e join e.etudiant et "
 				+ " where et.idEtudiant =:x order by e.idEvenement desc");
 		query.setParameter("x",idEtudiant);
@@ -199,7 +183,7 @@ public abstract class EvenementAbstractJpa {
 	public Evenement verifyExistingEventAbstractJpa(final Long idEtudiant){
 		final String SQL = "select e from Evenement e join e.etudiant et where (TYPE_EVENEMENT =:x or TYPE_EVENEMENT =:y) and et.idEtudiant =:z";
 		Evenement event = null;
-		Query query = em.createQuery(SQL).setParameter("x","WARNING").setParameter("y","TOP").setParameter("z",idEtudiant);
+		Query query = entityManager.createQuery(SQL).setParameter("x","WARNING").setParameter("y","TOP").setParameter("z",idEtudiant);
 		if(query.getResultList().size() > 0 && query.getResultList() != null){
 			event = (Evenement) query.getResultList().get(0);
 		}
@@ -207,16 +191,16 @@ public abstract class EvenementAbstractJpa {
 	}
 	
 	public void deleteEvenementAbstractJpa(final Long idEvenement){
-		Evenement evnement = em.find(Evenement.class, idEvenement);
-		em.remove(evnement);
+		Evenement evnement = entityManager.find(Evenement.class, idEvenement);
+		entityManager.remove(evnement);
 	}
 	
 	public Evenement updateEvenementAbstractJpa(final Evenement evenement,final Long idEtudiant,final Long idSession){
-		Etudiant etudiant = em.find(Etudiant.class, idEtudiant);
-		SessionEtudiant sessionEtudiant = em.find(SessionEtudiant.class, idSession);
+		Etudiant etudiant = entityManager.find(Etudiant.class, idEtudiant);
+		SessionEtudiant sessionEtudiant = entityManager.find(SessionEtudiant.class, idSession);
 		evenement.setSessionEtudiant(sessionEtudiant);
 		evenement.setEtudiant(etudiant);
-		em.merge(evenement);
+		entityManager.merge(evenement);
 		return evenement;
 	}
 	
@@ -231,7 +215,7 @@ public abstract class EvenementAbstractJpa {
 		"where se.idSession =:id and e.nomEtudiant =:nom and (:date  >= cast(ev.startDate as date) and :date <= cast(ev.endDate as date) ) "
 		+"and (TYPE_EVENEMENT =:r or TYPE_EVENEMENT =:a or TYPE_EVENEMENT =:e)" ;
 
-		Query query = em.createNativeQuery(SQL).
+		Query query = entityManager.createNativeQuery(SQL).
 				setParameter("id",idSession).
 				setParameter("nom", nomEtudiant).
 				setParameter("date",dtStr).

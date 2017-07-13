@@ -7,16 +7,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.transaction.annotation.Transactional;
-
-import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Evenement;
 import com.adaming.myapp.entities.Salle;
 import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.entities.Site;
 import com.adaming.myapp.entities.Specialite;
 import com.adaming.myapp.exception.AddSessionException;
-import com.adaming.myapp.exception.VerificationInDataBaseException;
+import com.adaming.myapp.persistence.EntityManagerAbstract;
 import com.adaming.myapp.tools.LoggerConfig;
 
 /**
@@ -25,22 +22,21 @@ import com.adaming.myapp.tools.LoggerConfig;
  * @date 10/10/2016
  * @version 1.0.0
  * */
-public abstract class SessionAbstractJpa {
+public abstract class SessionAbstractJpa extends EntityManagerAbstract{
 
-	@PersistenceContext
-	private EntityManager em;
+
 
 	public SessionEtudiant addSessionStudentAbstractJpa(
 			final SessionEtudiant se, final Long idSpecialite,
 			final Long idSite, final Long idSalle) throws AddSessionException {
-		Specialite sp = em.find(Specialite.class, idSpecialite);
-		Site site = em.find(Site.class, idSite);
-		Salle salle = em.find(Salle.class, idSalle);
+		Specialite sp = entityManager.find(Specialite.class, idSpecialite);
+		Site site = entityManager.find(Site.class, idSite);
+		Salle salle = entityManager.find(Salle.class, idSalle);
 		se.setSpecialite(sp);
 		se.setSite(site);
 		se.setSalle(salle);
 		sp.getSessionEtudiant().add(se);
-		em.persist(se);
+		entityManager.persist(se);
 		LoggerConfig.logInfo(" la session+" + se.getIdSession()
 				+ "a bien été enregistrer");
 		return se;
@@ -49,13 +45,13 @@ public abstract class SessionAbstractJpa {
 	public SessionEtudiant updateSessionEtudianAbstractJpa(
 			final SessionEtudiant se, final Long idSpecialite,
 			final Long idSite, final Long idSalle) {
-		Specialite sp = em.find(Specialite.class, idSpecialite);
-		Site site = em.find(Site.class, idSite);
-		Salle salle = em.find(Salle.class, idSalle);
+		Specialite sp = entityManager.find(Specialite.class, idSpecialite);
+		Site site = entityManager.find(Site.class, idSite);
+		Salle salle = entityManager.find(Salle.class, idSalle);
 		se.setSpecialite(sp);
 		se.setSalle(salle);
 		se.setSite(site);
-		em.merge(se);
+		entityManager.merge(se);
 		LoggerConfig.logInfo(" la session+" + se.getIdSession()
 				+ "a bien été Modifié");
 		return se;
@@ -67,13 +63,13 @@ public abstract class SessionAbstractJpa {
 				+ "left join fetch p.site left join fetch p.salle left join fetch p.specialite "
 				+ "where p.id = :id";
 
-		return (SessionEtudiant) em.createQuery(SQL)
+		return (SessionEtudiant) entityManager.createQuery(SQL)
 				.setParameter("id", idSessionEtudiant).getSingleResult();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getSallesDisponibleAbstracJpa(final Long idSalle) {
-		Query query = em
+		Query query = entityManager
 				.createQuery("Select se.idSession,se.dateDebute,se.dateFin,sa.numeroSalle FROM SessionEtudiant se join se.salle sa where sa.idSalle=:x order by se.idSession desc");
 		query.setParameter("x", idSalle);
 		query.setMaxResults(1);
@@ -88,7 +84,7 @@ public abstract class SessionAbstractJpa {
 				+ "join site si on se.ID_SITE_SESSION = si.idSite "
 				+ "join salle sa on se.ID_SALLE_SESSION = sa.idSalle "
 				+ " where se.dateFin >= CURRENT_DATE";
-		Query query = em
+		Query query = entityManager
 				.createNativeQuery(SQL);
 		LoggerConfig.logInfo("il existe" + query.getResultList().size()
 				+ " sessions en cours");
@@ -98,7 +94,7 @@ public abstract class SessionAbstractJpa {
 	@SuppressWarnings("unchecked")
 	public List<Object[]> getAllSessionsAbstractJpaV2() {
 		final String SQL = "Select se.idSession,sp.designation,se.dateDebute,se.dateFin,site.nomSite,sa.numeroSalle From SessionEtudiant se join se.specialite sp join se.site site join se.salle sa Order By se.dateFin DESC";
-		Query query = em.createQuery(SQL);
+		Query query = entityManager.createQuery(SQL);
 		LoggerConfig.logInfo("il existe" + query.getResultList().size());
 		return query.getResultList();
 	}
@@ -109,7 +105,7 @@ public abstract class SessionAbstractJpa {
 				+ "left join fetch s.site left join fetch s.salle left join fetch s.specialite "
 				+ "left join fetch s.formateurs f left join s.etudiants e where f.idFormateur = :id";
 		SessionEtudiant session = null;
-		Query query = em.createQuery(SQL).setParameter("id", idFormateur);
+		Query query = entityManager.createQuery(SQL).setParameter("id", idFormateur);
 		if (query.getResultList() != null && !query.getResultList().isEmpty()
 				&& query.getResultList().size() == 1) {
 			session = (SessionEtudiant) query.getResultList().get(0);
@@ -136,7 +132,7 @@ public abstract class SessionAbstractJpa {
 				+ "join fetch s.site join fetch s.salle join fetch s.specialite "
 				+ "left join s.etudiants e where e.idEtudiant = :id ";
 		SessionEtudiant session = null;
-		Query query = em.createQuery(SQL).setParameter("id", idEtudiant);
+		Query query = entityManager.createQuery(SQL).setParameter("id", idEtudiant);
 		if (query.getResultList() != null && !query.getResultList().isEmpty()) {
 			session = (SessionEtudiant) query.getResultList().get(0);
 		}
@@ -174,7 +170,7 @@ public abstract class SessionAbstractJpa {
 			System.out.println(req.toString());
 		}
 
-		Query query = em.createQuery(req.toString()).setParameter("id",
+		Query query = entityManager.createQuery(req.toString()).setParameter("id",
 				idSession);
 		if (choix.equals("TOP")) {
 			query.setParameter("t", "TOP");
@@ -202,7 +198,7 @@ public abstract class SessionAbstractJpa {
                           +" where (:d >= se.dateDebute and :f <= se.dateFin )"
                           +" or (:f >= se.dateDebute and :d <= se.dateFin)";
 
-		Query query = em.createNativeQuery(SQL).setParameter("d", dateDebut).setParameter("f", dateFin);
+		Query query = entityManager.createNativeQuery(SQL).setParameter("d", dateDebut).setParameter("f", dateFin);
 		return query.getResultList();
 
 	}
@@ -217,7 +213,7 @@ public abstract class SessionAbstractJpa {
 				+"join salle sa on sa.idSalle = se.id_salle_session "
 				+" where DATE(now()) = DATE( DATE_SUB( se.dateFin , INTERVAL 1 WEEK ) )";
 
-		Query query = em.createNativeQuery(SQL);
+		Query query = entityManager.createNativeQuery(SQL);
 		List<Object[]> sessions = query.getResultList();
 
 		return sessions;

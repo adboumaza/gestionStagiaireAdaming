@@ -178,6 +178,8 @@ public class ContratBean {
 	public void setFormattedDate(String formattedDate) {
 		this.formattedDate = formattedDate;
 	}
+
+	
 	
 	
 

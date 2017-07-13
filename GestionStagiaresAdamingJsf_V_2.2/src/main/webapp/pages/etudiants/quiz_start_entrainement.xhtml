@@ -24,11 +24,17 @@
 		<h:outputScript name="NiceAdmin/js/scripts.js" />
      </f:facet>
      <style type="text/css">
-         .ui-picklist .ui-picklist-list {
-			    margin-top: 10px;
-			    padding: 10px;
-			    width: 350px!important;
-		    }
+	        .ui-widget-content {
+			    background: #f0f2f7 !important;
+			    font-weight: 200 !important;
+			    -webkit-border-radius: 0px !important;
+			    padding: 15px!important;
+			    margin: 15px!important;
+			}
+			.ui-orderlist .ui-orderlist-list {
+			     border: 1px solid #ccc!important;
+			     width: 350px;
+			}
 		
      </style>
 </h:head>
@@ -50,23 +56,32 @@
                   <div class="col-lg-12">
                       <section class="panel" style="width: 97%;margin: auto">
                            <header class="panel-heading">
-                              Sélectionnez un ou plusieurs Modules
+                              Sélectionnez le nombre de Questions
                           </header>
                           <div class="panel-body">
                               <div class="form">
-                                 <h:form class="form-validate form-horizontal">
-                                 <p:growl  showDetail="true" showSummary="true"></p:growl>
+                                 <h:form id="form20" class="form-validate form-horizontal">
 	                               <div class="form-group ">
-	                                   <div class="col-lg-5">
-	                                       <p:pickList responsive="true"  id="pickList" value="#{quizEntrainementBean.dualListModules}" var="m" itemLabel="#{m}" itemValue="#{m}" showTargetFilter="true" showSourceFilter="true" filterMatchMode="contains">
-	                                           
-	                                       </p:pickList>  
-	                                    </div>
-	                                 </div>
-	                                 <div class="form-group ">
-	                                   <div class="col-lg-5">
-	                                       <h:commandButton value="Suivant" action="#{quizEntrainementBean.selectedModule}"></h:commandButton>
-	                                    </div>
+	                                  <p:dataTable style="width:96%;margin:auto" id="da" value="#{quizEntrainementBean.modulesTargetFormatted}" var="q">
+									    <p:column headerText="Module">
+									        <h:outputText value="#{q.module}"/>
+									    </p:column>
+									    <p:column headerText="Nombre de questions">
+									        <p:spinner  value="#{q.nbrQuestion}" max="#{q.nbrQuestion}" min="#{quizEntrainementBean.min}">
+									            <p:ajax event="change" listener="#{quizEntrainementBean.verify(q.module,q.nbrQuestion)}"></p:ajax>
+									        </p:spinner>
+									    </p:column>
+									  </p:dataTable>
+	                               </div>
+	                               
+								  </h:form>
+								  <h:form>
+								      <div class="form-group ">
+		                                 <div class="col-lg-5">
+		                                     <p:commandButton value="commencer le quiz">
+		                                          <p:ajax event="click" listener="#{quizEntrainementBean.startQuiz}" />
+		                                     </p:commandButton>
+		                                 </div>
 	                                 </div>
 								  </h:form>
 							  </div>

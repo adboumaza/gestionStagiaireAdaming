@@ -1,12 +1,9 @@
 package com.adaming.myapp.examen.dao;
 
-import java.sql.SQLException;
 import java.util.List;
-
-import org.hibernate.JDBCException;
+import java.util.Set;
 
 import com.adaming.myapp.entities.Examen;
-import com.mysql.jdbc.exceptions.MySQLSyntaxErrorException;
 
 public interface IExamenDao{
 
@@ -14,5 +11,9 @@ public interface IExamenDao{
 	
 	Examen verifyExistingExamen(final Long idEtdudiant,final Long idModule, final Long idSession);
 	
-	List<Object[]> sqlQuiz(String sql) throws javax.persistence.PersistenceException;
+	List<Object[]> sqlQuiz(final String sql) throws javax.persistence.PersistenceException;
+	
+	List<Object[]> getAllQuizEntrainement();
+	
+	Set<Object[]> getAllQuestionsQuizByModule(String nomModule,Integer nbrQuestions);
 }

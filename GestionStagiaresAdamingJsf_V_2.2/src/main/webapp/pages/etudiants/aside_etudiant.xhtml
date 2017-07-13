@@ -20,7 +20,6 @@
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/account-passkey.png"/></i>
                           <span>Mon Compte</span>
-                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                       <ul class="sub">
                          <li><h:link outcome="custom_password">Changer Le M-D-Passe</h:link></li>                            
@@ -30,7 +29,6 @@
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/signature.png"/></i>
                           <span>Signature</span>
-                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                       <ul class="sub">
                          <li><h:form><h:commandLink action="#{contratBean.redirect}" value="Signature Etudiant"/> </h:form>  </li> 
@@ -39,8 +37,7 @@
 				  <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/exam.png" style="wdth:24px;height:24px;"/></i>
-                          <span>Examen</span>
-                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
+                          <span>Examen</span>              
                       </a>
                       <ul class="sub">
                          <li><h:form><h:commandLink action="#{examenBean.initExamen}" value="Passer Un Examen"/> </h:form>  </li>                          
@@ -53,7 +50,6 @@
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/rank.png"/></i>
                           <span>Classement</span>
-                       <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
                       </a>
                        <ul class="sub">
                          <li><h:form><h:commandLink action="#{classementBean.getAllModulesValideBySession}" value="Voir le Classement"/> </h:form>  </li>                                 
@@ -63,8 +59,7 @@
                    <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/mail.png" style="wdth:24px;height:24px;"/></i>
-                          <span>Contact</span>
-                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
+                          <span>Contact</span>                
                       </a>
                       <ul class="sub">
                          <li><h:link outcome="send_mail">Contacter le R-P</h:link></li>                            
@@ -73,11 +68,10 @@
                   <li class="sub-menu">
                       <a href="javascript:;" class="">
                           <i><h:graphicImage name="NiceAdmin/img/icons/test.png"/></i>
-                          <span>Quiz</span>
-                         <i><h:graphicImage name="NiceAdmin/img/security-unlock-button.png" style="float: right;padding-right: 6px"/></i>
+                          <span>Quiz</span>                  
                       </a>
                       <ul class="sub">
-                         <li><h:form><h:commandLink action="#{quizBean.initEntrainementQuiz}" value="Découvrez nos quizz"/> </h:form>  </li>                       
+                         <li><h:form><h:commandLink action="#{quizEntrainementBean.init}" value="Découvrez nos quizz"/> </h:form>  </li>                       
                          <li><h:form><h:commandLink action="#{quizBean.init}" value="Éditeur SQL"/> </h:form>  </li>                       
                       </ul>
                   </li>    

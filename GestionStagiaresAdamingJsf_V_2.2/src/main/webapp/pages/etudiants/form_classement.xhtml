@@ -66,13 +66,13 @@
                               Classement
                           </header>
                           <div class="panel-body">
-                              <div class="form">
-                                 <h:form id="form10" class="form-validate form-horizontal">
-	                               <div class="form-group ">
+                              <div>
+                                 <h:form  class="form-validate form-horizontal">
+	                               <div>
 	                                   
 	                                   <p:dataList id="list" var="n" varStatus="iteration" value="#{classementBean.notes}">
 				                           
-								            <div class="row">
+								            
 												<div style="width:100%" class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 													<div class="info-box dark-bg">
 													    
@@ -88,7 +88,7 @@
 														<h:graphicImage rendered="#{n[1] lt 10}"     name="NiceAdmin/img/dislike.png"/> 
 													</div><!--/.info-box-->			
 												</div><!--/.col-->
-										</div><!--/.row-->
+										
 	                                   </p:dataList>
 	                               </div>
 								  </h:form>

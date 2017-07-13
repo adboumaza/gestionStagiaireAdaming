@@ -1,30 +1,22 @@
 package com.adaming.myapp.examen.dao;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-
-
-import org.hibernate.JDBCException;
 
 import com.adaming.myapp.entities.Etudiant;
 import com.adaming.myapp.entities.Examen;
 import com.adaming.myapp.entities.Module;
 import com.adaming.myapp.entities.SessionEtudiant;
+import com.adaming.myapp.persistence.EntityManagerAbstract;
 
-public abstract class ExamenAbstractJpa {
+public abstract class ExamenAbstractJpa extends EntityManagerAbstract{
 
-	/**
-	 * @see javax.persistence.EntityManager
-	 **/
-	@PersistenceContext
-	private EntityManager entityManager;
 
 	/**
 	 * Logger @see java.util.logging.Logger
@@ -79,6 +71,47 @@ public abstract class ExamenAbstractJpa {
 		
 		return result;
 	
+	}
+	
+	
+	/*@SuppressWarnings("unchecked")
+	public List<Object[]> getAllQuizEntrainementAbstractJpa(){
+		
+		final String SQL =  "SELECT idModule,nomModule,sp.designation from module m "
+						   +"JOIN specialite sp ON m.ID_SP_MODULE = sp.idSpecialite "
+						   +"WHERE m.type ='Quiz' group by idModule";
+		Query query = entityManager.createNativeQuery(SQL);
+		return query.getResultList();
+	}*/
+	
+
+	@SuppressWarnings("unchecked")
+	public List<Object[]> getAllQuizEntrainementAbstractJpa(){
+		final String SQL =  "SELECT count(*) as nbrQuestions,idModule,nomModule,sp.designation from questions "
+				           +"JOIN module m on m.idModule = ID_QUES_MODULE "
+						   +"JOIN specialite sp on m.ID_SP_MODULE = sp.idSpecialite "
+                           +"WHERE m.type ='Quiz' GROUP BY idModule ";
+		Query query = entityManager.createNativeQuery(SQL);
+		return query.getResultList();
+	}
+	
+	
+	
+	@SuppressWarnings("unchecked")
+	public Set<Object[]> getAllQuestionsQuizByModuleAbstractJpa(String nomModule,Integer nbrQuestions)
+	{
+		final String SQL =   "SELECT m.nomModule,q.label,r.labelReponse FROM questions q "
+							+"JOIN module m ON m.idModule = ID_QUES_MODULE "
+						    +"JOIN reponses r ON r.ID_REP_QUES = q.idQuestions "
+						    +"WHERE m.type ='Quiz' AND m.nomModule =:module ORDER BY q.idQuestions";
+		Set<Object[]> results = null;
+		if(nbrQuestions != null)
+		{
+			Query query = entityManager.createNativeQuery(SQL).setParameter("module", nomModule).setFirstResult(0).setMaxResults(nbrQuestions * 4);
+			results =  new LinkedHashSet<Object[]>(query.getResultList());
+		}
+		
+	    return results;
 	}
 
 }

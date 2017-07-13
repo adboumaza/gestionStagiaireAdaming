@@ -2,22 +2,15 @@ package com.adaming.myapp.agenda.dao;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.adaming.myapp.entities.Agenda;
-import com.adaming.myapp.entities.SessionEtudiant;
 import com.adaming.myapp.entities.User;
+import com.adaming.myapp.persistence.EntityManagerAbstract;
 import com.adaming.myapp.tools.LoggerConfig;
 
-public abstract class AgendaAbstractJpa{
+public abstract class AgendaAbstractJpa extends EntityManagerAbstract{
    
-	@PersistenceContext
-	private EntityManager entityManager;
-
-
 	public Agenda addAgendaAbstractJpa(final Agenda agenda, final Long idUser) {
 		User user = entityManager.find(User.class, idUser);
 		agenda.setUser(user);

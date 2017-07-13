@@ -1,6 +1,9 @@
 package com.adaming.myapp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.junit.AfterClass;
@@ -30,6 +33,7 @@ public class ExamenServiceTest {
 	}
 	
 	@Test
+	@Ignore
 	public void addExamen(){
 		try{
 			Examen examen = new Examen(new Date());
@@ -41,7 +45,10 @@ public class ExamenServiceTest {
 	}
 	
 	@Test
-	public void getTimeOfExamen(){
-		
+	public void getAllQuesionsQuizByModule(){
+		List<Object[]> results = new ArrayList<Object[]> (serviceExamen.getAllQuestionsQuizByModule("Quiz - UML",3));
+		for(Object[] o : results){
+			System.out.println(o[0] + " "+o[1]+" "+o[2]);
+		}
 	}
 }

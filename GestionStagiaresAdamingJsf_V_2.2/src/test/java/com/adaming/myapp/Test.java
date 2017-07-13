@@ -56,7 +56,7 @@ public class Test {
 	public static void main(String[] args) throws ParseException, ParserConfigurationException, MalformedURLException, SAXException, IOException, TransformerException {
 		 
 
-		String pswEnc = Utilitaire.passWordEncoderGenerator("jkitZCdr");
+		String pswEnc = Utilitaire.passWordEncoderGenerator("admin2017");
 		System.out.println(pswEnc);
 		
 		/*$2a$12$MhU5MRDeg2Y7ojmjIUvy1eIk12clnI/AiLqKJRCIVgsvVDh.bTDL6*/
